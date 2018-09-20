@@ -1,0 +1,42 @@
+{
+  "name": "its-not-trivial",
+  "version": "0.0.0",
+  "description": "An Interactive Trivia Party Game",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/peter-banfield/its-not-trivial.git"
+  },
+  "contributors": [
+    {
+      "name": "Peter Banfield",
+      "email": "peter.e.banfield@gmail.com"
+    },
+    {
+      "name": "Brenden Lane"
+    },
+    {
+      "name": "Ryan Brantly"
+    },
+    {
+      "name": "Carl Ngo"
+    },
+    {
+      "name": "Jake Sinson"
+    },
+    {
+      "name": "Noel Cuevas"
+    }
+  ],
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/peter-banfield/its-not-trivial/issues"
+  },
+  "homepage": "https://github.com/peter-banfield/its-not-trivial#readme",
+  "engines": {
+    "node": "8.11.4"
+  }
+}
