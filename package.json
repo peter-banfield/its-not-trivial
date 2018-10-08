@@ -38,5 +38,8 @@
   "homepage": "https://github.com/peter-banfield/its-not-trivial#readme",
   "engines": {
     "node": "8.11.4"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
   }
 }
