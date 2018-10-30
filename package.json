@@ -4,7 +4,10 @@
   "description": "An Interactive Trivia Party Game",
   "main": "app.js",
   "scripts": {
-    "start": "node app.js"
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test",
+    "eject": "react-scripts eject"
   },
   "repository": {
     "type": "git",
@@ -40,6 +43,21 @@
     "node": "8.11.4"
   },
   "dependencies": {
-    "express": "^4.16.3"
-  }
+    "bootstrap": "^4.1.3",
+    "express": "^4.16.3",
+    "react": "^16.6.0",
+    "react-dom": "^16.6.0",
+    "react-redux": "^5.1.0",
+    "react-router-dom": "^4.3.1",
+    "react-scripts": "^2.0.5",
+    "reactstrap": "^6.5.0",
+    "redux": "^4.0.1",
+    "redux-thunk": "^2.3.0"
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
