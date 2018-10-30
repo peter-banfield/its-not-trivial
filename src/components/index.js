@@ -12,4 +12,4 @@ import RoundNumber from './Gameboard/RoundNumber'
 import QuestionNumber from './Gameboard/QuestionNumber'
 
 export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
-    CreateGame, RoomCode, Rules, RoundNumber }
+    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber }
