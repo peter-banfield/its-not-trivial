@@ -6,5 +6,6 @@ import StartGame from './Player/StartGame'
 import SkipRules from './Player/SkipRules'
 import PlayAgain from './Player/PlayAgain'
 import Answer from './Player/Answer'
+import Blank from './Player/Blank'
 
-export { CreateGame, RoomCode, PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer }
+export { CreateGame, RoomCode, PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank }
