@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { Provider } from 'react-redux';
 import { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
-    CreateGame, RoomCode, Rules } from "./components"
+    CreateGame, RoomCode, Rules, RoundNumber } from "./components"
 import Store from "./store"
 
 
@@ -24,6 +24,7 @@ class App extends Component{
                 <Route path="/CreateGame" component = {CreateGame} />
                 <Route path="/RoomCode" component = {RoomCode} />
                 <Route path="/Rules" component = {Rules} />
+                <Route path="/Round" component = {RoundNumber} />
             </Switch>
             </BrowserRouter>
             </Container>

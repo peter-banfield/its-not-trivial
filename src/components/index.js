@@ -8,6 +8,8 @@ import Blank from './Player/Blank'
 import CreateGame from './Gameboard/CreateGame'
 import RoomCode from './Gameboard/RoomCode'
 import Rules from './Gameboard/Rules'
+import RoundNumber from './Gameboard/RoundNumber'
+import QuestionNumber from './Gameboard/QuestionNumber'
 
 export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
-    CreateGame, RoomCode, Rules}
+    CreateGame, RoomCode, Rules, RoundNumber }
