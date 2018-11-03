@@ -10,6 +10,7 @@ import RoomCode from './Gameboard/RoomCode'
 import Rules from './Gameboard/Rules'
 import RoundNumber from './Gameboard/RoundNumber'
 import QuestionNumber from './Gameboard/QuestionNumber'
+import QuestionAsk from './Gameboard/QuestionAsk'
 
 export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
-    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber }
+    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk }
