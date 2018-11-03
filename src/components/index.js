@@ -12,6 +12,7 @@ import RoundNumber from './Gameboard/RoundNumber'
 import QuestionNumber from './Gameboard/QuestionNumber'
 import QuestionAsk from './Gameboard/QuestionAsk'
 import AnswerPlaceBets from './Gameboard/AnswerPlaceBets'
+import AnswerSeeBets from './Gameboard/AnswerSeeBets'
 
 export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
-    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, AnswerPlaceBets }
+    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, AnswerPlaceBets, AnswerSeeBets }
