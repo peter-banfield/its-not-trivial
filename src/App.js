@@ -4,7 +4,7 @@ import { Container } from 'reactstrap';
 import { Provider } from 'react-redux';
 import { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
     CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
-    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard } from "./components"
+    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats } from "./components"
 import Store from "./store"
 
 
@@ -33,6 +33,7 @@ class App extends Component{
                 <Route path="/CorrectAnswer" component = {CorrectAnswer} />
                 <Route path="/PointsLeaderBoard" component = {PointsLeaderBoard} />
                 <Route path="/AnswersLeaderBoard" component = {AnswersLeaderBoard} />
+                <Route path="/Congrats" component = {Congrats} />
             </Switch>
             </BrowserRouter>
             </Container>

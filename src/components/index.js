@@ -16,7 +16,8 @@ import AnswerSeeBets from './Gameboard/AnswerSeeBets'
 import CorrectAnswer from './Gameboard/CorrectAnswer'
 import PointsLeaderBoard from './Gameboard/PointsLeaderBoard'
 import AnswersLeaderBoard from './Gameboard/AnswersLeaderBoard'
+import Congrats from './Gameboard/Congrats'
 
 export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
     CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
-    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard }
+    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats }
