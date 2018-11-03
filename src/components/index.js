@@ -13,6 +13,8 @@ import QuestionNumber from './Gameboard/QuestionNumber'
 import QuestionAsk from './Gameboard/QuestionAsk'
 import AnswerPlaceBets from './Gameboard/AnswerPlaceBets'
 import AnswerSeeBets from './Gameboard/AnswerSeeBets'
+import CorrectAnswer from './Gameboard/CorrectAnswer'
 
 export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
-    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, AnswerPlaceBets, AnswerSeeBets }
+    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
+    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer }

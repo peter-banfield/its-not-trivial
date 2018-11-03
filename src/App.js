@@ -3,7 +3,8 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { Provider } from 'react-redux';
 import { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
-    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, AnswerPlaceBets, AnswerSeeBets } from "./components"
+    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
+    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer } from "./components"
 import Store from "./store"
 
 
@@ -29,6 +30,7 @@ class App extends Component{
                 <Route path="/QuestionAsk" component = {QuestionAsk} />
                 <Route path="/AnswerPlaceBets" component = {AnswerPlaceBets} />
                 <Route path="/AnswerSeeBets" component = {AnswerSeeBets} />
+                <Route path="/CorrectAnswer" component = {CorrectAnswer} />
             </Switch>
             </BrowserRouter>
             </Container>
