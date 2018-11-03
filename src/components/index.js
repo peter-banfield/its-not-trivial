@@ -14,7 +14,8 @@ import QuestionAsk from './Gameboard/QuestionAsk'
 import AnswerPlaceBets from './Gameboard/AnswerPlaceBets'
 import AnswerSeeBets from './Gameboard/AnswerSeeBets'
 import CorrectAnswer from './Gameboard/CorrectAnswer'
+import PointsLeaderBoard from './Gameboard/PointsLeaderBoard'
 
 export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
     CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
-    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer }
+    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard }
