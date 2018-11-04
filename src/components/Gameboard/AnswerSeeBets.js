@@ -1,5 +1,6 @@
 import React from 'react';
 import { Jumbotron, Row, Col, Table } from 'reactstrap';
+import Question from './Question';
 
 export default class AnswerSeeBets extends React.Component {
     render() {
@@ -53,11 +54,7 @@ export default class AnswerSeeBets extends React.Component {
                         </Col>
                         <Col className="d-flex align-items-end flex-column bd-highlight mb-3 w-100">
                             <Row>
-                                <div>
-                                    <h1>Question #1</h1>
-                                    <hr className="my-2" />
-                                    <p>Placeholder text for a question this is going to be a longer line to see what is going on</p>
-                                </div>
+                                <Question />
                             </Row>
                         </Col>
                     </Row>

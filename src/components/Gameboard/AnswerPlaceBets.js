@@ -1,5 +1,8 @@
 import React from 'react';
 import { Jumbotron, Row, Col,  Table } from 'reactstrap';
+import Timer from './Timer';
+import Submitted from './Submitted';
+import Question from './Question';
 
 export default class AnswerPlaceBets extends React.Component {
     render() {
@@ -26,19 +29,11 @@ export default class AnswerPlaceBets extends React.Component {
                         </Col>
                         <Col className="d-flex align-items-end flex-column bd-highlight mb-3 w-100">
                             <Row>
-                                <div>
-                                    <h1>Question #1</h1>
-                                    <hr className="my-2" />
-                                    <p>Placeholder text for a question this is going to be a longer line to see what is going on</p>
-                                </div>
+                                <Question />
                             </Row>
                             <Row className="mt-auto w-100">
-                                <Col>
-                                    <h3>60 Seconds</h3>
-                                </Col>
-                                <Col>
-                                    <h3>5/7 submitted</h3>
-                                </Col>
+                                <Timer />
+                                <Submitted />
                             </Row>
                         </Col>
                     </Row>
