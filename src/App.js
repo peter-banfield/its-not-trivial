@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import { Provider } from 'react-redux';
+
 import { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
     CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
-    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats } from "./components"
-import Store from "./store"
+    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats } from "./components";
 
+import { Provider } from 'react-redux';
+import Store from './store';
 
 class App extends Component{
+    
     render() {
         return(
             <Provider store = {Store}>
