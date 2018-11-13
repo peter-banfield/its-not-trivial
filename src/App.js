@@ -3,10 +3,11 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 import { Provider } from 'react-redux';
 // Routing
-import { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
+import { SocketTest, PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
     CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
     AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats } from "./components"
 import Store from "./store"
+
 
 class App extends Component{
     render() {
@@ -15,8 +16,9 @@ class App extends Component{
                 <Container>
                 <BrowserRouter>
                 <Switch>
+                <Route exact path = "/" component = {JoinRoom} />
+                <Route path="/SocketTest" component = {SocketTest} />
                 <Route path="/PlaceBets" component = {PlaceBets} />
-                <Route path="/JoinRoom" component = {JoinRoom} />
                 <Route path="/StartGame" component = {StartGame} />
                 <Route path="/SkipRules" component = {SkipRules} />
                 <Route path="/PlayAgain" component = {PlayAgain} />
