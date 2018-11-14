@@ -1,15 +1,17 @@
 import axios from 'axios';
+const io = require('socket.io-client')  
+const socket = io('http://localhost:8080')
+
 //import { browserHistory } from 'react-router-dom';
 
-export const CREATE_USERNAME = 'CREATE_USERNAME';
+export const CREATE_USER= "CREATE_USER";
 
 
-export function createSession() {
-  return function(dispatch){
-    axios.post('/create')
-      .then( response => {
-        dispatch({type: CREATE_SESSION, payload: response.data.session.code});
-        //browserHistory.push('/linklanding');
-      })
+
+export const JoinAction = (username, roomCode) => ({
+  type: CREATE_USER,
+  payload: {
+    username,
+    roomCode
   }
-}
+});

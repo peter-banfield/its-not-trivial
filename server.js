@@ -16,15 +16,11 @@ const server = app.listen(port, () => console.log(`its-not-trivial server listen
 const io = require('socket.io')(server);
 
 io.on('connect', socket => {
-    console.log(socket.connected); //returns true
-    console.log(socket.id); //userID of socket
-    //var socketId = socket.id;
-    //var clients = io.sockets.adapter;
-    //var ioAccess = io.sockets;
-    io.to(`${socketId}`).emit('hey', 'I just met you');
-    //console.log(clients);
+    console.log(socket.connected + " " + socket.id); //returns true and socketID
 });
 
-/*io.on('room', socket =>{
+io.on('joinRoom', (socket, data) =>{
+    console.log(data)
+    socket.emit('newUser', {username: username, roomCode: roomCode} );
 
-})*/
+});
