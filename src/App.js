@@ -24,7 +24,7 @@ class App extends Component{
                 <Route path="/PlayAgain" component = {PlayAgain} />
                 <Route path="/Answer" component = {Answer} />
                 <Route path="/Blank" component = {Blank} />
-                <Route path="/CreateGame" component = {CreateGame} />
+                <Route path="/gameboard" component = {CreateGame} />
                 <Route path="/RoomCode" component = {RoomCode} />
                 <Route path="/Rules" component = {Rules} />
                 <Route path="/Round" component = {RoundNumber} />
