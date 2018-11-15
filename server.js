@@ -16,11 +16,18 @@ const server = app.listen(port, () => console.log(`its-not-trivial server listen
 const io = require('socket.io')(server);
 
 io.on('connect', socket => {
-    console.log(socket.connected + " " + socket.id); //returns true and socketID
+    //console.log(socket.connected + " " + socket.id); //returns true and socketID
 });
 
-io.on('joinRoom', (socket, data) =>{
-    console.log(data)
-    socket.emit('newUser', {username: username, roomCode: roomCode} );
+io.on('connection', (socket) =>{
+    socket.on('joinRoom', (username, roomCode) => {
+        console.log("Socket received user: " + username + "\nand room code: " + roomCode);
+        socket.join(roomCode, () =>{
+            io.to(roomCode).emit("a user has joined")
+            console.log("inside of room: " + roomCode)
+         });
+    });
+    
+   
 
 });

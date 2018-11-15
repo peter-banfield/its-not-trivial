@@ -6,12 +6,10 @@ const socket = io('http://localhost:8080')
 
 export const CREATE_USER= "CREATE_USER";
 
-
-
 export const JoinAction = (username, roomCode) => ({
   type: CREATE_USER,
   payload: {
-    username,
-    roomCode
+    username: username,
+    roomCode: roomCode
   }
 });
