@@ -4,8 +4,8 @@ import { Row, Col, Jumbotron, ListGroup, ListGroupItem } from 'reactstrap';
 export default class RoomCode extends React.Component {
     constructor(props) {
         super(props)
-        this.Roomcode = "ABCD";
-        this.players = ["Peter", "Ryan", "Brenden", "Carl", "Jake", "Noel"];
+        this.Roomcode = "";
+        this.players = [""];
     }
     render() {
         return (
