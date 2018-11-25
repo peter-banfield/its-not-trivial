@@ -1,4 +1,3 @@
-import SocketTest from './Player/SocketTest'
 import PlaceBets from './Player/PlaceBets'
 import JoinRoom from './Player/JoinRoom'
 import StartGame from './Player/StartGame'
@@ -19,6 +18,6 @@ import PointsLeaderBoard from './Gameboard/PointsLeaderBoard'
 import AnswersLeaderBoard from './Gameboard/AnswersLeaderBoard'
 import Congrats from './Gameboard/Congrats'
 
-export { SocketTest, PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
+export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
     CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
     AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats }
