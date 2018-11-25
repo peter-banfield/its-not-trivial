@@ -20,19 +20,18 @@ export const ADD_NEW_USER = "ADD_NEW_USER";
 
 export const JoinAction = (username) => ({
   type: CREATE_USER,
-  payload: {
-    username: username,
-  }
+  payload: { username: username, }
 });
 
 export function createGame(){
    return function generateuniquecode(dispatch, getState){
-        var roomCode = randomstring.generate({length: 4, charset: 'alphabetic'}).toUpperCase();          
+        var roomCode = randomstring.generate({length: 4, charset: 'alphabetic'}).toUpperCase();   
         dynamodb.putItem({Item: {"id": {S: roomCode}, "CanJoin": {BOOL: true}},TableName: "Rooms",ConditionExpression:"attribute_not_exists(id)"}, function(err, res){
             if(err){
-                //generateuniquecode();
+                generateuniquecode();
             } 
             else{
+                socket.emit("joinRoom", "gameboard", roomCode);   
                 store.dispatch({ type: CREATE_GAME, payload: { code: roomCode } });
             }; 
         });

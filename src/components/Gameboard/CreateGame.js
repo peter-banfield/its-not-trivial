@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import { bindActionCreators } from 'redux'
-import { createGame } from '../../actions';
+import { createGame } from '../../actions/index';
 
 
 export class CreateGame extends React.Component {

@@ -1,16 +1,13 @@
 import { CREATE_GAME } from '../actions/index';
 
 
-export default function(state = [], action) {
+export default function(state = {code: ''} , action) {
   switch(action.type){
     case CREATE_GAME:
-      /*alert("inside reducer" + "\n content is: " + action.payload.username +
-             "\n roomcode: " + action.payload.roomCode)*/
-      return state.concat([
-      {
-        roomCode: action.payload.roomCode,
+      return {
+        ...state,
+        code: action.payload.code
       }
-      ]);
     default:
       return state;
   }
