@@ -54,6 +54,7 @@ class JoinRoom extends React.Component {
 function mapStateToProps(state){
     return{
         username: state.user
+        roomError: state.gameplay.roomError
     }
 }
 

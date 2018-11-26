@@ -1,6 +1,6 @@
 import store from '../store.js'
 const io = require('socket.io-client')  
-const socket = io(window.location.hostname+':8080')
+const socket = io('http://localhost:8080')
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
 var AWS = require("aws-sdk");
@@ -19,11 +19,29 @@ export const ADD_QUESTION = 'ADD_QUESTION';
 export const GAME_READY = "GAME_READY";
 export const GAME_NOT_READY = "GAME_NOT_READY";
 
-export const JoinAction = (username) => ({
-  type: CREATE_USER,
-  payload: { username: username, }
-});
 
+export function JoinAction(username, roomCode){
+    return function(dispatch, getState){
+        dynamodb.getItem({Key: {"id": {S: roomCode}}, TableName: "Rooms"},function(err, data) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+                if(Object.keys(data).length === 0) {
+                    // reject for invalid roomcode
+                    store.dispatch("ROOM_ERROR")
+                } 
+                else {
+                    // call joinroom action
+                    socket.emit("joinRoom", username, roomCode)
+
+                }
+            }
+        });
+
+    }
+
+}
 export function createGame(){
    return function generateuniquecode(dispatch, getState){
         var roomCode = randomstring.generate({length: 4, charset: 'alphabetic'}).toUpperCase();   

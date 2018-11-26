@@ -48,7 +48,6 @@ io.on('connection', (socket) =>{
         }
         roomState[roomCode].usersCount++;
         io.in(roomCode).emit('userConnected', { users: roomState[roomCode].users } );
-        console.log("past io emit")
 
     });
     
