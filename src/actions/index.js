@@ -1,4 +1,3 @@
-//import axios from 'axios';
 import store from '../store.js'
 const io = require('socket.io-client')  
 const socket = io(window.location.hostname+':8080')
@@ -11,13 +10,14 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
 });
 var dynamodb = new AWS.DynamoDB();
 
-//import { browserHistory } from 'react-router-dom';
+
 
 export const CREATE_GAME = "CREATE_GAME";
 export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ADD_QUESTION = 'ADD_QUESTION';
-
+export const GAME_READY = "GAME_READY";
+export const GAME_NOT_READY = "GAME_NOT_READY";
 
 export const JoinAction = (username) => ({
   type: CREATE_USER,
@@ -37,6 +37,21 @@ export function createGame(){
             }; 
         });
     }
+}
+
+export const checkJoinedPlayers = (getState) =>{
+    const currentState = getState();
+    const users = currentState.gameplay.users;
+    var numPlayers = Object.keys(users).length - 1 
+    console.log(numPlayers)
+    if(numPlayers === 4){
+        return {
+            type: GAME_READY
+        };
+    }
+    return {
+        type: GAME_NOT_READY
+    };
 }
 
 export function getQuestions(){
@@ -74,7 +89,6 @@ export function getQuestions(){
         store.dispatch({ type: ADD_QUESTION, payload: { question: questions } });
     }
 }
-
 socket.on('userConnected', function(data){
         store.dispatch({type: ADD_NEW_USER, payload: data})
     });
