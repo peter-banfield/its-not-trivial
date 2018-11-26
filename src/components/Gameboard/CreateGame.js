@@ -12,7 +12,6 @@ export class CreateGame extends React.Component {
         }
 
         componentWillReceiveProps(nextProps){
-            console.log(nextProps)
             if(nextProps.code.code){
                 this.props.history.push("/RoomCode")
             }
