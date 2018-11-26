@@ -6,22 +6,20 @@ import {connect} from 'react-redux';
 class RoomCode extends React.Component {
     
     renderPlayers(){        
-        return this.props.players.map(p =>{
+        console.log(this.props.players);
+        return Object.keys(this.props.players).map(p =>{
             return (
-                <ListGroupItem key={p.id}>{p.name}</ListGroupItem>
+                <ListGroupItem >{p}</ListGroupItem>
             );
         });
     }
 
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
-        if(nextProps.gameReady.ready === true){   
-            console.log(nextProps.gameReady.ready);
+        if(nextProps.gameReady === true){   
+            console.log(nextProps.gameReady);
             this.props.history.push("/rules");
         }
-        else{
-            console.log(nextProps.gameReady.ready);
-            this.props.history.push("/blank");
-        }
+        
     }
 
     render() {
@@ -31,7 +29,7 @@ class RoomCode extends React.Component {
                     <Row className="h-100">
                         <Col className="d-flex align-items-center justify-content-center w-100">
                             <h1>
-                                Room Code: {this.props.room.code}
+                                Room Code: {this.props.room}
                             </h1>
                         </Col>
                        
@@ -49,9 +47,9 @@ class RoomCode extends React.Component {
 
 function mapStateToProps(state){
     return {
-        players: state.players,
-        room: state.room,
-        gameReady: state.gameReady
+        players: state.gameplay.users,
+        room: state.session.code,
+        gameReady: state.gameplay.ready
     }
 }
 
