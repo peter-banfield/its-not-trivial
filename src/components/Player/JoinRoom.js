@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux'
 import { JoinAction } from '../../actions/index'
 import io from 'socket.io-client';
-const socket = io('http://localhost:8080')
+const socket = io(window.location.hostname+':8080')
 
 class JoinRoom extends React.Component {
 
