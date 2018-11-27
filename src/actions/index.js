@@ -16,6 +16,7 @@ var dynamodb = new AWS.DynamoDB();
 export const CREATE_GAME = "CREATE_GAME";
 export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
+export const ADD_QUESTION = 'ADD_QUESTION';
 
 
 export const JoinAction = (username) => ({
@@ -35,6 +36,42 @@ export function createGame(){
                 store.dispatch({ type: CREATE_GAME, payload: { code: roomCode } });
             }; 
         });
+    }
+}
+
+export function getQuestions(){
+    return function() {
+        var numQuestions = 7;
+        // Generate a list numQuestions long of unique random integers
+        ///////////////////////////////////
+        function getRandomInt(min, max) { // borrowed the next 13 lines from Pullo at https://www.sitepoint.com/community/t/fill-an-array-with-unique-values/100808
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+        function getRandomInts(num, min, max) {
+            var ints = [];
+            while (ints.length < num) {
+                var randNum = getRandomInt(min, max);
+                if(!ints.indexOf(randNum) > -1){
+                    ints.push(randNum);
+                }
+            }
+            return ints;
+        }
+        var questionIds = getRandomInts(numQuestions, 1, 226)
+        /////////////////////////////
+        // get the questions
+        var questions = []
+        questionIds.forEach(function(id){
+            dynamodb.getItem({Key: {"QuestionId":{N: String(id)}}, TableName: "Questions"}, function(err, res){
+                if(err){
+                    console.log(err);
+                } else {
+                    var question = {Question: res.Item.Question.S, Answer: parseInt(res.Item.Answer.N)}
+                    questions.push(question)
+                }
+            })
+        })
+        store.dispatch({ type: ADD_QUESTION, payload: { question: questions } });
     }
 }
 
