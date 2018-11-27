@@ -1,7 +1,7 @@
 //import axios from 'axios';
 import store from '../store.js'
 const io = require('socket.io-client')  
-const socket = io('http://localhost:8080')
+const socket = io(window.location.hostname+':8080')
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
 var AWS = require("aws-sdk");
