@@ -7,13 +7,18 @@ import { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
     AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats } from "./components";
 
 import { Provider } from 'react-redux';
-import Store from './store';
+import configureStore from './store';
+import { socketActions } from "./actions/socket_actions.js";
+
+export const store = configureStore();
+
+socketActions(store);
 
 class App extends Component{
     
     render() {
         return(
-            <Provider store = {Store}>
+            <Provider store = {store}>
                 <Container>
                 <BrowserRouter>
                 <Switch>

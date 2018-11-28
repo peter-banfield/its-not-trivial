@@ -11,7 +11,7 @@ class StartGame extends React.Component {
     }
     
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
-        if(nextProps.gameReady.ready === true){   
+        if(nextProps.gameReady === true){   
             this.props.history.push("/skiprules");
         }
     }
