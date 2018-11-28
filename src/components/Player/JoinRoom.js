@@ -21,9 +21,12 @@ class JoinRoom extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
-            if(nextProps.username){
-                this.props.history.push("/StartGame")
-            }
+        if(nextProps.roomError){
+            this.props.history.push("/errorscreen")
+        }
+        if(Object.keys(nextProps.username).length !== 0){
+            this.props.history.push("/StartGame")
+        }
     }
 
     render() {
