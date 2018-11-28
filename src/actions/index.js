@@ -59,7 +59,7 @@ export function checkJoinedPlayers(){
     return function (dispatch, getState){
         const currentState = getState();
         const users = currentState.gameplay.users;
-        var numPlayers = Object.keys(users).length - 1 
+        var numPlayers = Object.keys(users).length
         if(numPlayers >= 4){
             dispatch({ type: GAME_READY });
         }
