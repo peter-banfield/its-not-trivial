@@ -6,6 +6,12 @@ export default class PlaceBets extends React.Component {
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
             <Form className="flex-fill" >
+                <FormGroup className="ml-4 mb-0" >
+                    <Label for="DoubleDown">
+                    <Input type="checkbox" name="DoubleDown" id="DoubleDown" className="" />
+                    Double your bets
+                    </Label>
+                </FormGroup>
                 <FormGroup>
                     <Label for="SelectBigBet">Select Your Big Bet</Label>
                     <Input type="select" name="select" id="SelectBigBet">
