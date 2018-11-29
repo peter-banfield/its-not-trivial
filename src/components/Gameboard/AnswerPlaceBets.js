@@ -1,10 +1,19 @@
 import React from 'react';
 import { Jumbotron, Row, Col,  Table } from 'reactstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import Timer from './Timer';
 import Submitted from './Submitted';
 import Question from './Question';
 
-export default class AnswerPlaceBets extends React.Component {
+class AnswerPlaceBets extends React.Component {
+
+    componentWillReceiveProps(nextProps){ 
+        // if(conditon){   
+        //     this.props.history.push(endpoint);
+        // }
+    }
+
     render() {
         return (
             <Col className="d-flex align-items-center justify-content-center w-100 h-100">
@@ -42,3 +51,17 @@ export default class AnswerPlaceBets extends React.Component {
         )
     }
 }
+
+function mapStateToProps(state){
+    return {
+        // variable to use in component: refrence to state
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({
+        // variable to use in component: refrence to action
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(AnswerPlaceBets);

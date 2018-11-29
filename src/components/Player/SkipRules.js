@@ -1,12 +1,35 @@
 import React from 'react';
 import { Button } from 'reactstrap';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class SkipRules extends React.Component {
-        render() {
-            return (
-                <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
-                    <Button size="lg">Skip Rules</Button>
-                </div>
-            )
-        }
+class SkipRules extends React.Component {
+
+    componentWillReceiveProps(nextProps){ 
+        // if(conditon){   
+        //     this.props.history.push(endpoint);
+        // }
+    }
+
+    render() {
+        return (
+            <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
+                <Button size="lg">Skip Rules</Button>
+            </div>
+        )
+    }
 }
+
+function mapStateToProps(state){
+    return {
+        // variable to use in component: state.refrence to the attribute of interest
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({
+        // variable to use in component: refrence to action
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(SkipRules);

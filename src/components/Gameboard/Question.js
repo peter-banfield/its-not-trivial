@@ -1,6 +1,15 @@
 import React from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 
-export default class Question extends React.Component {
+class Question extends React.Component {
+
+    componentWillReceiveProps(nextProps){ 
+        // if(conditon){   
+        //     this.props.history.push(endpoint);
+        // }
+    }
+    
     render() {
         return (
             <div>
@@ -11,3 +20,17 @@ export default class Question extends React.Component {
         )
     }
 }
+
+function mapStateToProps(state){
+    return {
+        // variable to use in component: state.refrence to the attribute of interest
+    }
+}
+
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({
+        // variable to use in component: refrence to action
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Question);

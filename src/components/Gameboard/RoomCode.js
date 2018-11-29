@@ -3,6 +3,7 @@ import { Row, Col, Jumbotron, ListGroup, ListGroupItem } from 'reactstrap';
 import {connect} from 'react-redux';
 
 
+
 class RoomCode extends React.Component {
     
     renderPlayers(){        
@@ -17,7 +18,6 @@ class RoomCode extends React.Component {
         if(nextProps.gameReady === true){   
             this.props.history.push("/rules");
         }
-        
     }
 
     render() {
