@@ -1,10 +1,8 @@
 import React from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux'
-import { JoinAction } from '../../actions/index'
-import io from 'socket.io-client';
-const socket = io(window.location.hostname+':8080')
+import { bindActionCreators } from 'redux';
+import { JoinAction } from '../../actions/index';
 
 class JoinRoom extends React.Component {
 
@@ -18,16 +16,17 @@ class JoinRoom extends React.Component {
         event.preventDefault();
         const data = new FormData(event.target)
         const username = data.get('username');
-        const roomCode = data.get('roomCode');
-        alert('A name was submitted: ' + username + "\n and roomCode: " + roomCode);
+        const roomCode = data.get('roomCode').toUpperCase();
         this.props.JoinAction(username, roomCode);
-        socket.emit("joinRoom", username, roomCode)
     }
 
     componentWillReceiveProps(nextProps){
-            if(nextProps.username.username){
-                this.props.history.push("/StartGame")
-            }
+        if(nextProps.roomError){
+            this.props.history.push("/errorscreen")
+        }
+        if(Object.keys(nextProps.username).length !== 0){
+            this.props.history.push("/StartGame")
+        }
     }
 
     render() {
@@ -53,7 +52,8 @@ class JoinRoom extends React.Component {
 
 function mapStateToProps(state){
     return{
-        username: state.user
+        username: state.gameplay.users,
+        roomError: state.gameplay.roomError
     }
 }
 

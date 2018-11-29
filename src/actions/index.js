@@ -1,7 +1,4 @@
-//import axios from 'axios';
-import store from '../store.js'
-const io = require('socket.io-client')  
-const socket = io(window.location.hostname+':8080')
+import { joinRoom, createRoom, roomReady } from "./socket_actions.js";
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
 var AWS = require("aws-sdk");
@@ -11,20 +8,35 @@ AWS.config.credentials = new AWS.CognitoIdentityCredentials({
 });
 var dynamodb = new AWS.DynamoDB();
 
-//import { browserHistory } from 'react-router-dom';
-
 export const CREATE_GAME = "CREATE_GAME";
 export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
+export const ROOM_ERROR = "ROOM_ERROR";
 export const ADD_QUESTION = 'ADD_QUESTION';
 
 
-export const JoinAction = (username) => ({
-  type: CREATE_USER,
-  payload: { username: username, }
-});
+export function JoinAction(username, roomCode){
+    return function(dispatch, getState){
+        dynamodb.getItem({Key: {"id": {S: roomCode}}, TableName: "Rooms"},function(err, data) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            if(Object.keys(data).length === 0) {
+                // reject for invalid roomcode
+                dispatch({ type: "ROOM_ERROR" })
+                } 
+            else {
+                // call joinroom action
+                joinRoom(username, roomCode); 
+                }
+            }
+        });
 
-export function createGame(){
+    }
+
+}
+export function createGame(roomCode){
    return function generateuniquecode(dispatch, getState){
         var roomCode = randomstring.generate({length: 4, charset: 'alphabetic'}).toUpperCase();   
         dynamodb.putItem({Item: {"id": {S: roomCode}, "CanJoin": {BOOL: true}},TableName: "Rooms",ConditionExpression:"attribute_not_exists(id)"}, function(err, res){
@@ -32,15 +44,28 @@ export function createGame(){
                 generateuniquecode();
             } 
             else{
-                socket.emit("joinRoom", "gameboard", roomCode);   
-                store.dispatch({ type: CREATE_GAME, payload: { code: roomCode } });
+                createRoom(roomCode) 
+                dispatch({ type: CREATE_GAME, payload: { code: roomCode } });
             }; 
         });
     }
 }
 
+export function checkJoinedPlayers(roomCode){
+    return function (dispatch, getState){
+        const currentState = getState();
+        console.log(roomCode)
+        const roomUsers = currentState.gameplay.room.usersCount;
+        if(roomUsers >= 4){
+            //console.log("big wet turd")
+            roomReady(roomCode)
+        }
+    }
+}
+    
+
 export function getQuestions(){
-    return function() {
+    return function(dispatch, getState) {
         var numQuestions = 7;
         // Generate a list numQuestions long of unique random integers
         ///////////////////////////////////
@@ -71,10 +96,6 @@ export function getQuestions(){
                 }
             })
         })
-        store.dispatch({ type: ADD_QUESTION, payload: { question: questions } });
+        dispatch({ type: ADD_QUESTION, payload: { question: questions } });
     }
 }
-
-socket.on('userConnected', function(data){
-        store.dispatch({type: ADD_NEW_USER, payload: data})
-    });

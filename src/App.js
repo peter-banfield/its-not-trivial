@@ -1,17 +1,24 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
-import { Provider } from 'react-redux';
-import { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
-    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
-    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats } from "./components"
-import Store from "./store"
 
+import { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank, ErrorScreen,
+    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
+    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats } from "./components";
+
+import { Provider } from 'react-redux';
+import configureStore from './store';
+import { socketActions } from "./actions/socket_actions.js";
+
+export const store = configureStore();
+
+socketActions(store);
 
 class App extends Component{
+    
     render() {
         return(
-            <Provider store = {Store}>
+            <Provider store = {store}>
                 <Container>
                 <BrowserRouter>
                 <Switch>
@@ -22,6 +29,7 @@ class App extends Component{
                 <Route path="/PlayAgain" component = {PlayAgain} />
                 <Route path="/Answer" component = {Answer} />
                 <Route path="/Blank" component = {Blank} />
+                <Route path="/errorscreen" component = {ErrorScreen} />
                 <Route path="/gameboard" component = {CreateGame} />
                 <Route path="/RoomCode" component = {RoomCode} />
                 <Route path="/Rules" component = {Rules} />

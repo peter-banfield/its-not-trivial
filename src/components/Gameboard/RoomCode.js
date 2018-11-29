@@ -1,12 +1,25 @@
 import React from 'react';
 import { Row, Col, Jumbotron, ListGroup, ListGroupItem } from 'reactstrap';
+import {connect} from 'react-redux';
 
-export default class RoomCode extends React.Component {
-    constructor(props) {
-        super(props)
-        this.Roomcode = "";
-        this.players = [""];
+
+class RoomCode extends React.Component {
+    
+    renderPlayers(){        
+        return Object.keys(this.props.players).map(p =>{
+            return (
+                <ListGroupItem >{p}</ListGroupItem>
+            );
+        });
     }
+
+    componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
+        if(nextProps.gameReady === true){   
+            this.props.history.push("/rules");
+        }
+        
+    }
+
     render() {
         return (
             <Col className="d-flex align-items-center justify-content-center w-100 h-100">
@@ -14,18 +27,13 @@ export default class RoomCode extends React.Component {
                     <Row className="h-100">
                         <Col className="d-flex align-items-center justify-content-center w-100">
                             <h1>
-                                Room Code: {this.Roomcode}
+                                Room Code: {this.props.room}
                             </h1>
                         </Col>
+                       
                         <Col className="d-flex justify-content-center flex-column bd-highlight mb-3 w-100">
-                        <ListGroup>
-                                <ListGroupItem>{this.players[0]}</ListGroupItem>
-                                <ListGroupItem>{this.players[1]}</ListGroupItem>
-                                <ListGroupItem>{this.players[2]}</ListGroupItem>
-                                <ListGroupItem>{this.players[3]}</ListGroupItem>
-                                <ListGroupItem>{this.players[4]}</ListGroupItem>
-                                <ListGroupItem>{this.players[5]}</ListGroupItem>
-                                <ListGroupItem>{this.players[6]}</ListGroupItem>
+                            <ListGroup>                            
+                                {this.renderPlayers()}
                             </ListGroup>  
                         </Col>
                     </Row>
@@ -35,3 +43,12 @@ export default class RoomCode extends React.Component {
     }
 }
 
+function mapStateToProps(state){
+    return {
+        players: state.gameplay.users,
+        room: state.session.code,
+        gameReady: state.gameplay.ready
+    }
+}
+
+export default connect(mapStateToProps)(RoomCode);

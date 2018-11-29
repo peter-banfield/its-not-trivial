@@ -17,7 +17,8 @@ import CorrectAnswer from './Gameboard/CorrectAnswer'
 import PointsLeaderBoard from './Gameboard/PointsLeaderBoard'
 import AnswersLeaderBoard from './Gameboard/AnswersLeaderBoard'
 import Congrats from './Gameboard/Congrats'
+import ErrorScreen from './Player/ErrorScreen'
 
-export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank,
+export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank, ErrorScreen,
     CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
     AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats }

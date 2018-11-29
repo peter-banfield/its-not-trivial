@@ -23,21 +23,30 @@ io.on('connect', socket => {
 var roomState = {};
 
 io.on('connection', (socket) =>{
-    socket.on('joinRoom', (username, roomCode) => {
-        console.log("Socket received user: " + username + "\nand room code: " + roomCode);
+    
+    socket.on('createRoom', (roomCode) =>{
+        socket.join(roomCode, () =>{
+            console.log("gameboard has created room " + roomCode)
+         });
         if(!roomState[roomCode]){
             roomState[roomCode] = {
                 usersCount: 0,
-                round: 0
+                round: 0,
             }
         }
+        io.in(roomCode).emit('gameCreated', { room: roomState[roomCode] })
+    })
+
+    socket.on('joinRoom', (username, roomCode) => {
         socket.join(roomCode, () =>{
-            io.to(roomCode).emit('message', "a user has joined")
-            console.log("inside of room: " + roomCode)
+            console.log("a user has joined " + roomCode)
          });
         if(!roomState[roomCode].users){
             roomState[roomCode].users = {};
         }
+
+        //roomState[roomCode].users.roomCode = roomCode
+
         roomState[roomCode].users[username] = {
             username: username, 
             score: 0,
@@ -46,10 +55,13 @@ io.on('connection', (socket) =>{
             bigBet: '',
             smallBet: ''
         }
-        roomState[roomCode].usersCount++;
-        io.in(roomCode).emit('userConnected', { users: roomState[roomCode].users } );
-        console.log("past io emit")
 
+        io.in(roomCode).emit('userConnected', { users: roomState[roomCode].users, room: roomCode } );
+
+    });
+
+    socket.on('roomReady', (roomCode) => {
+        io.in(roomCode).emit('roomVerified')
     });
     
    
