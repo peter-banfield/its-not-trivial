@@ -6,12 +6,6 @@ import { JoinAction } from '../../actions/index';
 
 class JoinRoom extends React.Component {
 
-    constructor(props){
-        super(props);
-        // This binding is necessary to make `this` work in the callback
-        this.handleSubmit = this.handleSubmit.bind(this);
-    }
-
     handleSubmit = event => {
         event.preventDefault();
         const data = new FormData(event.target)
@@ -32,7 +26,7 @@ class JoinRoom extends React.Component {
     render() {
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
-            <Form className="flex-fill" onSubmit={this.handleSubmit}>
+            <Form className="flex-fill" onSubmit={this.handleSubmit.bind(this)}>
                 <FormGroup>
                     <Label for="RoomCode">Room Code</Label>
                     <Input type="text" name="roomCode" id="roomCode"></Input>

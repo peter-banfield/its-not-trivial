@@ -5,25 +5,25 @@ import { bindActionCreators } from 'redux';
 import { createGame } from '../../actions/index';
 
 
-export class CreateGame extends React.Component {
+class CreateGame extends React.Component {
         
-        gameCreate = event =>{
-            this.props.createGame();
-        }
+    gameCreate = event =>{
+        this.props.createGame();
+    }
 
-        componentWillReceiveProps(nextProps){
-            if(nextProps.code.code){
-                this.props.history.push("/RoomCode")
-            }
+    componentWillReceiveProps(nextProps){
+        if(nextProps.code.code){
+            this.props.history.push("/RoomCode")
         }
-        
-        render() {
-            return (
-                <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
-                    <Button size="lg" onClick={this.gameCreate}>Create Game</Button>
-                </div>
-            )
-        }
+    }
+    
+    render() {
+        return (
+            <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
+                <Button size="lg" onClick={this.gameCreate}>Create Game</Button>
+            </div>
+        )
+    }
 }
 
 function mapStateToProps(state){
