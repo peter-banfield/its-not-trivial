@@ -1,6 +1,4 @@
-import { joinRoom, createRoom } from "./socket_actions.js";
-const io = require('socket.io-client')  
-const socket = io('http://localhost:8080')
+import { joinRoom, createRoom, roomReady } from "./socket_actions.js";
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
 var AWS = require("aws-sdk");
@@ -15,8 +13,6 @@ export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
 export const ADD_QUESTION = 'ADD_QUESTION';
-export const GAME_READY = "GAME_READY";
-export const GAME_NOT_READY = "GAME_NOT_READY";
 
 
 export function JoinAction(username, roomCode){
@@ -55,23 +51,21 @@ export function createGame(roomCode){
     }
 }
 
-export function checkJoinedPlayers(){
+export function checkJoinedPlayers(roomCode){
     return function (dispatch, getState){
         const currentState = getState();
-        const users = currentState.gameplay.users;
-        var numPlayers = Object.keys(users).length
-        if(numPlayers >= 4){
-            dispatch({ type: GAME_READY });
-        }
-        else{
-            dispatch({ type: GAME_NOT_READY });
+        console.log(roomCode)
+        const roomUsers = currentState.gameplay.room.usersCount;
+        if(roomUsers >= 4){
+            //console.log("big wet turd")
+            roomReady(roomCode)
         }
     }
 }
     
 
 export function getQuestions(){
-    return function() {
+    return function(dispatch, getState) {
         var numQuestions = 7;
         // Generate a list numQuestions long of unique random integers
         ///////////////////////////////////
@@ -102,6 +96,6 @@ export function getQuestions(){
                 }
             })
         })
-        store.dispatch({ type: ADD_QUESTION, payload: { question: questions } });
+        dispatch({ type: ADD_QUESTION, payload: { question: questions } });
     }
 }

@@ -1,25 +1,33 @@
-import { ROOM_ERROR, GAME_NOT_READY, GAME_READY, ADD_QUESTION } from '../actions/index';
-import { ADD_NEW_ROOM, ADD_NEW_USER } from '../actions/socket_actions.js';
+import { ROOM_ERROR, ADD_QUESTION } from '../actions/index';
+import { ADD_NEW_ROOM, ADD_NEW_USER, GAME_READY } from '../actions/socket_actions.js';
 
-export default function(state = { users: {}, ready: false, roomError: false, question: [] }, action){
+const initialState = { 
+    room: { 
+        usersCount: 0,
+        round: 0,
+        roomCode: ""
+    },
+    users: {},
+    ready: false,
+    roomError: false,
+    question: []}
+
+export default function(state = initialState, action){
     switch(action.type){
         case ADD_NEW_ROOM:
             return {...state, room: action.payload.room }
         case ADD_NEW_USER:
-            return {...state, users: action.payload.users }
+            console.log(action.payload.users)
+            return {
+                ...state, 
+                users: action.payload.users,
+                room: { ...state.room, usersCount: state.room.usersCount + 1, roomCode: action.payload.room}
+            }
         case ROOM_ERROR:
             return { ...state, roomError: !state.roomError }
         case GAME_READY:
-            return {
-                ...state,
-                ready: true
-            }
-        case GAME_NOT_READY:
-            return {
-                ...state,
-                ready: false
-            }	
-	case ADD_QUESTION:
+            return { ...state, ready: true }	
+	   case ADD_QUESTION:
             return {...state, questions: action.payload.question }
 	default:
             return state;

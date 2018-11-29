@@ -45,6 +45,8 @@ io.on('connection', (socket) =>{
             roomState[roomCode].users = {};
         }
 
+        //roomState[roomCode].users.roomCode = roomCode
+
         roomState[roomCode].users[username] = {
             username: username, 
             score: 0,
@@ -53,9 +55,13 @@ io.on('connection', (socket) =>{
             bigBet: '',
             smallBet: ''
         }
-        roomState[roomCode].usersCount++;
-        io.in(roomCode).emit('userConnected', { users: roomState[roomCode].users } );
 
+        io.in(roomCode).emit('userConnected', { users: roomState[roomCode].users, room: roomCode } );
+
+    });
+
+    socket.on('roomReady', (roomCode) => {
+        io.in(roomCode).emit('roomVerified')
     });
     
    

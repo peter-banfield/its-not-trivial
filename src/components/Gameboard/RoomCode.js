@@ -6,7 +6,6 @@ import {connect} from 'react-redux';
 class RoomCode extends React.Component {
     
     renderPlayers(){        
-        console.log(this.props.players);
         return Object.keys(this.props.players).map(p =>{
             return (
                 <ListGroupItem >{p}</ListGroupItem>
@@ -16,7 +15,6 @@ class RoomCode extends React.Component {
 
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
         if(nextProps.gameReady === true){   
-            console.log(nextProps.gameReady);
             this.props.history.push("/rules");
         }
         

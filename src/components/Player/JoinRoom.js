@@ -16,7 +16,7 @@ class JoinRoom extends React.Component {
         event.preventDefault();
         const data = new FormData(event.target)
         const username = data.get('username');
-        const roomCode = data.get('roomCode');
+        const roomCode = data.get('roomCode').toUpperCase();
         this.props.JoinAction(username, roomCode);
     }
 

@@ -7,7 +7,7 @@ import {checkJoinedPlayers} from '../../actions';
 class StartGame extends React.Component {
 
     handleClick(){ // handle start game click
-        this.props.checkJoinedPlayers(this.props.players); // invoke one of the function in action
+        this.props.checkJoinedPlayers(this.props.roomCode); // invoke one of the function in action
     }
     
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
@@ -26,7 +26,9 @@ class StartGame extends React.Component {
 }
 
 function mapStateToProps(state) {
+    console.log(state)
     return {
+        roomCode: state.gameplay.room.roomCode,
         gameReady: state.gameplay.ready,
         players: state.gameplay.users     
     };
