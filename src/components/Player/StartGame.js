@@ -3,6 +3,7 @@ import { Button } from 'reactstrap';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 import {checkJoinedPlayers} from '../../actions';
+import { screens } from '../screens'
 
 class StartGame extends React.Component {
 
@@ -11,7 +12,7 @@ class StartGame extends React.Component {
     }
     
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
-        if(nextProps.gameReady === 1){   
+        if(nextProps.gameReady === screens.StartGame){   
             this.props.history.push("/skiprules");
         }
     }

@@ -2,11 +2,12 @@ import React from 'react';
 import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { screens } from '../screens'
 
 class Blank extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        if(nextProps.screen === 3){   
+        if(nextProps.screen === screens.QuestionNumber){   
             this.props.history.push('/questionask');
         }
     }

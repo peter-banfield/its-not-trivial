@@ -1,8 +1,7 @@
 import React from 'react';
 import { Row, Col, Jumbotron, ListGroup, ListGroupItem } from 'reactstrap';
 import {connect} from 'react-redux';
-
-
+import { screens } from '../screens';
 
 class RoomCode extends React.Component {
     
@@ -15,7 +14,7 @@ class RoomCode extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
-        if(nextProps.gameReady === 1){   
+        if(nextProps.gameReady === screens.StartGame){   
             this.props.history.push("/rules");
         }
     }

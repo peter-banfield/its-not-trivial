@@ -3,18 +3,19 @@ import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { nextScreen } from '../../actions/socket_actions'
+import { screens } from '../screens'
 
 class QuestionNumber extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
         console.log(nextProps)
-        if(nextProps.screen === 3){   
+        if(nextProps.screen === screens.QuestionNumber){   
             this.props.history.push('/questionask');
         }
     }
 
     componentDidMount(){
-        setTimeout(function(){ nextScreen(this.props.roomCode, 3) }.bind(this), 3000);
+        setTimeout(function(){ nextScreen(this.props.roomCode, screens.QuestionNumber) }.bind(this), 3000);
     }
     
     render() {
