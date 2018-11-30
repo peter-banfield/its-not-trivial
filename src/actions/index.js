@@ -1,4 +1,5 @@
-import { joinRoom, createRoom, roomReady } from "./socket_actions.js";
+import { joinRoom, createRoom, nextScreen } from "./socket_actions.js";
+import { screens } from "../components/screens"
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
 var AWS = require("aws-sdk");
@@ -57,8 +58,7 @@ export function checkJoinedPlayers(roomCode){
         console.log(roomCode)
         const roomUsers = currentState.gameplay.room.usersCount;
         if(roomUsers >= 4){
-            //console.log("big wet turd")
-            roomReady(roomCode)
+            nextScreen(roomCode, screens.StartGame)
         }
     }
 }

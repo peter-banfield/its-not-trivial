@@ -3,7 +3,7 @@ const socket = io(window.location.hostname+':8080')
 
 export const ADD_NEW_ROOM = "ADD_NEW_ROOM";
 export const ADD_NEW_USER = "ADD_NEW_USER";
-export const GAME_READY = "GAME_READY";
+export const SCREEN_SWITCH = "SCREEN_SWITCH";
 
 
 export function socketActions(store){
@@ -20,8 +20,9 @@ export function socketActions(store){
     
     });
 
-    socket.on('roomVerified', function(data){
-        store.dispatch({type: GAME_READY, payload: ''})
+    socket.on('switchScreens', function(data){
+        console.log(data+":data")
+        store.dispatch({type: SCREEN_SWITCH, payload: data})
     });
 
 }
@@ -35,7 +36,7 @@ export function joinRoom(username, roomCode){
     socket.emit("joinRoom", username, roomCode)
 }
 
-export function roomReady(roomCode){
-    socket.emit("roomReady", roomCode)
+export function nextScreen(roomCode, screenNum){
+    console.log(roomCode+ ''+screenNum)
+    socket.emit("nextScreen", roomCode, screenNum)
 }
-

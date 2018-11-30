@@ -2,13 +2,14 @@ import React from 'react';
 import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { screens } from '../screens'
 
 class Blank extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        if(nextProps.screen === screens.QuestionNumber){   
+            this.props.history.push('/questionask');
+        }
     }
 
     render() {
