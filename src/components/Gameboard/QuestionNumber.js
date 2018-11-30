@@ -2,20 +2,26 @@ import React from 'react';
 import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { nextScreen } from '../../actions/socket_actions'
 
 class QuestionNumber extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        console.log(nextProps)
+        if(nextProps.screen === 3){   
+            this.props.history.push('/questionask');
+        }
+    }
+
+    componentDidMount(){
+        setTimeout(function(){ nextScreen(this.props.roomCode, 3) }.bind(this), 3000);
     }
     
     render() {
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
                 <Jumbotron>
-                    <h1>Question #1</h1>
+                    <h1>Question #{this.props.qNum}</h1>
                 </Jumbotron>
             </div>
         )
@@ -24,13 +30,15 @@ class QuestionNumber extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        qNum: state.gameplay.room.question.number,
+        roomCode: state.gameplay.room.roomCode,
+        screen: state.gameplay.screen
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        nextScreen: nextScreen
     }, dispatch);
 }
 

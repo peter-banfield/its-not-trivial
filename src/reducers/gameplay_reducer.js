@@ -27,11 +27,16 @@ const initialState = {
     room: { 
         usersCount: 0,
         round: 0,
+        question: {
+            number: 0,
+            question: "",
+            answer: ""
+        },
         roomCode: ""
     },
     users: {},
     roomError: false,
-    question: []}
+    questions: []}
 
 export default function(state = initialState, action){
     switch(action.type){

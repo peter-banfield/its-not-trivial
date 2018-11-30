@@ -6,9 +6,9 @@ import { bindActionCreators } from 'redux';
 class Blank extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        if(nextProps.screen === 3){   
+            this.props.history.push('/questionask');
+        }
     }
 
     render() {
