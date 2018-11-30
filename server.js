@@ -60,8 +60,8 @@ io.on('connection', (socket) =>{
 
     });
 
-    socket.on('roomReady', (roomCode) => {
-        io.in(roomCode).emit('roomVerified')
+    socket.on('nextScreen', (roomCode, screenNum) => {
+        io.in(roomCode).emit('switchScreens', { screen: screenNum })
     });
     
    

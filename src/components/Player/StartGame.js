@@ -11,7 +11,7 @@ class StartGame extends React.Component {
     }
     
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
-        if(nextProps.gameReady === true){   
+        if(nextProps.gameReady === 1){   
             this.props.history.push("/skiprules");
         }
     }
@@ -29,7 +29,7 @@ function mapStateToProps(state) {
     console.log(state)
     return {
         roomCode: state.gameplay.room.roomCode,
-        gameReady: state.gameplay.ready,
+        gameReady: state.gameplay.screen,
         players: state.gameplay.users     
     };
 }

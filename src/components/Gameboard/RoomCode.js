@@ -15,7 +15,7 @@ class RoomCode extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
-        if(nextProps.gameReady === true){   
+        if(nextProps.gameReady === 1){   
             this.props.history.push("/rules");
         }
     }
@@ -47,7 +47,7 @@ function mapStateToProps(state){
     return {
         players: state.gameplay.users,
         room: state.session.code,
-        gameReady: state.gameplay.ready
+        gameReady: state.gameplay.screen
     }
 }
 
