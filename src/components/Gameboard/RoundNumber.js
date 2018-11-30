@@ -5,17 +5,15 @@ import { bindActionCreators } from 'redux';
 
 class RoundNumber extends React.Component {
 
-    componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+    componentDidMount(){
+        setTimeout(function(){ this.props.history.push('/QuestionNumber'); }.bind(this), 3000);
     }
 
     render() {
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
                 <Jumbotron>
-                    <h1>Round #1</h1>
+                    <h1>Round #{this.props.rNum}</h1>
                 </Jumbotron>
             </div>
         )
@@ -24,7 +22,7 @@ class RoundNumber extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        rNum: state.gameplay.room.round,
     }
 }
 

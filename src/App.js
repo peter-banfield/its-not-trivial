@@ -33,7 +33,7 @@ class App extends Component{
                 <Route path="/gameboard" component = {CreateGame} />
                 <Route path="/RoomCode" component = {RoomCode} />
                 <Route path="/Rules" component = {Rules} />
-                <Route path="/Round" component = {RoundNumber} />
+                <Route path="/RoundNumber" component = {RoundNumber} />
                 <Route path="/QuestionNumber" component = {QuestionNumber} />
                 <Route path="/QuestionAsk" component = {QuestionAsk} />
                 <Route path="/AnswerPlaceBets" component = {AnswerPlaceBets} />
