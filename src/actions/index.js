@@ -52,18 +52,6 @@ export function createGame(roomCode){
     }
 }
 
-export function checkJoinedPlayers(roomCode){
-    return function (dispatch, getState){
-        const currentState = getState();
-        console.log(roomCode)
-        const roomUsers = currentState.gameplay.room.usersCount;
-        if(roomUsers >= 4){
-            nextScreen(roomCode, screens.StartGame)
-        }
-    }
-}
-    
-
 export function getQuestions(){
     return function(dispatch, getState) {
         var numQuestions = 7;
@@ -97,6 +85,18 @@ export function getQuestions(){
             })
         })
         dispatch({ type: ADD_QUESTION, payload: { question: questions } });
+        console.log(questions)
+    }
+}
+
+export function checkJoinedPlayers(roomCode){
+    return function (dispatch, getState){
+        const currentState = getState();
+        //console.log(roomCode)
+        const roomUsers = currentState.gameplay.room.usersCount;
+        if(roomUsers >= 4){
+            nextScreen(roomCode, screens.StartGame)
+        }
     }
 }
 

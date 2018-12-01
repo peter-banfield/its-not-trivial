@@ -3,19 +3,18 @@ import { Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { screens } from '../screens'
-import { getQuestions, skipRules } from '../../actions/index';
+import { skipRules } from '../../actions/index';
 
 class SkipRules extends React.Component {
 
     handleClick(){ // handle start game click
-        this.props.getQuestions();
-        console.log(this.props.questions)
         this.props.skipRules(this.props.roomCode);
 
     }
 
     componentWillReceiveProps(nextProps){ 
-        if(nextProps.gameReady === screens.StartGame){   
+        if(nextProps.gameReady === screens.SkipRules){
+            console.log(this.props.questions)
             this.props.history.push("/blank");
         }
     }
@@ -39,7 +38,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({getQuestions: getQuestions, skipRules: skipRules}, dispatch);
+    return bindActionCreators({ skipRules: skipRules }, dispatch);
 
 }
 
