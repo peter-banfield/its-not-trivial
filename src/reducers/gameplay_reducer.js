@@ -14,7 +14,7 @@ const initialState = {
     },
     users: {},
     roomError: false,
-    questions: [],
+    questions: {},
     answers: [[]]}
 
     /** each question object should look like below by the time it gets to the end of betting

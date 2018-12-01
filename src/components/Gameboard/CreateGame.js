@@ -9,12 +9,11 @@ class CreateGame extends React.Component {
         
     gameCreate = event =>{
         this.props.createGame();
-        this.props.getQuestions(this.props.qPerRound * this.props.rPerGame);
     }
 
     componentWillReceiveProps(nextProps){
         if(nextProps.code.code){
-            this.props.getQuestions(nextProps.code.code);
+            this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.code.code);
             this.props.history.push("/RoomCode")
         }
     }

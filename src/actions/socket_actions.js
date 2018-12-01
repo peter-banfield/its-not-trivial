@@ -28,7 +28,7 @@ export function socketActions(store){
 }
 
 
-export function createRoom(roomCode, questions){
+export function createRoom(roomCode){
     socket.emit("createRoom", roomCode)
 }
 

@@ -1,16 +1,8 @@
 var path = require("path");
-var AWS = require("aws-sdk");
-
 const express = require('express')
 const http = require('http')
 const port = process.env.PORT || 8080;  
 const app = express()
-
-AWS.config.region = 'us-east-1'; // Region
-AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    IdentityPoolId: 'us-east-1:80d57a52-edb2-44de-acb8-e6759c55991d',
-});
-var dynamodb = new AWS.DynamoDB();
 
 app.use(express.static(__dirname + 'public'));  
 
@@ -22,12 +14,12 @@ const server = app.listen(port, () => console.log(`its-not-trivial server listen
 
 const io = require('socket.io')(server);
 
-roomState = {};
+var roomState = {};
 
 io.on('connection', (socket) =>{
     
     //create room by initializing roomState to default values
-    socket.on('createRoom', (roomCode, questions) =>{
+    socket.on('createRoom', (roomCode) =>{
         socket.join(roomCode, () =>{
             console.log("gameboard has created room " + roomCode)
          });
