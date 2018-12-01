@@ -37,7 +37,7 @@ io.on('connection', (socket) =>{
         io.in(roomCode).emit('gameCreated', { room: roomState[roomCode] })
     })
 
-    socket.on('joinRoom', (username, roomCode) => {
+    socket.on('joinRoom', (username, roomCode, userId) => {
         socket.join(roomCode, () =>{
             console.log("a user has joined " + roomCode)
          });
@@ -47,7 +47,7 @@ io.on('connection', (socket) =>{
 
         //roomState[roomCode].users.roomCode = roomCode
 
-        roomState[roomCode].users[username] = {
+        roomState[roomCode].users[userId] = {
             username: username, 
             score: 0,
             numCorrect: 0,
