@@ -28,8 +28,12 @@ export function socketActions(store){
 }
 
 
-export function createRoom(roomCode){
+export function createRoom(roomCode, questions){
     socket.emit("createRoom", roomCode)
+}
+
+export function questionsToServer(roomCode, question, index){
+    socket.emit("storeQuestions", roomCode, question, index)
 }
 
 export function joinRoom(username, roomCode){
@@ -42,5 +46,5 @@ export function nextScreen(roomCode, screenNum){
 }
 
 export function answerSubmit(roomCode, answer){
-    socket.emit("answerSubmit", roomCode, answer)
+    socket.emit("answerSubmit", roomCode, answer, socket.id)
 }

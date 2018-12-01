@@ -41,12 +41,18 @@ const initialState = {
 export default function(state = initialState, action){
     switch(action.type){
         case ADD_NEW_ROOM:
-            return {...state, room: {...state.room, room: action.payload.room } }
+            return {
+                ...state, 
+                room: action.payload.room
+            }
         case ADD_NEW_USER:
+            console.log("inside reducer")
+            console.log(action.payload.questions)
             return {
                 ...state, 
                 users: action.payload.users,
-                room: { ...state.room, usersCount: state.room.usersCount + 1, roomCode: action.payload.room}
+                room: { ...state.room, usersCount: state.room.usersCount + 1, roomCode: action.payload.room},
+                questions: action.payload.questions
             }
         case ROOM_ERROR:
             return { ...state, roomError: !state.roomError }

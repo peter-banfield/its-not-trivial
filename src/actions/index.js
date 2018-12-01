@@ -1,4 +1,4 @@
-import { joinRoom, createRoom, nextScreen, answerSubmit } from "./socket_actions.js";
+import { joinRoom, createRoom, nextScreen, answerSubmit, questionsToServer } from "./socket_actions.js";
 import { screens } from "../components/screens"
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
@@ -53,7 +53,7 @@ export function createGame(roomCode){
     }
 }
 
-export function getQuestions(numQuestions){
+export function getQuestions(numQuestions, roomCode){
     return function(dispatch, getState) {
         // Generate a list numQuestions long of unique random integers
         ///////////////////////////////////
@@ -73,19 +73,19 @@ export function getQuestions(numQuestions){
         var questionIds = getRandomInts(numQuestions, 1, 226)
         /////////////////////////////
         // get the questions
-        var questions = []
-        questionIds.forEach(function(id){
+        var questions = {}
+        questionIds.forEach(function(id, index){
             dynamodb.getItem({Key: {"QuestionId":{N: String(id)}}, TableName: "Questions"}, function(err, res){
                 if(err){
                     console.log(err);
                 } else {
                     var question = {question: res.Item.Question.S, correctAnswr: parseInt(res.Item.Answer.N)}
-                    questions.push(question)
+                    questions[index] = question
+                    questionsToServer(roomCode, question, index)
                 }
             })
         })
         dispatch({ type: ADD_QUESTION, payload: { question: questions } });
-        console.log(questions)
     }
 }
 
@@ -116,20 +116,6 @@ export function nextQuestion(roomCode){
  
  export function AnswerSubmitAction(roomCode, answer){
     return function(dispatch, getState){
-        dynamodb.getItem({Key: {"id": {S: roomCode}}, TableName: "Rooms"},function(err, data) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            if(Object.keys(data).length === 0) {
-                // reject for invalid roomcode
-                dispatch({ type: "ROOM_ERROR" })
-                } 
-            else {                
-                //console.log(answer);
-                answerSubmit(roomCode, answer);                 
-                }
-            }
-        });
+            answerSubmit(roomCode, answer);                 
     }
 }
