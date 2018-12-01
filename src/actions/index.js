@@ -79,7 +79,7 @@ export function getQuestions(numQuestions, roomCode){
                 if(err){
                     console.log(err);
                 } else {
-                    var question = {question: res.Item.Question.S, correctAnswr: parseInt(res.Item.Answer.N)}
+                    var question = {question: res.Item.Question.S, correctAnswr: parseInt(res.Item.Answer.N), answers: {}, bets: {}}
                     questions[index] = question
                     questionsToServer(roomCode, question, index)
                 }
@@ -94,7 +94,7 @@ export function checkJoinedPlayers(roomCode){
         const currentState = getState();
         //console.log(roomCode)
         const roomUsers = currentState.gameplay.room.usersCount;
-        if(roomUsers >= 2){
+        if(roomUsers >= 1){
             nextScreen(roomCode, screens.StartGame)
         }
     }
@@ -114,7 +114,7 @@ export function nextQuestion(roomCode){
 }
 
  
- export function AnswerSubmitAction(roomCode, answer){
+export function AnswerSubmitAction(roomCode, answer){
     return function(dispatch, getState){
             answerSubmit(roomCode, answer);                 
     }

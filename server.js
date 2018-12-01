@@ -80,9 +80,14 @@ io.on('connection', (socket) =>{
     socket.on('answerSubmit', (roomCode, answer, userId) => {
         socket.join(roomCode, () =>{
             console.log("a user has submitted the answer: " + answer)
-         });
-
-        io.in(roomCode).emit('answerSubmitted', { answer } );
+        });
+        var questionId = roomState[roomCode].questionNum
+        console.log(roomState[roomCode].questions[questionId])
+        if(!roomState[roomCode].questions[questionId].answers){
+            roomState[roomCode].questions[questionId].answers = {}
+        }
+        roomState[roomCode].questions[questionId].answers[userId] = answer
+        io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions } );
     });
     
    

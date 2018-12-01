@@ -14,8 +14,7 @@ const initialState = {
     },
     users: {},
     roomError: false,
-    questions: {},
-    answers: [[]]}
+    questions: []}
 
     /** each question object should look like below by the time it gets to the end of betting
         {
@@ -64,13 +63,8 @@ export default function(state = initialState, action){
         case INCREMENT_QUESTION:
             return {...state, questionNum: state.room.questionNum + 1}
         case ANSWER_SUBMITTED:
-            //console.log(action.payload);
-            var answer = action.payload.answer;
-            var num = state.room.questionNum;
-            //console.log(state.answers);
-            state.answers[num].push(answer);
             //console.log(state.answers[num].length);
-            return {...state, answers: { ...state.answers}  }
+            return {...state, questions: action.payload.answer  }
 	default:
             return state;
     }
