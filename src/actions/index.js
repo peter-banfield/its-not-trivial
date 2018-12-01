@@ -99,3 +99,9 @@ export function getQuestions(){
         dispatch({ type: ADD_QUESTION, payload: { question: questions } });
     }
 }
+
+export function skipRules(roomCode){
+    return function(dispatch, getState) {
+        nextScreen(roomCode, screens.SkipRules)
+    }
+}

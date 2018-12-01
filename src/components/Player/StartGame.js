@@ -8,7 +8,8 @@ import { screens } from '../screens'
 class StartGame extends React.Component {
 
     handleClick(){ // handle start game click
-        this.props.checkJoinedPlayers(this.props.roomCode); // invoke one of the function in action
+        this.props.checkJoinedPlayers(this.props.roomCode);
+
     }
     
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status

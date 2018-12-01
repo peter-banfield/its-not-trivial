@@ -22,7 +22,7 @@ export default function(state = initialState, action){
         case ADD_NEW_ROOM:
             return {...state, room: action.payload.room }
         case ADD_NEW_USER:
-            console.log(action.payload.users)
+            //console.log(action.payload.users)
             return {
                 ...state, 
                 users: action.payload.users,
