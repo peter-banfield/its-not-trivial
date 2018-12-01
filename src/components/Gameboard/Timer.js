@@ -1,35 +1,41 @@
 import React from 'react';
 import { Col } from 'reactstrap';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import { Redirect } from 'react-router';
 
-class Timer extends React.Component {
-
-    componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+export default class Timer extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            count: 60,
+            
+        }
+        // this.state = {
+        //     timeO: false,
+        //   }
     }
-
     render() {
+        
         return (
             <Col>
-                <h3>60 Seconds</h3>
+                <h3>{this.state.count} Seconds</h3>
             </Col>
         )
     }
-}
 
-function mapStateToProps(state){
-    return {
-        // variable to use in component: state.refrence to the attribute of interest
+    
+    componentDidMount() {
+        this.myInterval = setInterval(() => {
+            if(this.state.count != 0){
+                this.setState(prevState => (
+                    {
+                    count: prevState.count - 1
+    
+                }))
+            }
+            
+        }, 1000)
+    }
+    componentWillUnmount () {
+        clearInterval(this.myIngterval)
     }
 }
-
-function mapDispatchToProps(dispatch){
-    return bindActionCreators({
-        // variable to use in component: refrence to action
-    }, dispatch);
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Timer);
