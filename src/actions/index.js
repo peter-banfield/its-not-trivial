@@ -14,6 +14,7 @@ export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
 export const ADD_QUESTION = 'ADD_QUESTION';
+export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
 
 
 export function JoinAction(username, roomCode){
@@ -52,18 +53,6 @@ export function createGame(roomCode){
     }
 }
 
-export function checkJoinedPlayers(roomCode){
-    return function (dispatch, getState){
-        const currentState = getState();
-        console.log(roomCode)
-        const roomUsers = currentState.gameplay.room.usersCount;
-        if(roomUsers >= 4){
-            nextScreen(roomCode, screens.StartGame)
-        }
-    }
-}
-    
-
 export function getQuestions(){
     return function(dispatch, getState) {
         var numQuestions = 7;
@@ -97,5 +86,30 @@ export function getQuestions(){
             })
         })
         dispatch({ type: ADD_QUESTION, payload: { question: questions } });
+        console.log(questions)
+    }
+}
+
+export function checkJoinedPlayers(roomCode){
+    return function (dispatch, getState){
+        const currentState = getState();
+        //console.log(roomCode)
+        const roomUsers = currentState.gameplay.room.usersCount;
+        if(roomUsers >= 4){
+            nextScreen(roomCode, screens.StartGame)
+        }
+    }
+}
+
+export function skipRules(roomCode){
+    return function(dispatch, getState) {
+        nextScreen(roomCode, screens.SkipRules)
+    }
+}
+
+export function nextQuestion(roomCode){
+    return function(dispatch, getState){
+        dispatch({ type: INCREMENT_QUESTION });
+        nextScreen(roomCode, screens.QuestionNumber)
     }
 }

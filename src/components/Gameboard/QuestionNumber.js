@@ -3,12 +3,14 @@ import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { nextScreen } from '../../actions/socket_actions'
+//import { nextQuestion } from '../../actions/index'
 import { screens } from '../screens'
 
 class QuestionNumber extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
         console.log(nextProps)
+        
         if(nextProps.screen === screens.QuestionNumber){   
             this.props.history.push('/questionask');
         }
@@ -22,7 +24,7 @@ class QuestionNumber extends React.Component {
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
                 <Jumbotron>
-                    <h1>Question #{this.props.qNum}</h1>
+                    <h1>Question #{this.props.qNum + 1}</h1>
                 </Jumbotron>
             </div>
         )
@@ -31,7 +33,7 @@ class QuestionNumber extends React.Component {
 
 function mapStateToProps(state){
     return {
-        qNum: state.gameplay.room.question.number,
+        qNum: state.gameplay.room.questionNum,
         roomCode: state.gameplay.room.roomCode,
         screen: state.gameplay.screen
     }
@@ -39,7 +41,8 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        nextScreen: nextScreen
+        nextScreen: nextScreen,
+        //nextQuestion: nextQuestion
     }, dispatch);
 }
 

@@ -2,13 +2,14 @@ import React from 'react';
 import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { screens } from '../screens'
 
 class Rules extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        if(nextProps.gameReady === screens.SkipRules){   
+            this.props.history.push("/roundnumber");
+        }
     }
     
     render() {
@@ -39,6 +40,7 @@ class Rules extends React.Component {
 function mapStateToProps(state){
     return {
         // variable to use in component: state.refrence to the attribute of interest
+        gameReady: state.gameplay.screen,
     }
 }
 

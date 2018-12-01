@@ -8,7 +8,7 @@ class Blank extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
         if(nextProps.screen === screens.QuestionNumber){   
-            this.props.history.push('/questionask');
+            this.props.history.push('/answer');
         }
     }
 
@@ -25,6 +25,7 @@ class Blank extends React.Component {
 
 function mapStateToProps(state){
     return {
+        screen: state.gameplay.screen
         // variable to use in component: state.refrence to the attribute of interest
     }
 }

@@ -2,13 +2,14 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import { createGame } from '../../actions/index';
+import { createGame, getQuestions } from '../../actions/index';
 
 
 class CreateGame extends React.Component {
         
     gameCreate = event =>{
         this.props.createGame();
+        this.props.getQuestions();
     }
 
     componentWillReceiveProps(nextProps){
@@ -33,7 +34,7 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({createGame: createGame}, dispatch);
+    return bindActionCreators({createGame: createGame, getQuestions: getQuestions}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CreateGame)
