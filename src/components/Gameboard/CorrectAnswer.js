@@ -5,10 +5,15 @@ import { bindActionCreators } from 'redux';
 
 class CorrectAnswer extends React.Component {
 
-    componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+    componentDidMount(){
+        setTimeout(function(){
+            if(this.props.questionNum % this.props.numQuestions === 0 ) {
+                this.props.history.push("/PointsLeaderBoard")
+            }
+            else {
+                this.props.history.push("/AnswersLeaderBoard")
+            }
+        }.bind(this), 10000);
     }
     
     render() {
@@ -18,13 +23,13 @@ class CorrectAnswer extends React.Component {
                 <Col className="d-flex align-items-center flex-column bd-highlight mb-3 w-100 h-100">
                     <Row>
                         <div>
-                            <h1>Correct Answer: 100</h1>
+                            <h1>Correct Answer: {this.props.correctAnswr}</h1>
                             <hr className="my-2" />
-                            <h1>Closest Answer: 98</h1>
+                            <h1>Closest Answer: {this.props.closestAnswr}</h1>
                         </div>
                     </Row>
                     <Row className="d-flex justify-content-center mt-auto  w-100">
-                        <h1>6 points awarded</h1>
+                        <h1>{this.props.points} points awarded</h1>
                     </Row>
                     </Col>
                 </Jumbotron>
@@ -35,7 +40,12 @@ class CorrectAnswer extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        numQuestions: state.gameplay.questions.length + 1,
+        correctAnswr: state.gameplay.questions[state.gameplay.room.questionNum].correctAnswr,
+        closestAnswr: state.gameplay.questions[state.gameplay.room.questionNum].closestAnswr,
+        points: state.gameplay.questions[state.gameplay.room.questionNum].points,
+        roundNum: state.gameplay.room.round,
+        questionNum: state.gameplay.room.questionNum + 1
     }
 }
 
