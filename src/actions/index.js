@@ -53,9 +53,8 @@ export function createGame(roomCode){
     }
 }
 
-export function getQuestions(){
+export function getQuestions(numQuestions){
     return function(dispatch, getState) {
-        var numQuestions = 7;
         // Generate a list numQuestions long of unique random integers
         ///////////////////////////////////
         function getRandomInt(min, max) { // borrowed the next 13 lines from Pullo at https://www.sitepoint.com/community/t/fill-an-array-with-unique-values/100808
@@ -80,7 +79,7 @@ export function getQuestions(){
                 if(err){
                     console.log(err);
                 } else {
-                    var question = {Question: res.Item.Question.S, Answer: parseInt(res.Item.Answer.N)}
+                    var question = {question: res.Item.Question.S, correctAnswr: parseInt(res.Item.Answer.N)}
                     questions.push(question)
                 }
             })

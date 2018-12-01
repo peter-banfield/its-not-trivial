@@ -6,13 +6,35 @@ const initialState = {
     room: { 
         usersCount: 0,
         round: 0,
+        qPerRound: 7,
+        rPerGame: 1,
         questionNum: 0,
         roomCode: ""
     },
     users: {},
     roomError: false,
     questions: []}
-
+    /** each question object should look like below by the time it gets to the end of betting
+        {
+            question: "test", 
+            correctAnswr: 1994, 
+            closestAnswr: 1994, 
+            points: 2, 
+            answers: [
+                {
+                    player: "test",
+                    answer: "1994"
+                }
+            ], 
+            bets: [
+                {
+                    player: "test", 
+                    big: "1999", 
+                    small: "2000"
+                }
+            ]
+        } 
+    */
 export default function(state = initialState, action){
     switch(action.type){
         case ADD_NEW_ROOM:

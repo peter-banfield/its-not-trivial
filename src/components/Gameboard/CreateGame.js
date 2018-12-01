@@ -9,7 +9,7 @@ class CreateGame extends React.Component {
         
     gameCreate = event =>{
         this.props.createGame();
-        this.props.getQuestions();
+        this.props.getQuestions(this.props.qPerRound * this.props.rPerGame);
     }
 
     componentWillReceiveProps(nextProps){
@@ -29,7 +29,9 @@ class CreateGame extends React.Component {
 
 function mapStateToProps(state){
     return{
-        code: state.session
+        code: state.session, 
+        qPerRound: state.gameplay.room.qPerRound,
+        rPerGame: state.gameplay.room.rPerGame
     }
 }
 
