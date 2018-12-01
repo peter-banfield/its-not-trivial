@@ -14,6 +14,7 @@ export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
 export const ADD_QUESTION = 'ADD_QUESTION';
+export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
 
 
 export function JoinAction(username, roomCode){
@@ -103,5 +104,12 @@ export function checkJoinedPlayers(roomCode){
 export function skipRules(roomCode){
     return function(dispatch, getState) {
         nextScreen(roomCode, screens.SkipRules)
+    }
+}
+
+export function nextQuestion(roomCode){
+    return function(dispatch, getState){
+        dispatch({ type: INCREMENT_QUESTION });
+        nextScreen(roomCode, screens.QuestionNumber)
     }
 }

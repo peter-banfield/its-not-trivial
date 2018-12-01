@@ -7,8 +7,8 @@ import { screens } from '../screens'
 class Rules extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        if(nextProps.gameReady === screens.StartGame){   
-            this.props.history.push("/questionnumber");
+        if(nextProps.gameReady === screens.SkipRules){   
+            this.props.history.push("/roundnumber");
         }
     }
     
