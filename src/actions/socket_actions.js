@@ -29,7 +29,7 @@ export function createRoom(roomCode){
 }
 
 export function joinRoom(username, roomCode){
-    socket.emit("joinRoom", username, roomCode)
+    socket.emit("joinRoom", username, roomCode, socket.id)
 }
 
 export function nextScreen(roomCode, screenNum){

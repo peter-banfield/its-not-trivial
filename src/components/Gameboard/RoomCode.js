@@ -8,7 +8,7 @@ class RoomCode extends React.Component {
     renderPlayers(){        
         return Object.keys(this.props.players).map(p =>{
             return (
-                <ListGroupItem >{p}</ListGroupItem>
+                <ListGroupItem >{this.props.players[p].username}</ListGroupItem>
             );
         });
     }
