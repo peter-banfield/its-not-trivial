@@ -2,9 +2,21 @@ import React from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { AnswerSubmitAction } from '../../actions/index';
+
 
 class Answer extends React.Component {
     
+    handleSubmit = event => {
+        event.preventDefault();
+        const data = new FormData(event.target)
+        const answer = data.get('answer');
+        console.log(answer);
+        if(answer >= 0){            
+            this.props.AnswerSubmitAction(this.props.roomCode, answer);
+        }        
+    }
+
     componentWillReceiveProps(nextProps){ 
         // if(conditon){   
         //     this.props.history.push(endpoint);
@@ -14,10 +26,10 @@ class Answer extends React.Component {
     render() {
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
-            <Form className="flex-fill" >
+            <Form className="flex-fill" onSubmit={this.handleSubmit.bind(this)}>
                 <FormGroup>
                     <Label for="Answer">Answer</Label>
-                    <Input type="text" name="text" id="Answer"></Input>
+                    <Input type="number" name="answer" id="answer"></Input>
                 </FormGroup>
                 <FormGroup className="d-flex justify-content-end">
                 <Button color="primary">Submit</Button>
@@ -30,13 +42,14 @@ class Answer extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        roomError: state.gameplay.roomError,
+        roomCode: state.gameplay.room.roomCode
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        AnswerSubmitAction: AnswerSubmitAction
     }, dispatch);
 }
 

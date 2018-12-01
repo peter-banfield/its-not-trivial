@@ -1,4 +1,4 @@
-import { joinRoom, createRoom, nextScreen } from "./socket_actions.js";
+import { joinRoom, createRoom, nextScreen, answerSubmit } from "./socket_actions.js";
 import { screens } from "../components/screens"
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
@@ -15,6 +15,7 @@ export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
 export const ADD_QUESTION = 'ADD_QUESTION';
 export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
+export const ANSWER_SUBMIT = 'ANSWER_SUBMIT';
 
 
 export function JoinAction(username, roomCode){
@@ -34,10 +35,9 @@ export function JoinAction(username, roomCode){
                 }
             }
         });
-
     }
-
 }
+
 export function createGame(roomCode){
    return function generateuniquecode(dispatch, getState){
         var roomCode = randomstring.generate({length: 4, charset: 'alphabetic'}).toUpperCase();   
@@ -94,7 +94,7 @@ export function checkJoinedPlayers(roomCode){
         const currentState = getState();
         //console.log(roomCode)
         const roomUsers = currentState.gameplay.room.usersCount;
-        if(roomUsers >= 4){
+        if(roomUsers >= 2){
             nextScreen(roomCode, screens.StartGame)
         }
     }
@@ -110,5 +110,26 @@ export function nextQuestion(roomCode){
     return function(dispatch, getState){
         dispatch({ type: INCREMENT_QUESTION });
         nextScreen(roomCode, screens.QuestionNumber)
+    }
+}
+
+ 
+ export function AnswerSubmitAction(roomCode, answer){
+    return function(dispatch, getState){
+        dynamodb.getItem({Key: {"id": {S: roomCode}}, TableName: "Rooms"},function(err, data) {
+        if(err) {
+            console.log(err);
+        }
+        else {
+            if(Object.keys(data).length === 0) {
+                // reject for invalid roomcode
+                dispatch({ type: "ROOM_ERROR" })
+                } 
+            else {                
+                //console.log(answer);
+                answerSubmit(roomCode, answer);                 
+                }
+            }
+        });
     }
 }

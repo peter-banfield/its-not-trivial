@@ -16,5 +16,6 @@ export const screens = {
     QuestionNumber: 3, 
     QuestionAsk: 4, 
     AnswerPlaceBets: 5, 
-    PointsLeaderBoard: 6
+    PointsLeaderBoard: 6,
+    Blank: 7
 }

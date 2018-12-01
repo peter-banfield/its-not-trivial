@@ -1,5 +1,6 @@
 import { ROOM_ERROR, ADD_QUESTION, INCREMENT_QUESTION } from '../actions/index';
-import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH } from '../actions/socket_actions.js';
+import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH,
+    ANSWER_SUBMITTED } from '../actions/socket_actions.js';
 
 const initialState = { 
     screen: 0, 
@@ -13,7 +14,9 @@ const initialState = {
     },
     users: {},
     roomError: false,
-    questions: []}
+    questions: [],
+    answers: [[]]}
+
     /** each question object should look like below by the time it gets to the end of betting
         {
             question: "test", 
@@ -50,10 +53,18 @@ export default function(state = initialState, action){
         case SCREEN_SWITCH:
             return { ...state, screen: action.payload.screen }	
 	   case ADD_QUESTION:
-            console.log(action.payload.question)
+
             return {...state, questions: action.payload.question }
         case INCREMENT_QUESTION:
             return {...state, questionNum: state.room.questionNum + 1}
+        case ANSWER_SUBMITTED:
+            //console.log(action.payload);
+            var answer = action.payload.answer;
+            var num = state.room.questionNum;
+            //console.log(state.answers);
+            state.answers[num].push(answer);
+            //console.log(state.answers[num].length);
+            return {...state, answers: { ...state.answers}  }
 	default:
             return state;
     }

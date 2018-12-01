@@ -63,6 +63,15 @@ io.on('connection', (socket) =>{
     socket.on('nextScreen', (roomCode, screenNum) => {
         io.in(roomCode).emit('switchScreens', { screen: screenNum })
     });
+
+    
+    socket.on('answerSubmit', (roomCode, answer) => {
+        socket.join(roomCode, () =>{
+            console.log("a user has submitted the answer: " + answer)
+         });
+
+        io.in(roomCode).emit('answerSubmitted', { answer } );
+    });
     
    
 });
