@@ -1,20 +1,52 @@
 import React from 'react';
 import { Col } from 'reactstrap';
-import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { nextScreen } from "../../actions/socket_actions.js";
+import { screens } from '../screens'
 
-class Timer extends React.Component {
-
-    componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+export class Timer extends React.Component {
+    constructor (props) {
+        super(props)
+        this.state = {
+            count: 60,
+            
+        }
     }
+
+    componentDidMount() {
+        this.myInterval = setInterval(() => {
+            if(this.state.count !== 0){
+                this.setState(prevState => ({
+                    count: prevState.count - 1
+                }))
+            }
+            if(this.state.count === 0){
+                switch(this.props.screen){
+                    case screens.QuestionNumber:
+                        nextScreen(this.props.roomCode, screens.QuestionAsk)
+                        break;
+                    case screens.QuestionAsk:
+                        nextScreen(this.props.roomCode, screens.AnswerPlaceBets)
+                        break;
+                    default:
+                        break;
+                } 
+        }
+        }, 100)
+    }
+
+
+    componentWillUnmount () {
+        clearInterval(this.myIngterval)
+    }
+
+
 
     render() {
         return (
             <Col>
-                <h3>60 Seconds</h3>
+                <h3>{this.state.count} Seconds</h3>
             </Col>
         )
     }
@@ -22,13 +54,15 @@ class Timer extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        roomCode: state.gameplay.room.roomCode,
+        screen: state.gameplay.screen
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        nextScreen: nextScreen,
+        //nextQuestion: nextQuestion
     }, dispatch);
 }
 

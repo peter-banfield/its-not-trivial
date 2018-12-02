@@ -5,25 +5,30 @@ import { bindActionCreators } from 'redux';
 import Submitted from './Submitted';
 import Timer from './Timer';
 import Question from './Question';
+import { questionSubmitted } from '../../actions/index';
+import { screens } from '../screens'
 
 class QuestionAsk extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        if(nextProps.screen === screens.QuestionAsk){
+            this.props.history.push("/AnswerPlaceBets");
+        }
     }
 
     render() {
+        if(this.props.submitted === this.props.maxPlayers){
+            this.props.questionSubmitted(this.props.roomCode)
+        }
         return (
             <div className="d-flex flex-column align-items-center justify-content-center" style={{height: '100%'}}>
                 <Jumbotron style={{height: '75%', textAlign: 'center'}}>
                     <div className="d-flex flex-column" style={{height: '100%'}}>
-                        <Question />
+                        <Question question={this.props.question}/>
                         <div className="d-flex align-items-end" style={{height: '100%'}}>
                             <Row className="flex-fill">
                             <Timer />
-                            <Submitted />
+                            <Submitted numSubmit={this.props.submitted} maxPlayers={this.props.maxPlayers} />
                             </Row>
                         </div>
                     </div>
@@ -35,13 +40,18 @@ class QuestionAsk extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].answers).length,
+        question: state.gameplay.questions[state.gameplay.room.questionNum].question,
+        maxPlayers: state.gameplay.room.usersCount,
+        roomCode: state.gameplay.room.roomCode,
+        screen: state.gameplay.screen
+
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        questionSubmitted: questionSubmitted
     }, dispatch);
 }
 

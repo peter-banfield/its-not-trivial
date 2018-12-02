@@ -13,9 +13,9 @@ class Question extends React.Component {
     render() {
         return (
             <div>
-                <h1>Question #1</h1>
+                <h1>Question #{this.props.questionNum + 1}</h1>
                 <hr className="my-2" />
-                <p>Placeholder text for a question this is going to be a longer line to see what is going on</p>
+                <p>{this.props.question}</p>
             </div>
         )
     }
@@ -23,7 +23,8 @@ class Question extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        questionNum: state.gameplay.room.questionNum,
+        question: state.gameplay.questions[state.gameplay.room.questionNum].question
     }
 }
 

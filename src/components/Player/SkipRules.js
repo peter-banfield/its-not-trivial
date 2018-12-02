@@ -14,7 +14,6 @@ class SkipRules extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
         if(nextProps.gameReady === screens.SkipRules){
-            console.log(this.props.questions)
             this.props.history.push("/blank");
         }
     }

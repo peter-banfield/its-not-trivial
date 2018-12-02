@@ -7,8 +7,18 @@ import { screens } from '../screens'
 class Blank extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        if(nextProps.screen === screens.QuestionNumber){   
-            this.props.history.push('/answer');
+        switch(nextProps.screen){
+            case screens.QuestionNumber:
+                this.props.history.push('/answer');
+                break;
+            case screens.QuestionAsk:
+                this.props.history.push('/placebets');
+                break;
+            case screens.PointsLeaderBoard:
+                this.props.history.push('/PlayAgain');
+                break;
+            default:
+                break;
         }
     }
 

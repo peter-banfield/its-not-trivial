@@ -3,6 +3,7 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AnswerSubmitAction } from '../../actions/index';
+import { screens } from '../screens'
 
 
 class Answer extends React.Component {
@@ -19,9 +20,9 @@ class Answer extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){ 
-        /*if(conditon){   
-             this.props.history.push(endpoint);
-         }*/
+        if(nextProps.screen === screens.QuestionAsk){   
+            this.props.history.push('/placebets');
+        }
     }
 
     render() {
@@ -44,7 +45,8 @@ class Answer extends React.Component {
 function mapStateToProps(state){
     return {
         roomError: state.gameplay.roomError,
-        roomCode: state.gameplay.room.roomCode
+        roomCode: state.gameplay.room.roomCode,
+        screen: state.gameplay.screen
     }
 }
 
