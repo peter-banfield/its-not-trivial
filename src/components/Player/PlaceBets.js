@@ -33,20 +33,21 @@ class PlaceBets extends React.Component {
             <Form className="flex-fill" onSubmit={this.handleSubmit.bind(this)} >
                 <FormGroup className="ml-4 mb-0" >
                     <Label for="DoubleDown">
-                    <Input type="checkbox" name="DoubleDown" id="DoubleDown" className="" />
+                    <Input type="checkbox" name="DoubleDown" id="DoubleDown" className="" 
+                    disabled={!this.props.user.HasDD}/>
                     Double your bets
                     </Label>
                 </FormGroup>
                 <FormGroup>
                     <Label for="SelectBigBet">Select Your Big Bet</Label>
                     <Input type="select" name="select" id="SelectBigBet">
-                        
+                    {this.renderAnswer()}    
                     </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label for="SelectSmallBet">Select Your Small Bet</Label>
                     <Input type="select" name="select" id="SelectSmallBet">
-
+                    {this.renderAnswer()}
                     </Input>
                 </FormGroup>
                 <FormGroup className="d-flex justify-content-end">
@@ -58,8 +59,24 @@ class PlaceBets extends React.Component {
     }
 }
 
+function sortAnswers(answers){
+
+    var answersArr = []
+    for(var key in answers){
+        var answer = answers[key]
+        answersArr.push(answer)
+    }
+    answersArr.sort(function(a, b){return b-a})
+    answersArr.unshift('')
+    answersArr.push('Smaller than the Smallest')
+    return answersArr
+
+}
+
 function mapStateToProps(state){
     return {
+        screen: state.gameplay.screen,
+        user: state.gameplay.users[getId()]
         screen: state.gameplay.screen
     }
 }
