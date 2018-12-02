@@ -57,7 +57,6 @@ export function createGame(roomCode){
 export function getQuestions(numQuestions, roomCode){
     return function(dispatch, getState) {
         // Generate a list numQuestions long of unique random integers
-        ///////////////////////////////////
         function getRandomInt(min, max) { // borrowed the next 13 lines from Pullo at https://www.sitepoint.com/community/t/fill-an-array-with-unique-values/100808
             return Math.floor(Math.random() * (max - min)) + min;
         }
@@ -72,7 +71,6 @@ export function getQuestions(numQuestions, roomCode){
             return ints;
         }
         var questionIds = getRandomInts(numQuestions, 1, 226)
-        /////////////////////////////
         // get the questions
         var questions = {}
         questionIds.forEach(function(id, index){
