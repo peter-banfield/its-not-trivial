@@ -6,6 +6,7 @@ import Timer from './Timer';
 import Submitted from './Submitted';
 import Question from './Question';
 import { answerSubmitted } from '../../actions/index';
+import { screens } from '../screens'
 
 class AnswerPlaceBets extends React.Component {
 
@@ -18,13 +19,9 @@ class AnswerPlaceBets extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
-    }
-
-    componentWillMount(){
-        console.log(this.props.answers)
+        if(nextProps.screen === screens.AnswerPlaceBets){
+            this.props.history.push("/AnswerSeeBets");
+        }
     }
 
     render() {
@@ -76,7 +73,8 @@ function mapStateToProps(state){
     return {
         answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers), //[state.gameplay.]
         submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].bets).length,
-        maxPlayers: state.gameplay.room.usersCount
+        maxPlayers: state.gameplay.room.usersCount,
+        screen: state.gameplay.screen
     }
 }
 
