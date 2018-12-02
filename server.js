@@ -58,8 +58,6 @@ io.on('connection', (socket) =>{
             score: 0,
             numCorrect: 0,
             HasDD: true,
-            bigBet: '',
-            smallBet: ''
         }
 
         //console.log(roomState[roomCode].questions);
@@ -73,22 +71,36 @@ io.on('connection', (socket) =>{
 
 
     socket.on('nextScreen', (roomCode, screenNum) => {
+        if(screenNum === 5){
+            //do point calculation celebration emoji
+            //dispatch points using emit
+        }
         io.in(roomCode).emit('switchScreens', { screen: screenNum })
     });
 
     
     socket.on('answerSubmit', (roomCode, answer, userId) => {
-        socket.join(roomCode, () =>{
-            console.log("a user has submitted the answer: " + answer)
-        });
         var questionId = roomState[roomCode].questionNum
         //console.log(roomState[roomCode].questions[questionId])
         if(!roomState[roomCode].questions[questionId].answers){
             roomState[roomCode].questions[questionId].answers = {}
         }
+        //if answer is exactly correct assign 2 points automatically
+
         roomState[roomCode].questions[questionId].answers[userId] = answer
         io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions } );
     });
+
+    socket.on("betSubmit", (roomCode, userId, questionNum, doubleDown, bigBet, smallBet) =>{
+        if(doubleDown){
+            roomState[roomCode].users[userId].HasDD = false;
+        }
+        if(!roomState[roomCode].questions[questionId].bets){
+            roomState[roomCode].questions[questionId].bets = {}
+        }
+        roomState[roomCode].questions[questionId].bets[userId] = { bigBet: bigBet, smallBet: smallBet }
+
+    })
     
    
 });
