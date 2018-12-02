@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Timer from './Timer';
 import Submitted from './Submitted';
 import Question from './Question';
+import { answerSubmitted } from '../../actions/index';
 
 class AnswerPlaceBets extends React.Component {
 
@@ -15,6 +16,9 @@ class AnswerPlaceBets extends React.Component {
     }
 
     render() {
+        if(this.props.submitted === this.props.maxPlayers){
+            this.props.answerSubmitted(this.props.roomCode)
+        }
         return (
             <Col className="d-flex align-items-center justify-content-center w-100 h-100">
                 <Jumbotron className="h-75 w-100 text-center">
@@ -54,14 +58,14 @@ class AnswerPlaceBets extends React.Component {
 
 function mapStateToProps(state){
     return {
-        submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].answers).length,
+        submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].bets).length,
         maxPlayers: state.gameplay.room.usersCount
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        answerSubmitted: answerSubmitted
     }, dispatch);
 }
 
