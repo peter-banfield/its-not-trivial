@@ -3,6 +3,7 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AnswerSubmitAction } from '../../actions/index';
+import { screens } from '../screens'
 
 
 class Answer extends React.Component {
@@ -14,13 +15,14 @@ class Answer extends React.Component {
         console.log(answer);
         if(answer >= 0){
             this.props.AnswerSubmitAction(this.props.roomCode, answer);
+            this.props.history.push("/blank")
         }        
     }
 
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        /*if(conditon){   
+             this.props.history.push(endpoint);
+         }*/
     }
 
     render() {

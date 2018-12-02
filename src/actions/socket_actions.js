@@ -23,6 +23,7 @@ export function socketActions(store){
     });
 
     socket.on('answerSubmitted', function(data){
+        console.log(data)
         store.dispatch({type: ANSWER_SUBMITTED, payload: data})
     });
 }
