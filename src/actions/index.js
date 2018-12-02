@@ -125,3 +125,9 @@ export function questionSubmitted(roomCode){
         nextScreen(roomCode, screens.QuestionAsk)
     }
 }
+
+export function answerSubmitted(roomCode){
+    return function(dispatch, getState) {
+        nextScreen(roomCode, screens.AnswerPlaceBets)
+    }
+}

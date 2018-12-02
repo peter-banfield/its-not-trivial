@@ -5,16 +5,29 @@ import { bindActionCreators } from 'redux';
 import Timer from './Timer';
 import Submitted from './Submitted';
 import Question from './Question';
+import { answerSubmitted } from '../../actions/index';
+import { screens } from '../screens'
 
 class AnswerPlaceBets extends React.Component {
 
+    renderAnswer(){        
+        return this.props.answers.map(a =>{
+            return (
+                <tr><th>{a}</th></tr>
+            );
+        });
+    }
+
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        if(nextProps.screen === screens.AnswerPlaceBets){
+            this.props.history.push("/AnswerSeeBets");
+        }
     }
 
     render() {
+        if(this.props.submitted === this.props.maxPlayers){
+            this.props.answerSubmitted(this.props.roomCode)
+        }
         return (
             <Col className="d-flex align-items-center justify-content-center w-100 h-100">
                 <Jumbotron className="h-75 w-100 text-center">
@@ -25,14 +38,7 @@ class AnswerPlaceBets extends React.Component {
                                     <tr><th>Answers</th></tr>
                                 </thead>
                                 <tbody>
-                                    <tr><th>7</th></tr>
-                                    <tr><th>6</th></tr>
-                                    <tr><th>5</th></tr>
-                                    <tr><th>4</th></tr>
-                                    <tr><th>3</th></tr>
-                                    <tr><th>2</th></tr>
-                                    <tr><th>1</th></tr>
-                                    <tr><th>Smaller Than The Smallest</th></tr>
+                                    {this.renderAnswer()}                                    
                                 </tbody>
                             </Table>
                         </Col>
@@ -42,7 +48,7 @@ class AnswerPlaceBets extends React.Component {
                             </Row>
                             <Row className="mt-auto w-100">
                                 <Timer />
-                                <Submitted />
+                                <Submitted numSubmit={this.props.submitted} maxPlayers={this.props.maxPlayers} />
                             </Row>
                         </Col>
                     </Row>
@@ -52,15 +58,29 @@ class AnswerPlaceBets extends React.Component {
     }
 }
 
+function sortAnswers(answers){
+        var answersArr = []
+        for(var key in answers){
+            var answer = answers[key]
+            answersArr.push(answer)
+        }
+        answersArr.sort(function(a, b){return b-a})
+        answersArr.push('Smaller than the Smallest')
+        return answersArr
+    }
+
 function mapStateToProps(state){
     return {
-        // variable to use in component: refrence to state
+        answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers), //[state.gameplay.]
+        submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].bets).length,
+        maxPlayers: state.gameplay.room.usersCount,
+        screen: state.gameplay.screen
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        answerSubmitted: answerSubmitted
     }, dispatch);
 }
 

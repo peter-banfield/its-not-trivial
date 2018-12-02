@@ -2,13 +2,14 @@ import React from 'react';
 import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { screens } from '../screens'
 
 class PlaceBets extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        if(nextProps.screen === screens.AnswerPlaceBets){
+            this.props.history.push("/blank");
+        }
     }
 
     render() {
@@ -44,7 +45,7 @@ class PlaceBets extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        screen: state.gameplay.screen
     }
 }
 
