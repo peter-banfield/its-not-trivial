@@ -10,12 +10,12 @@ class Submitted extends React.Component {
         //     this.props.history.push(endpoint);
         // }
     }
-
+    
     render() {
-        return (
+        return (            
             <Col>
-                <h3>5/7 submitted</h3>
-            </Col>
+                <h3>{this.props.answers[this.props.questionNum].length}/7</h3>
+            </Col> 
         )
     }
 }
@@ -23,6 +23,8 @@ class Submitted extends React.Component {
 function mapStateToProps(state){
     return {
         // variable to use in component: state.refrence to the attribute of interest
+        answers: state.gameplay.answers,
+        questionNum: state.gameplay.room.questionNum        
     }
 }
 

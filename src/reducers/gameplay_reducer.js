@@ -1,5 +1,6 @@
 import { ROOM_ERROR, ADD_QUESTION, INCREMENT_QUESTION } from '../actions/index';
-import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH } from '../actions/socket_actions.js';
+import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH,
+    ANSWER_SUBMITTED } from '../actions/socket_actions.js';
 
 const initialState = { 
     screen: 0, 
@@ -14,6 +15,7 @@ const initialState = {
     users: {},
     roomError: false,
     questions: []}
+
     /** each question object should look like below by the time it gets to the end of betting
         {
             question: "test", 
@@ -38,22 +40,31 @@ const initialState = {
 export default function(state = initialState, action){
     switch(action.type){
         case ADD_NEW_ROOM:
-            return {...state, room: {...state.room, room: action.payload.room } }
+            return {
+                ...state, 
+                room: action.payload.room
+            }
         case ADD_NEW_USER:
+            console.log("inside reducer")
+            console.log(action.payload.questions)
             return {
                 ...state, 
                 users: action.payload.users,
-                room: { ...state.room, usersCount: state.room.usersCount + 1, roomCode: action.payload.room}
+                room: { ...state.room, usersCount: state.room.usersCount + 1, roomCode: action.payload.room},
+                questions: action.payload.questions
             }
         case ROOM_ERROR:
             return { ...state, roomError: !state.roomError }
         case SCREEN_SWITCH:
             return { ...state, screen: action.payload.screen }	
 	   case ADD_QUESTION:
-            console.log(action.payload.question)
+
             return {...state, questions: action.payload.question }
         case INCREMENT_QUESTION:
             return {...state, questionNum: state.room.questionNum + 1}
+        case ANSWER_SUBMITTED:
+            //console.log(state.answers[num].length);
+            return {...state, questions: action.payload.answer  }
 	default:
             return state;
     }

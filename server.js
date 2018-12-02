@@ -1,5 +1,4 @@
 var path = require("path");
-
 const express = require('express')
 const http = require('http')
 const port = process.env.PORT || 8080;  
@@ -15,15 +14,11 @@ const server = app.listen(port, () => console.log(`its-not-trivial server listen
 
 const io = require('socket.io')(server);
 
-io.on('connect', socket => {
-    //console.log(socket.connected + " " + socket.id); //returns true and socketID
-});
-
-
 var roomState = {};
 
 io.on('connection', (socket) =>{
     
+    //create room by initializing roomState to default values
     socket.on('createRoom', (roomCode) =>{
         socket.join(roomCode, () =>{
             console.log("gameboard has created room " + roomCode)
@@ -32,11 +27,22 @@ io.on('connection', (socket) =>{
             roomState[roomCode] = {
                 usersCount: 0,
                 round: 0,
+                questionNum: 0,
+                roomCode: "",
+                questions: {}
             }
         }
-        io.in(roomCode).emit('gameCreated', { room: roomState[roomCode] })
-    })
 
+        io.in(roomCode).emit('gameCreated', { room: roomState[roomCode] })
+        
+    });
+
+    //store questions in roomState to sync store upon joinRoom
+    socket.on('storeQuestions', (roomCode, question, index) => {
+        roomState[roomCode].questions[index] = question
+    });
+
+    //user joins room and gets questions for each round
     socket.on('joinRoom', (username, roomCode, userId) => {
         socket.join(roomCode, () =>{
             console.log("a user has joined " + roomCode)
@@ -56,12 +62,32 @@ io.on('connection', (socket) =>{
             smallBet: ''
         }
 
-        io.in(roomCode).emit('userConnected', { users: roomState[roomCode].users, room: roomCode } );
+        console.log(roomState[roomCode].questions);
+
+        io.in(roomCode).emit('userConnected', 
+            { users: roomState[roomCode].users,
+              room: roomCode, 
+              questions: roomState[roomCode].questions } );
 
     });
 
+
     socket.on('nextScreen', (roomCode, screenNum) => {
         io.in(roomCode).emit('switchScreens', { screen: screenNum })
+    });
+
+    
+    socket.on('answerSubmit', (roomCode, answer, userId) => {
+        socket.join(roomCode, () =>{
+            console.log("a user has submitted the answer: " + answer)
+        });
+        var questionId = roomState[roomCode].questionNum
+        //console.log(roomState[roomCode].questions[questionId])
+        if(!roomState[roomCode].questions[questionId].answers){
+            roomState[roomCode].questions[questionId].answers = {}
+        }
+        roomState[roomCode].questions[questionId].answers[userId] = answer
+        io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions } );
     });
     
    
