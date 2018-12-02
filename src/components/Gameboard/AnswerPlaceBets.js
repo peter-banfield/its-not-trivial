@@ -9,6 +9,14 @@ import { answerSubmitted } from '../../actions/index';
 
 class AnswerPlaceBets extends React.Component {
 
+    renderAnswer(){        
+        return this.props.answers.map(a =>{
+            return (
+                <tr><th>{a}</th></tr>
+            );
+        });
+    }
+
     componentWillReceiveProps(nextProps){ 
         // if(conditon){   
         //     this.props.history.push(endpoint);
@@ -33,7 +41,7 @@ class AnswerPlaceBets extends React.Component {
                                     <tr><th>Answers</th></tr>
                                 </thead>
                                 <tbody>
-                                    <tr><th>{this.props.answers}</th></tr>
+                                    {this.renderAnswer()}                                    
                                 </tbody>
                             </Table>
                         </Col>
