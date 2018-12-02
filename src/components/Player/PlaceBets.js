@@ -25,7 +25,7 @@ class PlaceBets extends React.Component {
     handleSubmit = event => {
         event.preventDefault();
         const data = new FormData(event.target)
-        const doubleDown = data.get('DoubleDown');
+        const doubleDown = document.querySelector('#DoubleDown').checked
         const bigBet = data.get('BigBet');
         const smallBet = data.get('SmallBet');
         console.log("bets entered: " + doubleDown + bigBet + smallBet);
@@ -42,7 +42,7 @@ class PlaceBets extends React.Component {
                 <FormGroup className="ml-4 mb-0" >
                     <Label for="DoubleDown">
                     <Input type="checkbox" name="DoubleDown" id="DoubleDown" className="" 
-                    disabled={!this.props.user.HasDD}/>
+                    disabled={!this.props.user.HasDD} />
                     Double your bets
                     </Label>
                 </FormGroup>
