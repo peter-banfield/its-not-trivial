@@ -88,7 +88,7 @@ io.on('connection', (socket) =>{
         //if answer is exactly correct assign 2 points automatically
 
         roomState[roomCode].questions[questionId].answers[userId] = answer
-        io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions } );
+        io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions });
     });
 
     socket.on("betSubmit", (roomCode, userId, questionNum, doubleDown, bigBet, smallBet) =>{
@@ -99,6 +99,7 @@ io.on('connection', (socket) =>{
             roomState[roomCode].questions[questionId].bets = {}
         }
         roomState[roomCode].questions[questionId].bets[userId] = { bigBet: bigBet, smallBet: smallBet }
+        io.in(roomCode).emit('betSubmitted', { bets: roomState[roomCode].questions });
 
     })
     

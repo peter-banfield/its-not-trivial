@@ -14,6 +14,14 @@ class PlaceBets extends React.Component {
         }
     }
 
+    renderAnswer(){
+        return this.props.answers.map(a =>{
+            return (
+                <option>{a}</option>
+            );
+        });
+    }
+
     handleSubmit = event => {
         event.preventDefault();
         const data = new FormData(event.target)
@@ -21,7 +29,7 @@ class PlaceBets extends React.Component {
         const bigBet = data.get('SelectBigBet');
         const smallBet = data.get('SelectSmallBet');
         console.log(doubleDown + bigBet + smallBet);
-        if(bigBet != "" && smallBet != ""){
+        if(bigBet !== "" && smallBet !== ""){
             this.props.betSubmitAction(this.props.roomCode, doubleDown, bigBet, smallBet);
             this.props.history.push("/blank")
         }        
@@ -75,9 +83,9 @@ function sortAnswers(answers){
 
 function mapStateToProps(state){
     return {
+        answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers),
         screen: state.gameplay.screen,
-        user: state.gameplay.users[getId()]
-        screen: state.gameplay.screen
+        user: state.gameplay.users[getId()],
     }
 }
 
