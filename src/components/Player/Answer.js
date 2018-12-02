@@ -3,7 +3,6 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { AnswerSubmitAction } from '../../actions/index';
-import { screens } from '../screens'
 
 
 class Answer extends React.Component {

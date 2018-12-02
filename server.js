@@ -62,7 +62,7 @@ io.on('connection', (socket) =>{
             smallBet: ''
         }
 
-        console.log(roomState[roomCode].questions);
+        //console.log(roomState[roomCode].questions);
 
         io.in(roomCode).emit('userConnected', 
             { users: roomState[roomCode].users,
