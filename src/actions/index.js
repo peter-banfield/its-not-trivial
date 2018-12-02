@@ -135,6 +135,7 @@ export function betSubmitAction(roomCode, doubleDown, bigBet, smallBet){
     return function(dispatch, getState){
         const currentState = getState()
         const questionNum = currentState.gameplay.room.questionNum
+        console.log(questionNum)
         betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet)
     }
 }

@@ -26,9 +26,9 @@ class PlaceBets extends React.Component {
         event.preventDefault();
         const data = new FormData(event.target)
         const doubleDown = data.get('DoubleDown');
-        const bigBet = data.get('SelectBigBet');
-        const smallBet = data.get('SelectSmallBet');
-        console.log(doubleDown + bigBet + smallBet);
+        const bigBet = data.get('BigBet');
+        const smallBet = data.get('SmallBet');
+        console.log("bets entered: " + doubleDown + bigBet + smallBet);
         if(bigBet !== "" && smallBet !== ""){
             this.props.betSubmitAction(this.props.roomCode, doubleDown, bigBet, smallBet);
             this.props.history.push("/blank")
@@ -48,13 +48,13 @@ class PlaceBets extends React.Component {
                 </FormGroup>
                 <FormGroup>
                     <Label for="SelectBigBet">Select Your Big Bet</Label>
-                    <Input type="select" name="select" id="SelectBigBet">
+                    <Input type="select" name="BigBet" id="SelectBigBet">
                     {this.renderAnswer()}    
                     </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label for="SelectSmallBet">Select Your Small Bet</Label>
-                    <Input type="select" name="select" id="SelectSmallBet">
+                    <Input type="select" name="SmallBet" id="SelectSmallBet">
                     {this.renderAnswer()}
                     </Input>
                 </FormGroup>
@@ -84,6 +84,7 @@ function sortAnswers(answers){
 function mapStateToProps(state){
     return {
         answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers),
+        roomCode: state.gameplay.room.roomCode,
         screen: state.gameplay.screen,
         user: state.gameplay.users[getId()],
     }

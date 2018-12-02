@@ -14,7 +14,7 @@ const server = app.listen(port, () => console.log(`its-not-trivial server listen
 
 const io = require('socket.io')(server);
 
-var roomState = {};
+global.roomState = {};
 
 io.on('connection', (socket) =>{
     
@@ -81,7 +81,6 @@ io.on('connection', (socket) =>{
     
     socket.on('answerSubmit', (roomCode, answer, userId) => {
         var questionId = roomState[roomCode].questionNum
-        //console.log(roomState[roomCode].questions[questionId])
         if(!roomState[roomCode].questions[questionId].answers){
             roomState[roomCode].questions[questionId].answers = {}
         }
@@ -95,10 +94,16 @@ io.on('connection', (socket) =>{
         if(doubleDown){
             roomState[roomCode].users[userId].HasDD = false;
         }
-        if(!roomState[roomCode].questions[questionId].bets){
-            roomState[roomCode].questions[questionId].bets = {}
+
+        console.log("Big bet received: " + bigBet)
+        console.log("Small bet received: " + smallBet)
+        console.log(roomState[roomCode].questions[questionNum])
+
+        if(!roomState[roomCode].questions[questionNum].bets){
+            roomState[roomCode].questions[questionNum].bets = {}
         }
-        roomState[roomCode].questions[questionId].bets[userId] = { bigBet: bigBet, smallBet: smallBet }
+
+        roomState[roomCode].questions[questionNum].bets[userId] = { bigBet: bigBet, smallBet: smallBet }
         io.in(roomCode).emit('betSubmitted', { bets: roomState[roomCode].questions });
 
     })
