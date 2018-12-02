@@ -26,7 +26,7 @@ io.on('connection', (socket) =>{
         if(!roomState[roomCode]){
             roomState[roomCode] = {
                 usersCount: 0,
-                round: 0,
+                round: 1,
                 questionNum: 0,
                 roomCode: "",
                 questions: {}
