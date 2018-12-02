@@ -19,11 +19,11 @@ class QuestionAsk extends React.Component {
             <div className="d-flex flex-column align-items-center justify-content-center" style={{height: '100%'}}>
                 <Jumbotron style={{height: '75%', textAlign: 'center'}}>
                     <div className="d-flex flex-column" style={{height: '100%'}}>
-                        <Question />
+                        <Question question={this.props.question}/>
                         <div className="d-flex align-items-end" style={{height: '100%'}}>
                             <Row className="flex-fill">
                             <Timer />
-                            <Submitted />
+                            <Submitted numSubmit={this.props.submitted} />
                             </Row>
                         </div>
                     </div>
@@ -35,7 +35,8 @@ class QuestionAsk extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        submitted: state.gameplay.questions[state.gameplay.room.questionNum].answers.length,
+        question: state.gameplay.questions[state.gameplay.room.questionNum].question
     }
 }
 
