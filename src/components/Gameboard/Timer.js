@@ -15,18 +15,6 @@ export class Timer extends React.Component {
         }
     }
 
-    switchScreen(){
-        if(this.state.count === 0){
-            console.log("TRIGGERRRRRRRRDDDDD")
-            switch(this.props.screen){
-                case screens.QuestionNumber:
-                    nextScreen(this.props.roomCode, screens.QuestionAsk)
-                case screens.QuestionAsk:
-                    nextScreen(this.props.roomCode, screens.AnswerPlaceBets)
-            } 
-        }
-    }
-
     componentDidMount() {
         this.myInterval = setInterval(() => {
             if(this.state.count != 0){
@@ -34,13 +22,20 @@ export class Timer extends React.Component {
                     count: prevState.count - 1
                 }))
             }
-        }, 1000)
+            if(this.state.count === 0){
+                switch(this.props.screen){
+                    case screens.QuestionNumber:
+                        nextScreen(this.props.roomCode, screens.QuestionAsk)
+                    case screens.QuestionAsk:
+                        nextScreen(this.props.roomCode, screens.AnswerPlaceBets)
+                } 
+        }
+        }, 100)
     }
 
 
     componentWillUnmount () {
         clearInterval(this.myIngterval)
-        this.switchScreen()
     }
 
 
