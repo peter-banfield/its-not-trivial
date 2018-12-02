@@ -119,3 +119,9 @@ export function AnswerSubmitAction(roomCode, answer){
             answerSubmit(roomCode, answer);                 
     }
 }
+
+export function questionSubmitted(roomCode){
+    return function(dispatch, getState) {
+        nextScreen(roomCode, screens.QuestionAsk)
+    }
+}
