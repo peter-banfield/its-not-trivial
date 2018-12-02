@@ -22,19 +22,18 @@ const initialState = {
             correctAnswr: 1994, 
             closestAnswr: 1994, 
             points: 2, 
-            answers: [
-                {
-                    player: "test",
+            answers: {
+               socketID: {
+                    
                     answer: "1994"
                 }
-            ], 
-            bets: [
-                {
-                    player: "test", 
+            }, 
+            bets: {
+               socketID: { 
                     big: "1999", 
                     small: "2000"
                 }
-            ]
+            }
         } 
     */
 export default function(state = initialState, action){

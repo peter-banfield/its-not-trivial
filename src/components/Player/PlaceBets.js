@@ -3,6 +3,7 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { screens } from '../screens'
+import { getId } from '../../actions/socket_actions'
 
 class PlaceBets extends React.Component {
 

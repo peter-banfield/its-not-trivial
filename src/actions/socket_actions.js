@@ -28,6 +28,9 @@ export function socketActions(store){
     });
 }
 
+export function getId(){
+    return socket.id
+}
 
 export function createRoom(roomCode){
     socket.emit("createRoom", roomCode)
