@@ -15,6 +15,10 @@ class AnswerPlaceBets extends React.Component {
         // }
     }
 
+    componentWillMount(){
+        console.log(this.props.answers)
+    }
+
     render() {
         if(this.props.submitted === this.props.maxPlayers){
             this.props.answerSubmitted(this.props.roomCode)
@@ -29,14 +33,7 @@ class AnswerPlaceBets extends React.Component {
                                     <tr><th>Answers</th></tr>
                                 </thead>
                                 <tbody>
-                                    <tr><th>7</th></tr>
-                                    <tr><th>6</th></tr>
-                                    <tr><th>5</th></tr>
-                                    <tr><th>4</th></tr>
-                                    <tr><th>3</th></tr>
-                                    <tr><th>2</th></tr>
-                                    <tr><th>1</th></tr>
-                                    <tr><th>Smaller Than The Smallest</th></tr>
+                                    <tr><th>{this.props.answers}</th></tr>
                                 </tbody>
                             </Table>
                         </Col>
@@ -56,8 +53,20 @@ class AnswerPlaceBets extends React.Component {
     }
 }
 
+function sortAnswers(answers){
+        var answersArr = []
+        for(var key in answers){
+            var answer = answers[key]
+            answersArr.push(answer)
+        }
+        answersArr.sort(function(a, b){return b-a})
+        answersArr.push('Smaller than the Smallest')
+        return answersArr
+    }
+
 function mapStateToProps(state){
     return {
+        answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers), //[state.gameplay.]
         submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].bets).length,
         maxPlayers: state.gameplay.room.usersCount
     }
