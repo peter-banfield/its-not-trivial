@@ -52,3 +52,7 @@ export function nextScreen(roomCode, screenNum){
 export function answerSubmit(roomCode, answer){
     socket.emit("answerSubmit", roomCode, answer, socket.id)
 }
+
+export function betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet){
+    socket.emit("betSubmit", roomCode, questionNum, socket.id, doubleDown, bigBet, smallBet)
+}

@@ -1,4 +1,5 @@
-import { joinRoom, createRoom, nextScreen, answerSubmit, questionsToServer } from "./socket_actions.js";
+import { joinRoom, createRoom, nextScreen,
+         answerSubmit, questionsToServer, betSubmit } from "./socket_actions.js";
 import { screens } from "../components/screens"
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
@@ -129,5 +130,13 @@ export function questionSubmitted(roomCode){
 export function answerSubmitted(roomCode){
     return function(dispatch, getState) {
         nextScreen(roomCode, screens.AnswerPlaceBets)
+    }
+}
+
+export function betSubmitAction(roomCode, doubleDown, bigBet, smallBet){
+    return function(dispatch, getState){
+        const currentState = getState()
+        const questionNum = currentState.gameplay.room.questionNum
+        betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet)
     }
 }
