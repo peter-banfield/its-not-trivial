@@ -13,6 +13,14 @@ class PlaceBets extends React.Component {
         }
     }
 
+    renderAnswer(){        
+        return this.props.answers.map(a =>{
+            return (
+                <option>{a}</option>
+            );
+        });
+    }
+
     render() {
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
@@ -26,13 +34,13 @@ class PlaceBets extends React.Component {
                 <FormGroup>
                     <Label for="SelectBigBet">Select Your Big Bet</Label>
                     <Input type="select" name="select" id="SelectBigBet">
-                        
+                        {this.renderAnswer()}
                     </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label for="SelectSmallBet">Select Your Small Bet</Label>
                     <Input type="select" name="select" id="SelectSmallBet">
-
+                        {this.renderAnswer()}
                     </Input>
                 </FormGroup>
                 <FormGroup className="d-flex justify-content-end">
@@ -44,8 +52,21 @@ class PlaceBets extends React.Component {
     }
 }
 
+function sortAnswers(answers){
+    var answersArr = []
+    for(var key in answers){
+        var answer = answers[key]
+        answersArr.push(answer)
+    }
+    answersArr.sort(function(a, b){return b-a})
+    answersArr.unshift('')
+    answersArr.push('Smaller than the Smallest')
+    return answersArr
+}
+
 function mapStateToProps(state){
     return {
+        answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers),
         screen: state.gameplay.screen
     }
 }
