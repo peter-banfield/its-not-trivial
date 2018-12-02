@@ -82,7 +82,7 @@ io.on('connection', (socket) =>{
             console.log("a user has submitted the answer: " + answer)
         });
         var questionId = roomState[roomCode].questionNum
-        console.log(roomState[roomCode].questions[questionId])
+        //console.log(roomState[roomCode].questions[questionId])
         if(!roomState[roomCode].questions[questionId].answers){
             roomState[roomCode].questions[questionId].answers = {}
         }
