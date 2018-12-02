@@ -1,7 +1,6 @@
 import React from 'react';
 import { Col } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import { Redirect } from 'react-router';
 import { connect } from 'react-redux';
 import { nextScreen } from "../../actions/socket_actions.js";
 import { screens } from '../screens'
@@ -17,7 +16,7 @@ export class Timer extends React.Component {
 
     componentDidMount() {
         this.myInterval = setInterval(() => {
-            if(this.state.count != 0){
+            if(this.state.count !== 0){
                 this.setState(prevState => ({
                     count: prevState.count - 1
                 }))
@@ -26,8 +25,12 @@ export class Timer extends React.Component {
                 switch(this.props.screen){
                     case screens.QuestionNumber:
                         nextScreen(this.props.roomCode, screens.QuestionAsk)
+                        break;
                     case screens.QuestionAsk:
                         nextScreen(this.props.roomCode, screens.AnswerPlaceBets)
+                        break;
+                    default:
+                        break;
                 } 
         }
         }, 100)
