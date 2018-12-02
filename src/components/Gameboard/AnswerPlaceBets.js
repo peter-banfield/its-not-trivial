@@ -42,7 +42,7 @@ class AnswerPlaceBets extends React.Component {
                             </Row>
                             <Row className="mt-auto w-100">
                                 <Timer />
-                                <Submitted />
+                                <Submitted numSubmit={this.props.submitted} maxPlayers={this.props.maxPlayers} />
                             </Row>
                         </Col>
                     </Row>
@@ -54,7 +54,8 @@ class AnswerPlaceBets extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: refrence to state
+        submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].answers).length,
+        maxPlayers: state.gameplay.room.usersCount
     }
 }
 
