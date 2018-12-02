@@ -13,13 +13,21 @@ class PlaceBets extends React.Component {
         }
     }
 
+    componentDidMount(){
+        console.log(this.props.user)
+        
+    }
+
     render() {
+        
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
             <Form className="flex-fill" >
                 <FormGroup className="ml-4 mb-0" >
                     <Label for="DoubleDown">
-                    <Input type="checkbox" name="DoubleDown" id="DoubleDown" className="" />
+                    <Input type="checkbox" name="DoubleDown" id="DoubleDown" className="" 
+                    disabled={!this.props.user.HasDD}
+                    />
                     Double your bets
                     </Label>
                 </FormGroup>
@@ -46,7 +54,8 @@ class PlaceBets extends React.Component {
 
 function mapStateToProps(state){
     return {
-        screen: state.gameplay.screen
+        screen: state.gameplay.screen,
+        user: state.gameplay.users[getId()]
     }
 }
 
