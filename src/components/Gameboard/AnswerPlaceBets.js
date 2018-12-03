@@ -44,7 +44,7 @@ class AnswerPlaceBets extends React.Component {
                                 </tbody>
                             </Table>
                         </Col>
-                        <Col className="d-flex align-items-end flex-column bd-highlight mb-3 w-100">
+                        <Col className="d-flex align-items-center flex-column bd-highlight mb-3 w-100">
                             <Row>
                                 <Question />
                             </Row>
