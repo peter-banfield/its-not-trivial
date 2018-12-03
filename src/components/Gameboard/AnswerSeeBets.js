@@ -56,8 +56,6 @@ class AnswerSeeBets extends React.Component {
 }
 
 function sortBets(bets, answers){
-    console.log(bets)
-
 
     var betsArr = []
     var answersArr = []
@@ -70,9 +68,7 @@ function sortBets(bets, answers){
        }
     }
     betsArr.sort(function(a, b){return b-a})
-    console.log(betsArr)
     var countedBets = _.countBy(betsArr, Math.floor)
-    var countBetsArr = Object.keys(countedBets)
     var answersKeys = Object.keys(answers)
 
     answersKeys.forEach((id) => {
@@ -89,13 +85,8 @@ function sortBets(bets, answers){
         else{
             newCountBets.push({answer: id, count: countedBets[id]})
         }
-        
     })
-
-    console.log(newCountBets)
-
     return newCountBets
-
 }
 
 function mapStateToProps(state){

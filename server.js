@@ -163,9 +163,11 @@ io.on('connection', (socket) =>{
                 pointsToAward *= 2
             }
 
-            if(pointsToAward > 0 && 
-                ( bigBet === 'Smaller than the Smallest'|| smallBet === 'Smaller than the Smallest' ) ){
+            if(pointsToAward > 0){ 
+                if( bigBet === 'Smaller than the Smallest'|| smallBet === 'Smaller than the Smallest' ){
                 pointsToAward += 1
+                }
+                user.numCorrect += 1
             }
 
             console.log("total points to award to " + user + " is " + pointsToAward)
