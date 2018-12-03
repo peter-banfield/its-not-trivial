@@ -2,13 +2,40 @@ import React from 'react';
 import { Jumbotron, Col, Row, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { screens } from '../screens'
 
 class PointsLeaderBoard extends React.Component {
 
+    renderUsers(){        
+        return this.props.users.map((u, index) =>{
+            return (
+                <tr>
+                    <th scope="row">{index}</th>
+                    <td>{u.username}</td>
+                    <td>{u.score}</td>
+                </tr>
+            );
+        });
+    }
+
+    componentDidMount(){
+        setTimeout(function(){ 
+            if(this.props.moreRounds){
+                // run the move next round action
+            }
+            else {
+                // trigger moving to the congrats screen
+            }
+        }.bind(this), 3000);
+    }
+
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        if(nextProps.screen === screens.PointsLeaderBoard){   
+            this.props.history.push('/Congrats');
+        }
+        if(nextProps.screen === screens.SkipRules){   
+            this.props.history.push("/roundnumber");
+        }
     }
 
     render() {
@@ -22,49 +49,15 @@ class PointsLeaderBoard extends React.Component {
                     </Row>
                     <Row>
                         <Table bordered>
-                        <thead>
-                            <tr>
-                                <th scope="col">Rank</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Points</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <th scope="row">1</th>
-                                <td>Chris</td>
-                                <td>15</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">2</th>
-                                <td>Peter</td>
-                                <td>13</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">3</th>
-                                <td>Carl</td>
-                                <td>10</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">4</th>
-                                <td>Brenden</td>
-                                <td>9</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">5</th>
-                                <td>Noel</td>
-                                <td>7</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">6</th>
-                                <td>Daniel</td>
-                                <td>5</td>
-                            </tr>
-                            <tr>
-                                <th scope="row">7</th>
-                                <td>Jake</td>
-                                <td>3</td>
-                            </tr>
+                            <thead>
+                                <tr>
+                                    <th scope="col">Rank</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Points</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {this.renderUsers()}
                             </tbody>
                         </Table>
                     </Row>
@@ -74,9 +67,27 @@ class PointsLeaderBoard extends React.Component {
     }
 }
 
+var sortUsers = function(usersObj){
+    var userIds = Object.keys(usersObj)
+    var usersArr = []
+    userIds.forEach((id)=>{
+        usersArr.push({ username: usersObj[id].username, score: usersObj[id].score })
+    })
+    usersArr.sort((a,b)=>{
+        if (a.score < b.score)
+            return -1;
+        if (a.score > b.score)
+            return 1;
+        return 0;
+    })
+    return usersArr
+}
+
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        users: sortUsers(state.gameplay.users),
+        screen: state.gameplay.screen,
+        moreRounds: state.gameplay.room.rPerGame === state.gameplay.room.round ? true : false
     }
 }
 

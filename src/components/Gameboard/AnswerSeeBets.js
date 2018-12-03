@@ -3,7 +3,6 @@ import { Jumbotron, Row, Col, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Question from './Question';
-
 var _ = require('lodash');
 
 class AnswerSeeBets extends React.Component {
@@ -19,10 +18,10 @@ class AnswerSeeBets extends React.Component {
         });
     }
 
-    componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+    componentDidMount(){
+        setTimeout(function(){ 
+            this.props.history.push('/CorrectAnswer');
+        }.bind(this), 3000);
     }
 
     render() {
@@ -63,27 +62,42 @@ function sortBets(bets, answers){
        for(var key in bets[user]){
            var bet = bets[user][key]
            if(key !== "doubleDown"){
+                if('Smaller than the Smallest' === bet){
+                    bet = -1
+                }
                 betsArr.push(bet)
            }
        }
     }
-    betsArr.sort(function(a, b){return b-a})
+
     var countedBets = _.countBy(betsArr, Math.floor)
     var answersKeys = Object.keys(answers)
-
+    console.log(betsArr)
+    console.log(countedBets)
     answersKeys.forEach((id) => {
         answersArr.push(answers[id])
     })
+    answersArr.push(-1)
     answersArr.sort(function(a,b){return b-a})
-    answersArr.push('Smaller than the Smallest')
+    answersArr.push()
 
     var newCountBets = []
     answersArr.forEach((id) => {
         if(typeof countedBets[id] === "undefined"){
-            newCountBets.push({answer: id, count: 0})
+            if(id === -1){
+                newCountBets.push({answer: 'Smaller than the Smallest', count: 0})
+            }
+            else {
+                newCountBets.push({answer: id, count: 0})
+            }
         }
         else{
-            newCountBets.push({answer: id, count: countedBets[id]})
+            if(id === -1){
+                newCountBets.push({answer: 'Smaller than the Smallest', count: countedBets[id]})
+            }
+            else {
+                newCountBets.push({answer: id, count: countedBets[id]})
+            }
         }
     })
     return newCountBets
