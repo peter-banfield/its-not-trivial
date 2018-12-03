@@ -8,9 +8,7 @@ import { screens } from '../screens'
 
 class QuestionNumber extends React.Component {
 
-    componentWillReceiveProps(nextProps){ 
-        console.log(nextProps)
-        
+    componentWillReceiveProps(nextProps){         
         if(nextProps.screen === screens.QuestionNumber){   
             this.props.history.push('/questionask');
         }
