@@ -8,6 +8,17 @@ var _ = require('lodash');
 
 class AnswerSeeBets extends React.Component {
 
+    renderBets(){        
+        return this.props.bets.map(a =>{
+            return (
+                <tr>
+                    <th>{a.answer}</th>
+                    <td>{a.count}</td>
+                </tr>
+            );
+        });
+    }
+
     componentWillReceiveProps(nextProps){ 
         // if(conditon){   
         //     this.props.history.push(endpoint);
@@ -28,38 +39,7 @@ class AnswerSeeBets extends React.Component {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <th>7</th>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <th>6</th>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <th>5</th>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <th>4</th>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <th>3</th>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <th>2</th>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <th>1</th>
-                                        <td>3</td>
-                                    </tr>
-                                    <tr>
-                                        <th>Smaller Than The Smallest</th>
-                                        <td>3</td>
-                                    </tr>
+                                    {this.renderBets()}
                                 </tbody>
                             </Table>
                         </Col>
@@ -100,7 +80,7 @@ function sortBets(bets){
     })
 
     console.log(newCountBets)
-    return betsArr
+    return newCountBets
 
 }
 
