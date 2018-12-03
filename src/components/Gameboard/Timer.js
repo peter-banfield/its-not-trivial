@@ -33,7 +33,7 @@ export class Timer extends React.Component {
                         break;
                 } 
         }
-        }, 100)
+        }, 1000)
     }
 
 

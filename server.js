@@ -103,7 +103,7 @@ io.on('connection', (socket) =>{
             roomState[roomCode].questions[questionNum].bets = {}
         }
 
-        roomState[roomCode].questions[questionNum].bets[userId] = { bigBet: bigBet, smallBet: smallBet }
+        roomState[roomCode].questions[questionNum].bets[userId] = { bigBet: bigBet, smallBet: smallBet, doubleDown: doubleDown }
         io.in(roomCode).emit('betSubmitted', { bets: roomState[roomCode].questions });
 
     })
