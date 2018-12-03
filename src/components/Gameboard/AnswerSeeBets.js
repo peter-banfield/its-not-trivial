@@ -55,11 +55,12 @@ class AnswerSeeBets extends React.Component {
     }
 }
 
-function sortBets(bets){
+function sortBets(bets, answers){
     console.log(bets)
 
 
     var betsArr = []
+    var answersArr = []
     for(var user in bets){
        for(var key in bets[user]){
            var bet = bets[user][key]
@@ -72,21 +73,35 @@ function sortBets(bets){
     console.log(betsArr)
     var countedBets = _.countBy(betsArr, Math.floor)
     var countBetsArr = Object.keys(countedBets)
-    countBetsArr.sort(function(a,b){return b-a})
+    var answersKeys = Object.keys(answers)
+
+    answersKeys.forEach((id) => {
+        answersArr.push(answers[id])
+    })
+    answersArr.sort(function(a,b){return b-a})
+    answersArr.push('Smaller than the Smallest')
 
     var newCountBets = []
-    countBetsArr.forEach((id) => {
-        newCountBets.push({answer: id, count: countedBets[id]})
+    answersArr.forEach((id) => {
+        if(typeof countedBets[id] === "undefined"){
+            newCountBets.push({answer: id, count: 0})
+        }
+        else{
+            newCountBets.push({answer: id, count: countedBets[id]})
+        }
+        
     })
 
     console.log(newCountBets)
+
     return newCountBets
 
 }
 
 function mapStateToProps(state){
     return {
-        bets: sortBets(state.gameplay.questions[state.gameplay.room.questionNum].bets)
+        bets: sortBets(state.gameplay.questions[state.gameplay.room.questionNum].bets, 
+                        state.gameplay.questions[state.gameplay.room.questionNum].answers)
     }
 }
 
