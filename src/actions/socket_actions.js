@@ -52,6 +52,9 @@ export function joinRoom(username, roomCode){
 
 export function nextScreen(roomCode, screenNum){
     //console.log(roomCode+ ''+screenNum)
+    if(screenNum === 5){
+            socket.emit("calulatePoints", roomCode)
+        }
     socket.emit("nextScreen", roomCode, screenNum)
 }
 
