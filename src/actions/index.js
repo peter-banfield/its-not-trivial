@@ -94,6 +94,13 @@ export function checkJoinedPlayers(roomCode){
         //console.log(roomCode)
         const roomUsers = currentState.gameplay.room.usersCount;
         if(roomUsers >= 1){
+            dynamodb.deleteItem({Key: {"id": {S: String(roomCode)}},TableName: "Rooms"}, function(err, res){
+                if(err){
+                    console.log(err);
+                } else {
+                    console.log('removed roomcode from database')
+                }
+            })
             nextScreen(roomCode, screens.StartGame)
         }
     }
