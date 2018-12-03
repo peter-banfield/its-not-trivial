@@ -6,6 +6,7 @@ export const ADD_NEW_USER = "ADD_NEW_USER";
 export const SCREEN_SWITCH = "SCREEN_SWITCH";
 export const ANSWER_SUBMITTED = "ANSWER_SUBMITTED";
 export const BET_SUBMITTED = "BET_SUBMITTED";
+export const SCORING_COMPLETE = "SCORING_COMPLETE";
 
 
 export function socketActions(store){
@@ -19,19 +20,20 @@ export function socketActions(store){
     });
 
     socket.on('switchScreens', function(data){
-        console.log(data)
         store.dispatch({type: SCREEN_SWITCH, payload: data})
     });
 
     socket.on('answerSubmitted', function(data){
-        console.log(data)
         store.dispatch({type: ANSWER_SUBMITTED, payload: data})
     });
 
     socket.on('betSubmitted', function(data){
-        console.log(data)
         store.dispatch({type: BET_SUBMITTED, payload: data})
     });
+
+    socket.on('scoringComplete', function(data){
+        store.dispatch({type: SCORING_COMPLETE, payload: data})
+    })
 }
 
 export function getId(){
@@ -51,10 +53,6 @@ export function joinRoom(username, roomCode){
 }
 
 export function nextScreen(roomCode, screenNum){
-    //console.log(roomCode+ ''+screenNum)
-    if(screenNum === 5){
-            socket.emit("calulatePoints", roomCode)
-        }
     socket.emit("nextScreen", roomCode, screenNum)
 }
 
@@ -64,4 +62,8 @@ export function answerSubmit(roomCode, answer){
 
 export function betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet){
     socket.emit("betSubmit", roomCode, socket.id, questionNum, doubleDown, bigBet, smallBet)
+}
+
+export function calculatePoints(roomCode){
+    socket.emit("calulatePoints", roomCode)
 }

@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Timer from './Timer';
 import Submitted from './Submitted';
 import Question from './Question';
+import { calculatePoints } from '../../actions/socket_actions.js';
 import { answerSubmitted } from '../../actions/index';
 import { screens } from '../screens'
 
@@ -20,6 +21,7 @@ class AnswerPlaceBets extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
         if(nextProps.screen === screens.AnswerPlaceBets){
+            calculatePoints(this.props.room)
             this.props.history.push("/AnswerSeeBets");
         }
     }
@@ -81,7 +83,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        answerSubmitted: answerSubmitted
+        answerSubmitted: answerSubmitted,
     }, dispatch);
 }
 

@@ -83,19 +83,16 @@ io.on('connection', (socket) =>{
         //if answer is exactly correct assign 2 points automatically
         if(answer == parseInt(roomState[roomCode].questions[questionId].correctAnswr)){
             roomState[roomCode].users[userId].score += 2
-            console.log('score after correct'+roomState[roomCode].users[userId].score)
+            //console.log('score after correct '+ roomState[roomCode].users[userId].score)
         }
         roomState[roomCode].questions[questionId].answers[userId] = answer
-        io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions });
+        io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions, users: roomState[roomCode].users });
     });
 
     socket.on("betSubmit", (roomCode, userId, questionNum, doubleDown, bigBet, smallBet) =>{
         if(doubleDown){
             roomState[roomCode].users[userId].HasDD = false;
         }
-
-        console.log("Big bet received: " + bigBet)
-        console.log("Small bet received: " + smallBet)
 
         if(!roomState[roomCode].questions[questionNum].bets){
             roomState[roomCode].questions[questionNum].bets = {}
@@ -143,24 +140,31 @@ io.on('connection', (socket) =>{
 
         Object.keys(bets).forEach((id)=>{
             var user = users[id]
-            var bb = bets[id].bigBet
-            var sb = bets[id].smallBet
-            var dd = bets[id].doubleDown
+            var bigBet = bets[id].bigBet
+            var smallBet = bets[id].smallBet
+            var doubleDown = bets[id].doubleDown
             var pointsToAward = 0
-
-            if(checkBet(bb, closest)){
+            if(checkBet(bigBet, closest)){
+                console.log("2 Points Awarded to" + user)
                 pointsToAward += 2
             }
 
-            if(checkBet(sb, closest)){
+            if(checkBet(smallBet, closest)){
+                console.log("1 Points Awarded to" + user)
                 pointsToAward += 1
             }
 
-            if(dd){
+            if(doubleDown){
+                console.log("double down to " + user)
                 pointsToAward *= 2
             }
+            console.log("total points to award to " + user + " is " + pointsToAward)
             user.score += pointsToAward
         })
+
+        io.in(roomCode).emit('scoringComplete', { users: roomState[roomCode].users });
+
+
     })
     
    
