@@ -10,7 +10,7 @@ class PointsLeaderBoard extends React.Component {
         return this.props.users.map((u, index) =>{
             return (
                 <tr>
-                    <th scope="row">{index}</th>
+                    <th scope="row">{index+1}</th>
                     <td>{u.username}</td>
                     <td>{u.score}</td>
                 </tr>

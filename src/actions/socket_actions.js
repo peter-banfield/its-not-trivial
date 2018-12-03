@@ -7,6 +7,7 @@ export const SCREEN_SWITCH = "SCREEN_SWITCH";
 export const ANSWER_SUBMITTED = "ANSWER_SUBMITTED";
 export const BET_SUBMITTED = "BET_SUBMITTED";
 export const SCORING_COMPLETE = "SCORING_COMPLETE";
+export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
 
 
 export function socketActions(store){
@@ -33,6 +34,10 @@ export function socketActions(store){
 
     socket.on('scoringComplete', function(data){
         store.dispatch({type: SCORING_COMPLETE, payload: data})
+    })
+
+    socket.on('nextQuestion', function(data){
+        store.dispatch({ type: INCREMENT_QUESTION });
     })
 }
 
@@ -66,4 +71,8 @@ export function betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet){
 
 export function calculatePoints(roomCode){
     socket.emit("calulatePoints", roomCode)
+}
+
+export function incrementQuestion(roomCode){
+    socket.emit("incrementQuestion", roomCode)
 }

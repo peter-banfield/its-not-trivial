@@ -1,4 +1,4 @@
-import { joinRoom, createRoom, nextScreen,
+import { joinRoom, createRoom, nextScreen, incrementQuestion,
          answerSubmit, questionsToServer, betSubmit } from "./socket_actions.js";
 import { screens } from "../components/screens"
 var randomstring = require("randomstring");
@@ -15,7 +15,6 @@ export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
 export const ADD_QUESTION = 'ADD_QUESTION';
-export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
 export const ANSWER_SUBMIT = 'ANSWER_SUBMIT';
 
 
@@ -114,8 +113,8 @@ export function skipRules(roomCode){
 
 export function nextQuestion(roomCode){
     return function(dispatch, getState){
-        dispatch({ type: INCREMENT_QUESTION });
-        nextScreen(roomCode, screens.QuestionNumber)
+        incrementQuestion(roomCode)
+        nextScreen(roomCode, screens.AnswersLeaderBoard)
     }
 }
 
