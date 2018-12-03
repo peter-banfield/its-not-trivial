@@ -40,7 +40,7 @@ class CorrectAnswer extends React.Component {
 
 function mapStateToProps(state){
     return {
-        numQuestions: state.gameplay.questions.length + 1,
+        numQuestions: Object.keys(state.gameplay.questions).length,
         correctAnswr: state.gameplay.questions[state.gameplay.room.questionNum].correctAnswr,
         closestAnswr: state.gameplay.questions[state.gameplay.room.questionNum].closestAnswr,
         points: state.gameplay.questions[state.gameplay.room.questionNum].points,
