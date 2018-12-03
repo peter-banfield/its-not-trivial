@@ -26,7 +26,7 @@ class AnswerPlaceBets extends React.Component {
 
     render() {
         if(this.props.submitted === this.props.maxPlayers){
-            this.props.answerSubmitted(this.props.roomCode)
+            this.props.answerSubmitted(this.props.room)
         }
         return (
             <Col className="d-flex align-items-center justify-content-center w-100 h-100">
@@ -74,7 +74,8 @@ function mapStateToProps(state){
         answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers), //[state.gameplay.]
         submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].bets).length,
         maxPlayers: state.gameplay.room.usersCount,
-        screen: state.gameplay.screen
+        screen: state.gameplay.screen,
+        room: state.gameplay.room.roomCode,
     }
 }
 
