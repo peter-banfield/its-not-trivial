@@ -2,11 +2,12 @@ import React from 'react';
 import { Jumbotron, Col, Row, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { screens } from '../screens'
 
 class PointsLeaderBoard extends React.Component {
 
     renderUsers(){        
-        return this.props.users.map(u, index =>{
+        return this.props.users.map((u, index) =>{
             return (
                 <tr>
                     <th scope="row">{index}</th>
@@ -17,10 +18,21 @@ class PointsLeaderBoard extends React.Component {
         });
     }
 
+    componentDidMount(){
+        setTimeout(function(){ 
+            if(this.props.moreRounds){
+                // run the move next round action
+            }
+        }.bind(this), 3000);
+    }
+
     componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+        if(nextProps.screen === screens.PointsLeaderBoard){   
+            this.props.history.push('/Congrats');
+        }
+        if(nextProps.screen === screens.SkipRules){   
+            this.props.history.push("/roundnumber");
+        }
     }
 
     render() {
@@ -70,7 +82,9 @@ var sortUsers = function(usersObj){
 
 function mapStateToProps(state){
     return {
-        users: sortUsers(state.gameplay.users)
+        users: sortUsers(state.gameplay.users),
+        screen: state.gameplay.screen,
+        moreRounds: state.gameplay.room.rPerGame === state.gameplay.room.round ? true : false
     }
 }
 
