@@ -131,8 +131,12 @@ io.on('connection', (socket) =>{
             }
         }
 
+        if(closest == -Infinity){
+            closest = 'Smaller than the Smallest'
+        }
+
         var checkBet = function(bet, closest){
-            if(parseInt(bet) === parseInt(closest)){
+            if(bet == closest){
                 return true
             }
             return false
@@ -158,6 +162,12 @@ io.on('connection', (socket) =>{
                 console.log("double down to " + user)
                 pointsToAward *= 2
             }
+
+            if(pointsToAward > 0 && 
+                ( bigBet === 'Smaller than the Smallest'|| smallBet === 'Smaller than the Smallest' ) ){
+                pointsToAward += 1
+            }
+
             console.log("total points to award to " + user + " is " + pointsToAward)
             user.score += pointsToAward
         })
