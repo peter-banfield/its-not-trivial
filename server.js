@@ -142,6 +142,7 @@ io.on('connection', (socket) =>{
             return false
         }
 
+        var totalPointsToAward = 0
         Object.keys(bets).forEach((id)=>{
             var user = users[id]
             var bigBet = bets[id].bigBet
@@ -163,6 +164,8 @@ io.on('connection', (socket) =>{
                 pointsToAward *= 2
             }
 
+            totalPointsToAward += pointsToAward
+
             if(pointsToAward > 0){ 
                 if( bigBet === 'Smaller than the Smallest'|| smallBet === 'Smaller than the Smallest' ){
                 pointsToAward += 1
@@ -173,8 +176,9 @@ io.on('connection', (socket) =>{
             console.log("total points to award to " + user + " is " + pointsToAward)
             user.score += pointsToAward
         })
-
-        io.in(roomCode).emit('scoringComplete', { users: roomState[roomCode].users });
+        roomState[roomCode].questions[roomState[roomCode].questionNum].points = totalPointsToAward
+        roomState[roomCode].questions[roomState[roomCode].questionNum].closestAnswr = closest
+        io.in(roomCode).emit('scoringComplete', { users: roomState[roomCode].users, questions: roomState[roomCode].questions });
 
 
     })

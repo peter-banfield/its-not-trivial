@@ -63,7 +63,7 @@ export default function(state = initialState, action){
         case BET_SUBMITTED:
             return { ...state, questions: action.payload.bets }
         case SCORING_COMPLETE:
-            return { ...state, users: action.payload.users }
+            return { ...state, users: action.payload.users, questions: action.payload.questions }
 	    default:
             return state;
     }

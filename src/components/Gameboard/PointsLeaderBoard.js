@@ -23,6 +23,9 @@ class PointsLeaderBoard extends React.Component {
             if(this.props.moreRounds){
                 // run the move next round action
             }
+            else {
+                // trigger moving to the congrats screen
+            }
         }.bind(this), 3000);
     }
 
