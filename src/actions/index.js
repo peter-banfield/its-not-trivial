@@ -1,4 +1,5 @@
-import { joinRoom, createRoom, nextScreen, answerSubmit, questionsToServer } from "./socket_actions.js";
+import { joinRoom, createRoom, nextScreen,
+         answerSubmit, questionsToServer, betSubmit } from "./socket_actions.js";
 import { screens } from "../components/screens"
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
@@ -56,7 +57,6 @@ export function createGame(roomCode){
 export function getQuestions(numQuestions, roomCode){
     return function(dispatch, getState) {
         // Generate a list numQuestions long of unique random integers
-        ///////////////////////////////////
         function getRandomInt(min, max) { // borrowed the next 13 lines from Pullo at https://www.sitepoint.com/community/t/fill-an-array-with-unique-values/100808
             return Math.floor(Math.random() * (max - min)) + min;
         }
@@ -71,7 +71,6 @@ export function getQuestions(numQuestions, roomCode){
             return ints;
         }
         var questionIds = getRandomInts(numQuestions, 1, 226)
-        /////////////////////////////
         // get the questions
         var questions = {}
         questionIds.forEach(function(id, index){
@@ -129,5 +128,14 @@ export function questionSubmitted(roomCode){
 export function answerSubmitted(roomCode){
     return function(dispatch, getState) {
         nextScreen(roomCode, screens.AnswerPlaceBets)
+    }
+}
+
+export function betSubmitAction(roomCode, doubleDown, bigBet, smallBet){
+    return function(dispatch, getState){
+        const currentState = getState()
+        const questionNum = currentState.gameplay.room.questionNum
+        console.log(questionNum)
+        betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet)
     }
 }

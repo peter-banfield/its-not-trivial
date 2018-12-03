@@ -1,6 +1,6 @@
 import { ROOM_ERROR, ADD_QUESTION, INCREMENT_QUESTION } from '../actions/index';
 import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH,
-    ANSWER_SUBMITTED } from '../actions/socket_actions.js';
+    ANSWER_SUBMITTED, BET_SUBMITTED, SCORING_COMPLETE } from '../actions/socket_actions.js';
 
 const initialState = { 
     screen: 0, 
@@ -22,19 +22,18 @@ const initialState = {
             correctAnswr: 1994, 
             closestAnswr: 1994, 
             points: 2, 
-            answers: [
-                {
-                    player: "test",
+            answers: {
+               socketID: {
+                    
                     answer: "1994"
                 }
-            ], 
-            bets: [
-                {
-                    player: "test", 
+            }, 
+            bets: {
+               socketID: { 
                     big: "1999", 
                     small: "2000"
                 }
-            ]
+            }
         } 
     */
 export default function(state = initialState, action){
@@ -45,8 +44,6 @@ export default function(state = initialState, action){
                 room: action.payload.room
             }
         case ADD_NEW_USER:
-            console.log("inside reducer")
-            console.log(action.payload.questions)
             return {
                 ...state, 
                 users: action.payload.users,
@@ -58,14 +55,16 @@ export default function(state = initialState, action){
         case SCREEN_SWITCH:
             return { ...state, screen: action.payload.screen }	
 	   case ADD_QUESTION:
-
-            return {...state, questions: action.payload.question }
+            return { ...state, questions: action.payload.question }
         case INCREMENT_QUESTION:
-            return {...state, questionNum: state.room.questionNum + 1}
+            return { ...state, questionNum: state.room.questionNum + 1}
         case ANSWER_SUBMITTED:
-            //console.log(state.answers[num].length);
-            return {...state, questions: action.payload.answer  }
-	default:
+            return { ...state, questions: action.payload.answer, users: action.payload.users }
+        case BET_SUBMITTED:
+            return { ...state, questions: action.payload.bets }
+        case SCORING_COMPLETE:
+            return { ...state, users: action.payload.users }
+	    default:
             return state;
     }
 }

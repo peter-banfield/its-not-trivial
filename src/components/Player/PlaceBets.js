@@ -3,6 +3,8 @@ import { Form, FormGroup, Label, Input, Button } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { screens } from '../screens'
+import { betSubmitAction } from '../../actions/index';
+import { getId } from '../../actions/socket_actions'
 
 class PlaceBets extends React.Component {
 
@@ -12,26 +14,48 @@ class PlaceBets extends React.Component {
         }
     }
 
+    renderAnswer(){
+        return this.props.answers.map(a =>{
+            return (
+                <option>{a}</option>
+            );
+        });
+    }
+
+    handleSubmit = event => {
+        event.preventDefault();
+        const data = new FormData(event.target)
+        const doubleDown = document.querySelector('#DoubleDown').checked
+        const bigBet = data.get('BigBet');
+        const smallBet = data.get('SmallBet');
+        console.log("bets entered: " + doubleDown + bigBet + smallBet);
+        if(bigBet !== "" && smallBet !== ""){
+            this.props.betSubmitAction(this.props.roomCode, doubleDown, bigBet, smallBet);
+            this.props.history.push("/blank")
+        }        
+    }
+
     render() {
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
-            <Form className="flex-fill" >
+            <Form className="flex-fill" onSubmit={this.handleSubmit.bind(this)} >
                 <FormGroup className="ml-4 mb-0" >
                     <Label for="DoubleDown">
-                    <Input type="checkbox" name="DoubleDown" id="DoubleDown" className="" />
+                    <Input type="checkbox" name="DoubleDown" id="DoubleDown" className="" 
+                    disabled={!this.props.user.HasDD} />
                     Double your bets
                     </Label>
                 </FormGroup>
                 <FormGroup>
                     <Label for="SelectBigBet">Select Your Big Bet</Label>
-                    <Input type="select" name="select" id="SelectBigBet">
-                        
+                    <Input type="select" name="BigBet" id="SelectBigBet">
+                    {this.renderAnswer()}    
                     </Input>
                 </FormGroup>
                 <FormGroup>
                     <Label for="SelectSmallBet">Select Your Small Bet</Label>
-                    <Input type="select" name="select" id="SelectSmallBet">
-
+                    <Input type="select" name="SmallBet" id="SelectSmallBet">
+                    {this.renderAnswer()}
                     </Input>
                 </FormGroup>
                 <FormGroup className="d-flex justify-content-end">
@@ -43,15 +67,32 @@ class PlaceBets extends React.Component {
     }
 }
 
+function sortAnswers(answers){
+
+    var answersArr = []
+    for(var key in answers){
+        var answer = answers[key]
+        answersArr.push(answer)
+    }
+    answersArr.sort(function(a, b){return b-a})
+    answersArr.unshift('')
+    answersArr.push('Smaller than the Smallest')
+    return answersArr
+
+}
+
 function mapStateToProps(state){
     return {
-        screen: state.gameplay.screen
+        answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers),
+        roomCode: state.gameplay.room.roomCode,
+        screen: state.gameplay.screen,
+        user: state.gameplay.users[getId()],
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+       betSubmitAction: betSubmitAction
     }, dispatch);
 }
 

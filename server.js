@@ -14,7 +14,7 @@ const server = app.listen(port, () => console.log(`its-not-trivial server listen
 
 const io = require('socket.io')(server);
 
-var roomState = {};
+global.roomState = {};
 
 io.on('connection', (socket) =>{
     
@@ -58,8 +58,6 @@ io.on('connection', (socket) =>{
             score: 0,
             numCorrect: 0,
             HasDD: true,
-            bigBet: '',
-            smallBet: ''
         }
 
         //console.log(roomState[roomCode].questions);
@@ -78,17 +76,106 @@ io.on('connection', (socket) =>{
 
     
     socket.on('answerSubmit', (roomCode, answer, userId) => {
-        socket.join(roomCode, () =>{
-            console.log("a user has submitted the answer: " + answer)
-        });
         var questionId = roomState[roomCode].questionNum
-        //console.log(roomState[roomCode].questions[questionId])
         if(!roomState[roomCode].questions[questionId].answers){
             roomState[roomCode].questions[questionId].answers = {}
         }
+        //if answer is exactly correct assign 2 points automatically
+        if(answer == parseInt(roomState[roomCode].questions[questionId].correctAnswr)){
+            roomState[roomCode].users[userId].score += 2
+            //console.log('score after correct '+ roomState[roomCode].users[userId].score)
+        }
         roomState[roomCode].questions[questionId].answers[userId] = answer
-        io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions } );
+        io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions, users: roomState[roomCode].users });
     });
+
+    socket.on("betSubmit", (roomCode, userId, questionNum, doubleDown, bigBet, smallBet) =>{
+        if(doubleDown){
+            roomState[roomCode].users[userId].HasDD = false;
+        }
+
+        if(!roomState[roomCode].questions[questionNum].bets){
+            roomState[roomCode].questions[questionNum].bets = {}
+        }
+
+        roomState[roomCode].questions[questionNum].bets[userId] = { bigBet: bigBet, smallBet: smallBet, doubleDown: doubleDown }
+        io.in(roomCode).emit('betSubmitted', { bets: roomState[roomCode].questions });
+
+    })
+
+    socket.on("calulatePoints", (roomCode) => {
+        var users = roomState[roomCode].users
+        var correctAnswr = roomState[roomCode].questions[roomState[roomCode].questionNum].correctAnswr
+        var answers = roomState[roomCode].questions[roomState[roomCode].questionNum].answers
+        var bets = roomState[roomCode].questions[roomState[roomCode].questionNum].bets
+
+        var answerKeys = Object.keys(answers)
+        var closest = -Infinity
+        for(let id of answerKeys){
+            var answer = parseInt(answers[id])
+            if(answer > correctAnswr){
+                // bigger than correct
+                continue
+            }
+            else if(answer === correctAnswr ){
+                // correct answer 
+                closest = answer
+                break
+            }
+            else if(answer < correctAnswr){
+                // smaller than correct
+                if(answer > closest){
+                    // new closest
+                    closest = answer
+                }
+            }
+        }
+
+        if(closest == -Infinity){
+            closest = 'Smaller than the Smallest'
+        }
+
+        var checkBet = function(bet, closest){
+            if(bet == closest){
+                return true
+            }
+            return false
+        }
+
+        Object.keys(bets).forEach((id)=>{
+            var user = users[id]
+            var bigBet = bets[id].bigBet
+            var smallBet = bets[id].smallBet
+            var doubleDown = bets[id].doubleDown
+            var pointsToAward = 0
+            if(checkBet(bigBet, closest)){
+                console.log("2 Points Awarded to" + user)
+                pointsToAward += 2
+            }
+
+            if(checkBet(smallBet, closest)){
+                console.log("1 Points Awarded to" + user)
+                pointsToAward += 1
+            }
+
+            if(doubleDown){
+                console.log("double down to " + user)
+                pointsToAward *= 2
+            }
+
+            if(pointsToAward > 0 && 
+                ( bigBet === 'Smaller than the Smallest'|| smallBet === 'Smaller than the Smallest' ) ){
+                pointsToAward += 1
+            }
+
+            console.log("total points to award to " + user + " is " + pointsToAward)
+            user.score += pointsToAward
+        })
+
+        io.in(roomCode).emit('scoringComplete', { users: roomState[roomCode].users });
+
+
+    })
     
    
 });

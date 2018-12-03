@@ -5,6 +5,7 @@ import { bindActionCreators } from 'redux';
 import Timer from './Timer';
 import Submitted from './Submitted';
 import Question from './Question';
+import { calculatePoints } from '../../actions/socket_actions.js';
 import { answerSubmitted } from '../../actions/index';
 import { screens } from '../screens'
 
@@ -20,13 +21,14 @@ class AnswerPlaceBets extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
         if(nextProps.screen === screens.AnswerPlaceBets){
+            calculatePoints(this.props.room)
             this.props.history.push("/AnswerSeeBets");
         }
     }
 
     render() {
         if(this.props.submitted === this.props.maxPlayers){
-            this.props.answerSubmitted(this.props.roomCode)
+            this.props.answerSubmitted(this.props.room)
         }
         return (
             <Col className="d-flex align-items-center justify-content-center w-100 h-100">
@@ -42,7 +44,7 @@ class AnswerPlaceBets extends React.Component {
                                 </tbody>
                             </Table>
                         </Col>
-                        <Col className="d-flex align-items-end flex-column bd-highlight mb-3 w-100">
+                        <Col className="d-flex align-items-center flex-column bd-highlight mb-3 w-100">
                             <Row>
                                 <Question />
                             </Row>
@@ -74,13 +76,14 @@ function mapStateToProps(state){
         answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers), //[state.gameplay.]
         submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].bets).length,
         maxPlayers: state.gameplay.room.usersCount,
-        screen: state.gameplay.screen
+        screen: state.gameplay.screen,
+        room: state.gameplay.room.roomCode,
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        answerSubmitted: answerSubmitted
+        answerSubmitted: answerSubmitted,
     }, dispatch);
 }
 
