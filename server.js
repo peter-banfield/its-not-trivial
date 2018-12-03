@@ -81,7 +81,10 @@ io.on('connection', (socket) =>{
             roomState[roomCode].questions[questionId].answers = {}
         }
         //if answer is exactly correct assign 2 points automatically
-
+        if(answer == parseInt(roomState[roomCode].questions[questionId].correctAnswr)){
+            roomState[roomCode].users[userId].score += 2
+            console.log('score after correct'+roomState[roomCode].users[userId].score)
+        }
         roomState[roomCode].questions[questionId].answers[userId] = answer
         io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions });
     });
@@ -93,7 +96,6 @@ io.on('connection', (socket) =>{
 
         console.log("Big bet received: " + bigBet)
         console.log("Small bet received: " + smallBet)
-        console.log(roomState[roomCode].questions[questionNum])
 
         if(!roomState[roomCode].questions[questionNum].bets){
             roomState[roomCode].questions[questionNum].bets = {}
@@ -105,9 +107,60 @@ io.on('connection', (socket) =>{
     })
 
     socket.on("calulatePoints", (roomCode) => {
-        
+        var users = roomState[roomCode].users
+        var correctAnswr = roomState[roomCode].questions[roomState[roomCode].questionNum].correctAnswr
+        var answers = roomState[roomCode].questions[roomState[roomCode].questionNum].answers
+        var bets = roomState[roomCode].questions[roomState[roomCode].questionNum].bets
 
-        
+        var answerKeys = Object.keys(answers)
+        var closest = -Infinity
+        for(let id of answerKeys){
+            var answer = parseInt(answers[id])
+            if(answer > correctAnswr){
+                // bigger than correct
+                continue
+            }
+            else if(answer === correctAnswr ){
+                // correct answer 
+                closest = answer
+                break
+            }
+            else if(answer < correctAnswr){
+                // smaller than correct
+                if(answer > closest){
+                    // new closest
+                    closest = answer
+                }
+            }
+        }
+
+        var checkBet = function(bet, closest){
+            if(parseInt(bet) === parseInt(closest)){
+                return true
+            }
+            return false
+        }
+
+        Object.keys(bets).forEach((id)=>{
+            var user = users[id]
+            var bb = bets[id].bigBet
+            var sb = bets[id].smallBet
+            var dd = bets[id].doubleDown
+            var pointsToAward = 0
+
+            if(checkBet(bb, closest)){
+                pointsToAward += 2
+            }
+
+            if(checkBet(sb, closest)){
+                pointsToAward += 1
+            }
+
+            if(dd){
+                pointsToAward *= 2
+            }
+            user.score += pointsToAward
+        })
     })
     
    
