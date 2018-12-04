@@ -41,7 +41,7 @@ export default function(state = initialState, action){
         case ADD_NEW_ROOM:
             return {
                 ...state, 
-                room: action.payload.room
+                room: action.payload.room,
             }
         case ADD_NEW_USER:
             return {

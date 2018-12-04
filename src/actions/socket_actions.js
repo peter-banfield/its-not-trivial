@@ -50,11 +50,14 @@ export function getId(){
     return socket.id
 }
 
-export function createRoom(roomCode){
-    socket.emit("createRoom", roomCode)
+export function createRoom(roomCode, roundsQuestions, roundsGame){
+    console.log("roomcode: " + roomCode)
+    console.log("RoundQ & RoundG: " + roundsQuestions + " " + roundsGame)
+    socket.emit("createRoom", roomCode, roundsQuestions, roundsGame)
 }
 
 export function questionsToServer(roomCode, question, index){
+    console.log("roomcode: " + roomCode + " question: " + question + " index: " + index)
     socket.emit("storeQuestions", roomCode, question, index)
 }
 

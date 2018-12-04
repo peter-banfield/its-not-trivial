@@ -38,7 +38,7 @@ export function JoinAction(username, roomCode){
     }
 }
 
-export function createGame(roomCode){
+export function createGame(roomCode, roundsQuestions, roundsGame){
    return function generateuniquecode(dispatch, getState){
         var roomCode = randomstring.generate({length: 4, charset: 'alphabetic'}).toUpperCase();   
         dynamodb.putItem({Item: {"id": {S: roomCode}, "CanJoin": {BOOL: true}},TableName: "Rooms",ConditionExpression:"attribute_not_exists(id)"}, function(err, res){
@@ -46,7 +46,7 @@ export function createGame(roomCode){
                 generateuniquecode();
             } 
             else{
-                createRoom(roomCode) 
+                createRoom(roomCode, roundsQuestions, roundsGame) 
                 dispatch({ type: CREATE_GAME, payload: { code: roomCode } });
             }; 
         });
