@@ -41,8 +41,6 @@ const rootReducer = (state, action) => {
         }
         console.log(tempState)
         state.gameplay = tempState
-        //state.gameplay.questions: action.payload.questions
-        //state.room = { roomCode: state.room.roomCode, userCount: state.room.userCount }
     }
   
 

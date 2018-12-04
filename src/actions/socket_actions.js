@@ -48,7 +48,6 @@ export function socketActions(store){
     })
 
     socket.on('stateResetComplete', function(data){
-        console.log("received emit from server")
         store.dispatch({ type: RESET_STATE })
     })
 
@@ -62,13 +61,10 @@ export function getId(){
 }
 
 export function createRoom(roomCode, roundsQuestions, roundsGame){
-    //console.log("roomcode: " + roomCode)
-    //console.log("RoundQ & RoundG: " + roundsQuestions + " " + roundsGame)
     socket.emit("createRoom", roomCode, roundsQuestions, roundsGame)
 }
 
 export function questionsToServer(roomCode, question, index, numQuestion){
-    //console.log("roomcode: " + roomCode + " question: " + question + " index: " + index)
     socket.emit("storeQuestions", roomCode, question, index, numQuestion)
 }
 

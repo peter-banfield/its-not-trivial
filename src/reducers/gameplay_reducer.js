@@ -55,7 +55,6 @@ export default function(state = initialState, action){
         case SCREEN_SWITCH:
             return { ...state, screen: action.payload.screen }	
 	   case ADD_QUESTION:
-            console.log(action.payload.questions)
             return { ...state, questions: action.payload.questions }
         case INCREMENT_QUESTION:
             return { ...state, room: { ...state.room, questionNum: state.room.questionNum + 1}}

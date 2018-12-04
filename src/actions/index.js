@@ -112,14 +112,12 @@ export function getQuestions(numQuestions, roomCode){
                 }
             })
         })
-        //dispatch({ type: ADD_QUESTION, payload: { question: questions } });
     }
 }
 
 export function checkJoinedPlayers(roomCode){
     return function (dispatch, getState){
         const currentState = getState();
-        //console.log(roomCode)
         const roomUsers = currentState.gameplay.room.usersCount;
         if(roomUsers >= 1){
             console.log('about to delete')
