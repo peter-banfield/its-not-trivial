@@ -3,8 +3,7 @@ import { Jumbotron, Col, Row, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { screens } from '../screens'
-import { nextRound } from '../../actions/index'
-import { nextScreen } from '../../actions/socket_actions'
+import { nextRound, displayWinner } from '../../actions/index'
 
 class PointsLeaderBoard extends React.Component {
 
@@ -27,7 +26,7 @@ class PointsLeaderBoard extends React.Component {
                 this.props.nextRound(this.props.room)
             }
             else {
-                this.props.nextScreen(this.props.room, screens.PointsLeaderBoard)
+                this.props.displayWinner(this.props.room)
             }
         }.bind(this), 3000);
     }
@@ -98,7 +97,7 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
         nextRound: nextRound,
-        nextScreen: nextScreen
+        displayWinner: displayWinner
     }, dispatch);
 }
 

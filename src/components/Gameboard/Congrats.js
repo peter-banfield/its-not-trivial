@@ -7,9 +7,9 @@ import { screens } from '../screens'
 class Congrats extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        if(nextProps.screen === screens.PlayAgain){   
-            this.props.history.push('/roundnumber');
-        }
+        // if(nextProps.screen === screens.PlayAgain){   
+        //     this.props.history.push('/roundnumber');
+        // }
     }
     
     render() {
