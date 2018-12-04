@@ -8,6 +8,7 @@ export const ANSWER_SUBMITTED = "ANSWER_SUBMITTED";
 export const BET_SUBMITTED = "BET_SUBMITTED";
 export const SCORING_COMPLETE = "SCORING_COMPLETE";
 export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
+export const INCREMENT_ROUND = 'INCREMENT_ROUND';
 
 
 export function socketActions(store){
@@ -38,6 +39,10 @@ export function socketActions(store){
 
     socket.on('nextQuestion', function(data){
         store.dispatch({ type: INCREMENT_QUESTION });
+    })
+
+    socket.on('nextQuestion', function(data){
+        store.dispatch({ type: INCREMENT_ROUND });
     })
 }
 
@@ -75,4 +80,8 @@ export function calculatePoints(roomCode){
 
 export function incrementQuestion(roomCode){
     socket.emit("incrementQuestion", roomCode)
+}
+
+export function incrementRound(roomCode){
+    socket.emit("incrementRound", roomCode)
 }

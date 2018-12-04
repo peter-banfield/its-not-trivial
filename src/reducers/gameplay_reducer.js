@@ -1,5 +1,5 @@
 import { ROOM_ERROR, ADD_QUESTION} from '../actions/index';
-import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH,
+import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH, INCREMENT_ROUND,
     ANSWER_SUBMITTED, BET_SUBMITTED, SCORING_COMPLETE, INCREMENT_QUESTION  } from '../actions/socket_actions.js';
 
 const initialState = { 
@@ -7,8 +7,8 @@ const initialState = {
     room: { 
         usersCount: 0,
         round: 0,
-        qPerRound: 7,
-        rPerGame: 1,
+        qPerRound: 1,
+        rPerGame: 2,
         questionNum: 0,
         roomCode: ""
     },
@@ -58,6 +58,8 @@ export default function(state = initialState, action){
             return { ...state, questions: action.payload.question }
         case INCREMENT_QUESTION:
             return { ...state, room: { ...state.room, questionNum: state.room.questionNum + 1}}
+        case INCREMENT_ROUND:
+        return { ...state, room: { ...state.room, round: state.room.round + 1}}
         case ANSWER_SUBMITTED:
             return { ...state, questions: action.payload.answer, users: action.payload.users }
         case BET_SUBMITTED:

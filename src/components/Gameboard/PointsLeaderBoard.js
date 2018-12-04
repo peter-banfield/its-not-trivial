@@ -3,6 +3,8 @@ import { Jumbotron, Col, Row, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { screens } from '../screens'
+import { nextRound } from '../../actions/index'
+import { nextScreen } from '../../actions/socket_actions'
 
 class PointsLeaderBoard extends React.Component {
 
@@ -21,10 +23,10 @@ class PointsLeaderBoard extends React.Component {
     componentDidMount(){
         setTimeout(function(){ 
             if(this.props.moreRounds){
-                // run the move next round action
+                this.props.nextRound(this.props.room)
             }
             else {
-                // trigger moving to the congrats screen
+                this.props.nextScreen(this.props.room, screens.PointsLeaderBoard)
             }
         }.bind(this), 3000);
     }
@@ -33,7 +35,7 @@ class PointsLeaderBoard extends React.Component {
         if(nextProps.screen === screens.PointsLeaderBoard){   
             this.props.history.push('/Congrats');
         }
-        if(nextProps.screen === screens.SkipRules){   
+        if(nextProps.screen === screens.PlayAgain){   
             this.props.history.push("/roundnumber");
         }
     }
@@ -87,13 +89,15 @@ function mapStateToProps(state){
     return {
         users: sortUsers(state.gameplay.users),
         screen: state.gameplay.screen,
-        moreRounds: state.gameplay.room.rPerGame === state.gameplay.room.round ? true : false
+        moreRounds: state.gameplay.room.rPerGame === state.gameplay.room.round ? true : false,
+        room: state.session.code
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        nextRound: nextRound,
+        nextScreen: nextScreen
     }, dispatch);
 }
 

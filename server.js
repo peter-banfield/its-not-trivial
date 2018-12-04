@@ -188,4 +188,9 @@ io.on('connection', (socket) =>{
         io.in(roomCode).emit('nextQuestion')
     });
 
+    socket.on('incrementRound', (roomCode) => {
+        roomState[roomCode].round += 1
+        io.in(roomCode).emit('nextRound')
+    });
+
 });
