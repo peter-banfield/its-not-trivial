@@ -76,9 +76,9 @@ var sortUsers = function(usersObj){
         usersArr.push({ username: usersObj[id].username, score: usersObj[id].score })
     })
     usersArr.sort((a,b)=>{
-        if (a.score < b.score)
-            return -1;
         if (a.score > b.score)
+            return -1;
+        if (a.score < b.score)
             return 1;
         return 0;
     })
