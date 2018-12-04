@@ -1,20 +1,40 @@
 import React from 'react';
-import { Button } from 'reactstrap';
+import { Button, Jumbotron, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { createGame, getQuestions} from '../../actions/index';
 
 class PlayAgain extends React.Component {
     
-    componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
+    gameCreate = event =>{
+        this.props.createGame();
+    }
+
+    componentWillReceiveProps(nextProps){
+        if(nextProps.code.code){
+            this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.code.code);
+            this.props.history.push("/RoomCode")
+        }
     }
 
     render() {
         return (
-            <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
-                <Button size="lg">Play Again</Button>
+            <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>               
+                <Jumbotron className="w-100 h-55 text-center">
+                    <Row className="text-center">
+                        <div className="w-100">
+                            <h1>Play Again?</h1><br></br>
+                        </div>
+                    </Row>
+                    <Row>
+                        <div className="col">
+                            <Button size="sm">With Same Players</Button> 
+                        </div>
+                        <div className="col">
+                            <Button onClick={this.gameCreate} size="sm">With New Players</Button> 
+                        </div>                   
+                    </Row>
+                </Jumbotron>               
             </div>
         )
     }
@@ -22,13 +42,16 @@ class PlayAgain extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
+        code: state.session, 
+        qPerRound: state.gameplay.room.qPerRound,
+        rPerGame: state.gameplay.room.rPerGame
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        createGame: createGame,
+        getQuestions: getQuestions,
     }, dispatch);
 }
 
