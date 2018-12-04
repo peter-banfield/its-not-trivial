@@ -1,6 +1,6 @@
-import { ROOM_ERROR, ADD_QUESTION, /*RESET_STATE*/} from '../actions/index';
+import { ROOM_ERROR, /*ADD_QUESTION*/ } from '../actions/index';
 import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH, INCREMENT_ROUND,
-    ANSWER_SUBMITTED, BET_SUBMITTED, SCORING_COMPLETE, INCREMENT_QUESTION  } from '../actions/socket_actions.js';
+    ANSWER_SUBMITTED, BET_SUBMITTED, SCORING_COMPLETE, INCREMENT_QUESTION, ADD_QUESTION  } from '../actions/socket_actions.js';
 
 const initialState = { 
     screen: 0, 
@@ -55,7 +55,8 @@ export default function(state = initialState, action){
         case SCREEN_SWITCH:
             return { ...state, screen: action.payload.screen }	
 	   case ADD_QUESTION:
-            return { ...state, questions: action.payload.question }
+            console.log(action.payload.questions)
+            return { ...state, questions: action.payload.questions }
         case INCREMENT_QUESTION:
             return { ...state, room: { ...state.room, questionNum: state.room.questionNum + 1}}
         case INCREMENT_ROUND:

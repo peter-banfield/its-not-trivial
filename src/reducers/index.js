@@ -35,8 +35,13 @@ const rootReducer = (state, action) => {
         tempState = initialState
         tempState.room = room
         tempState.users = users
+        for(var key in tempState.users){
+            tempState.users[key].score = 0
+            tempState.users[key].HasDD = true
+        }
         console.log(tempState)
         state.gameplay = tempState
+        //state.gameplay.questions: action.payload.questions
         //state.room = { roomCode: state.room.roomCode, userCount: state.room.userCount }
     }
   

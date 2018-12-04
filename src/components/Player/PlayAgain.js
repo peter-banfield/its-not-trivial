@@ -3,6 +3,7 @@ import { Button, Jumbotron, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { createGame, getQuestions, sameUsers } from '../../actions/index';
+import { screens } from '../screens'
 
 class PlayAgain extends React.Component {
     
@@ -11,15 +12,24 @@ class PlayAgain extends React.Component {
     }
 
     sameUsers = event =>{
-        console.log(this.props.roomCode);
         this.props.sameUsers(this.props.roomCode);
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.roomCode){
-            this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
-            this.props.history.push("/RoomCode")
+        console.log(nextProps)
+        if(nextProps.screen === screens.SamePlayers){
+            //this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
+            this.props.history.push("/Blank")
         }
+        if(nextProps.screen === screens.PlayAgain){
+            //this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
+            this.props.history.push("/")
+        }
+
+    }
+
+    componentWillUnmount(){
+        this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, this.props.roomCode);
     }
 
     render() {
@@ -33,10 +43,10 @@ class PlayAgain extends React.Component {
                     </Row>
                     <Row>
                         <div className="col">
-                            <Button onClick={this.sameUsers} size="sm">With Same Players</Button> 
+                            <Button onClick={this.sameUsers} size="sm">Same Players</Button> 
                         </div>
                         <div className="col">
-                            <Button onClick={this.gameCreate} size="sm">With New Players</Button> 
+                            <Button onClick={this.gameCreate} size="sm">New Players</Button> 
                         </div>                   
                     </Row>
                 </Jumbotron>               
@@ -49,7 +59,8 @@ function mapStateToProps(state){
     return {
         roomCode: state.gameplay.room.roomCode, 
         qPerRound: state.gameplay.room.qPerRound,
-        rPerGame: state.gameplay.room.rPerGame
+        rPerGame: state.gameplay.room.rPerGame,
+        screen: state.gameplay.screen
     }
 }
 
