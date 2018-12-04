@@ -9,6 +9,7 @@ export const BET_SUBMITTED = "BET_SUBMITTED";
 export const SCORING_COMPLETE = "SCORING_COMPLETE";
 export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
 export const INCREMENT_ROUND = 'INCREMENT_ROUND';
+export const RESET_STATE = 'RESET_STATE';
 
 
 export function socketActions(store){
@@ -43,6 +44,11 @@ export function socketActions(store){
 
     socket.on('nextRound', function(data){
         store.dispatch({ type: INCREMENT_ROUND });
+    })
+
+    socket.on('stateResetComplete', function(data){
+        console.log("received emit from server")
+        store.dispatch({ type: RESET_STATE })
     })
 }
 
@@ -87,4 +93,8 @@ export function incrementQuestion(roomCode){
 
 export function incrementRound(roomCode){
     socket.emit("incrementRound", roomCode)
+}
+
+export function resetServerState(roomCode){
+    socket.emit("resetState", roomCode)
 }

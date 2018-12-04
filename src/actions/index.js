@@ -1,5 +1,5 @@
 import { joinRoom, createRoom, nextScreen, incrementQuestion,
-         answerSubmit, questionsToServer, betSubmit, incrementRound } from "./socket_actions.js";
+         answerSubmit, questionsToServer, betSubmit, incrementRound, resetServerState } from "./socket_actions.js";
 import { screens } from "../components/screens"
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
@@ -16,6 +16,7 @@ export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
 export const ADD_QUESTION = 'ADD_QUESTION';
 export const ANSWER_SUBMIT = 'ANSWER_SUBMIT';
+export const RESET_STATE = 'RESET_STATE';
 
 
 export function JoinAction(username, roomCode){
@@ -151,7 +152,7 @@ export function nextQuestion(roomCode){
  
 export function AnswerSubmitAction(roomCode, answer){
     return function(dispatch, getState){
-            answerSubmit(roomCode, answer);                 
+        answerSubmit(roomCode, answer);                 
     }
 }
 
@@ -171,7 +172,6 @@ export function betSubmitAction(roomCode, doubleDown, bigBet, smallBet){
     return function(dispatch, getState){
         const currentState = getState()
         const questionNum = currentState.gameplay.room.questionNum
-        console.log(questionNum)
         betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet)
     }
 }
@@ -186,5 +186,11 @@ export function nextRound(roomCode){
 export function displayWinner(roomCode){
     return function(dispatch, getState){
         nextScreen(roomCode, screens.PointsLeaderBoard)
+    }
+}
+
+export function sameUsers(roomCode){
+    return function(dispatch, getState){
+        resetServerState(roomCode)
     }
 }

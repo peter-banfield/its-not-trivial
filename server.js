@@ -196,4 +196,29 @@ io.on('connection', (socket) =>{
         io.in(roomCode).emit('nextRound')
     });
 
+    socket.on('resetState', (roomCode) => {
+        var usersTemp = roomState[roomCode].users;
+        var userCountTemp = roomState[roomCode].usersCount;
+        var qPerRoundTemp = roomState[roomCode].qPerRound;
+        var rPerGameTemp = roomState[roomCode].rPerGame;
+
+
+        roomState[roomCode] = {
+                usersCount: userCountTemp,
+                round: 1,
+                qPerRound: qPerRoundTemp,
+                rPerGame: rPerGameTemp,
+                questionNum: 0,
+                roomCode: roomCode,
+                questions: {}
+        }
+        roomState[roomCode].users = usersTemp;
+
+        console.log(roomState[roomCode])
+
+        io.in(roomCode).emit('stateResetComplete')
+
+    });
+
+
 });

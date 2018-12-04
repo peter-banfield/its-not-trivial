@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Jumbotron, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createGame, getQuestions} from '../../actions/index';
+import { createGame, getQuestions, sameUsers } from '../../actions/index';
 
 class PlayAgain extends React.Component {
     
@@ -10,9 +10,14 @@ class PlayAgain extends React.Component {
         this.props.createGame();
     }
 
+    sameUsers = event =>{
+        console.log(this.props.roomCode);
+        this.props.sameUsers(this.props.roomCode);
+    }
+
     componentWillReceiveProps(nextProps){
-        if(nextProps.code.code){
-            this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.code.code);
+        if(nextProps.roomCode){
+            this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
             this.props.history.push("/RoomCode")
         }
     }
@@ -28,7 +33,7 @@ class PlayAgain extends React.Component {
                     </Row>
                     <Row>
                         <div className="col">
-                            <Button size="sm">With Same Players</Button> 
+                            <Button onClick={this.sameUsers} size="sm">With Same Players</Button> 
                         </div>
                         <div className="col">
                             <Button onClick={this.gameCreate} size="sm">With New Players</Button> 
@@ -42,7 +47,7 @@ class PlayAgain extends React.Component {
 
 function mapStateToProps(state){
     return {
-        code: state.session, 
+        roomCode: state.gameplay.room.roomCode, 
         qPerRound: state.gameplay.room.qPerRound,
         rPerGame: state.gameplay.room.rPerGame
     }
@@ -52,6 +57,7 @@ function mapDispatchToProps(dispatch){
     return bindActionCreators({
         createGame: createGame,
         getQuestions: getQuestions,
+        sameUsers: sameUsers
     }, dispatch);
 }
 

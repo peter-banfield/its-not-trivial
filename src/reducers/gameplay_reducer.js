@@ -1,4 +1,4 @@
-import { ROOM_ERROR, ADD_QUESTION} from '../actions/index';
+import { ROOM_ERROR, ADD_QUESTION, /*RESET_STATE*/} from '../actions/index';
 import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH, INCREMENT_ROUND,
     ANSWER_SUBMITTED, BET_SUBMITTED, SCORING_COMPLETE, INCREMENT_QUESTION  } from '../actions/socket_actions.js';
 
@@ -8,7 +8,7 @@ const initialState = {
         usersCount: 0,
         round: 0,
         qPerRound: 1,
-        rPerGame: 2,
+        rPerGame: 1,
         questionNum: 0,
         roomCode: ""
     },
