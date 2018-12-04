@@ -7,6 +7,8 @@ export const SCREEN_SWITCH = "SCREEN_SWITCH";
 export const ANSWER_SUBMITTED = "ANSWER_SUBMITTED";
 export const BET_SUBMITTED = "BET_SUBMITTED";
 export const SCORING_COMPLETE = "SCORING_COMPLETE";
+export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
+export const INCREMENT_ROUND = 'INCREMENT_ROUND';
 
 
 export function socketActions(store){
@@ -34,17 +36,28 @@ export function socketActions(store){
     socket.on('scoringComplete', function(data){
         store.dispatch({type: SCORING_COMPLETE, payload: data})
     })
+
+    socket.on('nextQuestion', function(data){
+        store.dispatch({ type: INCREMENT_QUESTION });
+    })
+
+    socket.on('nextRound', function(data){
+        store.dispatch({ type: INCREMENT_ROUND });
+    })
 }
 
 export function getId(){
     return socket.id
 }
 
-export function createRoom(roomCode){
-    socket.emit("createRoom", roomCode)
+export function createRoom(roomCode, roundsQuestions, roundsGame){
+    console.log("roomcode: " + roomCode)
+    console.log("RoundQ & RoundG: " + roundsQuestions + " " + roundsGame)
+    socket.emit("createRoom", roomCode, roundsQuestions, roundsGame)
 }
 
 export function questionsToServer(roomCode, question, index){
+    console.log("roomcode: " + roomCode + " question: " + question + " index: " + index)
     socket.emit("storeQuestions", roomCode, question, index)
 }
 
@@ -66,4 +79,12 @@ export function betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet){
 
 export function calculatePoints(roomCode){
     socket.emit("calulatePoints", roomCode)
+}
+
+export function incrementQuestion(roomCode){
+    socket.emit("incrementQuestion", roomCode)
+}
+
+export function incrementRound(roomCode){
+    socket.emit("incrementRound", roomCode)
 }

@@ -19,7 +19,7 @@ global.roomState = {};
 io.on('connection', (socket) =>{
     
     //create room by initializing roomState to default values
-    socket.on('createRoom', (roomCode) =>{
+    socket.on('createRoom', (roomCode, roundQuestions, roundsGame) =>{
         socket.join(roomCode, () =>{
             console.log("gameboard has created room " + roomCode)
          });
@@ -27,6 +27,8 @@ io.on('connection', (socket) =>{
             roomState[roomCode] = {
                 usersCount: 0,
                 round: 1,
+                qPerRound: roundQuestions,
+                rPerGame: roundsGame,
                 questionNum: 0,
                 roomCode: "",
                 questions: {}
@@ -183,5 +185,15 @@ io.on('connection', (socket) =>{
 
     })
     
-   
+    socket.on('incrementQuestion', (roomCode) => {
+        roomState[roomCode].questionNum += 1
+        io.in(roomCode).emit('nextQuestion')
+    });
+
+    socket.on('incrementRound', (roomCode) => {
+        roomState[roomCode].round += 1
+        roomState[roomCode].questionNum += 1
+        io.in(roomCode).emit('nextRound')
+    });
+
 });

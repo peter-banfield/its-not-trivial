@@ -8,7 +8,10 @@ import { createGame, getQuestions} from '../../actions/index';
 class CreateGame extends React.Component {
         
     gameCreate = event =>{
-        this.props.createGame();
+        var roundsQuestions = this.props.qPerRound;
+        var roundsGame = this.props.rPerGame;
+        console.log("RoundQ & RoundG: " + roundsQuestions + " " + roundsGame)
+        this.props.createGame(this.props.code, roundsQuestions, roundsGame);
     }
 
     componentWillReceiveProps(nextProps){

@@ -3,6 +3,7 @@ import { Jumbotron, Col, Row, Table } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { screens } from '../screens'
+import { nextRound, displayWinner } from '../../actions/index'
 
 class PointsLeaderBoard extends React.Component {
 
@@ -10,7 +11,7 @@ class PointsLeaderBoard extends React.Component {
         return this.props.users.map((u, index) =>{
             return (
                 <tr>
-                    <th scope="row">{index}</th>
+                    <th scope="row">{index+1}</th>
                     <td>{u.username}</td>
                     <td>{u.score}</td>
                 </tr>
@@ -20,11 +21,12 @@ class PointsLeaderBoard extends React.Component {
 
     componentDidMount(){
         setTimeout(function(){ 
+            console.log(this.props.moreRounds)
             if(this.props.moreRounds){
-                // run the move next round action
+                this.props.nextRound(this.props.room)
             }
             else {
-                // trigger moving to the congrats screen
+                this.props.displayWinner(this.props.room)
             }
         }.bind(this), 3000);
     }
@@ -33,7 +35,7 @@ class PointsLeaderBoard extends React.Component {
         if(nextProps.screen === screens.PointsLeaderBoard){   
             this.props.history.push('/Congrats');
         }
-        if(nextProps.screen === screens.SkipRules){   
+        if(nextProps.screen === screens.PlayAgain){   
             this.props.history.push("/roundnumber");
         }
     }
@@ -87,13 +89,15 @@ function mapStateToProps(state){
     return {
         users: sortUsers(state.gameplay.users),
         screen: state.gameplay.screen,
-        moreRounds: state.gameplay.room.rPerGame === state.gameplay.room.round ? true : false
+        moreRounds: state.gameplay.room.rPerGame !== state.gameplay.room.round,
+        room: state.session.code
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        nextRound: nextRound,
+        displayWinner: displayWinner
     }, dispatch);
 }
 

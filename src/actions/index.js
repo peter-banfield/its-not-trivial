@@ -1,5 +1,5 @@
-import { joinRoom, createRoom, nextScreen,
-         answerSubmit, questionsToServer, betSubmit } from "./socket_actions.js";
+import { joinRoom, createRoom, nextScreen, incrementQuestion,
+         answerSubmit, questionsToServer, betSubmit, incrementRound } from "./socket_actions.js";
 import { screens } from "../components/screens"
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
@@ -15,7 +15,6 @@ export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
 export const ADD_QUESTION = 'ADD_QUESTION';
-export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
 export const ANSWER_SUBMIT = 'ANSWER_SUBMIT';
 
 
@@ -39,7 +38,7 @@ export function JoinAction(username, roomCode){
     }
 }
 
-export function createGame(roomCode){
+export function createGame(roomCode, roundsQuestions, roundsGame){
    return function generateuniquecode(dispatch, getState){
         var roomCode = randomstring.generate({length: 4, charset: 'alphabetic'}).toUpperCase();   
         dynamodb.putItem({Item: {"id": {S: roomCode}, "CanJoin": {BOOL: true}},TableName: "Rooms",ConditionExpression:"attribute_not_exists(id)"}, function(err, res){
@@ -47,7 +46,7 @@ export function createGame(roomCode){
                 generateuniquecode();
             } 
             else{
-                createRoom(roomCode) 
+                createRoom(roomCode, roundsQuestions, roundsGame) 
                 dispatch({ type: CREATE_GAME, payload: { code: roomCode } });
             }; 
         });
@@ -114,8 +113,8 @@ export function skipRules(roomCode){
 
 export function nextQuestion(roomCode){
     return function(dispatch, getState){
-        dispatch({ type: INCREMENT_QUESTION });
-        nextScreen(roomCode, screens.QuestionNumber)
+        incrementQuestion(roomCode)
+        nextScreen(roomCode, screens.AnswersLeaderBoard)
     }
 }
 
@@ -144,5 +143,18 @@ export function betSubmitAction(roomCode, doubleDown, bigBet, smallBet){
         const questionNum = currentState.gameplay.room.questionNum
         console.log(questionNum)
         betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet)
+    }
+}
+
+export function nextRound(roomCode){
+    return function(dispatch, getState){
+        incrementRound(roomCode)
+        nextScreen(roomCode, screens.PlayAgain)
+    }
+}
+
+export function displayWinner(roomCode){
+    return function(dispatch, getState){
+        nextScreen(roomCode, screens.PointsLeaderBoard)
     }
 }

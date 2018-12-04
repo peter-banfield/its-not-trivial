@@ -9,6 +9,7 @@
  *    AnswerPlaceBets = AnswerSeeBets/Blank
  *  PointsLeaderBoard = Congrats/PlayAgain
  *          PlayAgain = RoundNumber/Blank
+ * AnswersLeaderBoard = QuestionNum/Blank
  *
  *********************************************************************/
 export const screens = {
@@ -18,5 +19,6 @@ export const screens = {
     QuestionAsk: 4, 
     AnswerPlaceBets: 5, 
     PointsLeaderBoard: 6,
-    PlayAgain: 7
+    PlayAgain: 7,
+    AnswersLeaderBoard: 8
 }
