@@ -22,6 +22,7 @@ class PointsLeaderBoard extends React.Component {
 
     componentDidMount(){
         setTimeout(function(){ 
+            console.log(this.props.moreRounds)
             if(this.props.moreRounds){
                 this.props.nextRound(this.props.room)
             }
@@ -89,7 +90,7 @@ function mapStateToProps(state){
     return {
         users: sortUsers(state.gameplay.users),
         screen: state.gameplay.screen,
-        moreRounds: state.gameplay.room.rPerGame === state.gameplay.room.round ? true : false,
+        moreRounds: state.gameplay.room.rPerGame !== state.gameplay.room.round,
         room: state.session.code
     }
 }

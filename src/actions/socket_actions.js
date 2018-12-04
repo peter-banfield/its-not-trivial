@@ -41,7 +41,7 @@ export function socketActions(store){
         store.dispatch({ type: INCREMENT_QUESTION });
     })
 
-    socket.on('nextQuestion', function(data){
+    socket.on('nextRound', function(data){
         store.dispatch({ type: INCREMENT_ROUND });
     })
 }

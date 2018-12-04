@@ -59,7 +59,7 @@ export default function(state = initialState, action){
         case INCREMENT_QUESTION:
             return { ...state, room: { ...state.room, questionNum: state.room.questionNum + 1}}
         case INCREMENT_ROUND:
-        return { ...state, room: { ...state.room, round: state.room.round + 1}}
+        return { ...state, room: { ...state.room, round: state.room.round + 1, questionNum: state.room.questionNum + 1}}
         case ANSWER_SUBMITTED:
             return { ...state, questions: action.payload.answer, users: action.payload.users }
         case BET_SUBMITTED:

@@ -7,7 +7,7 @@ class CorrectAnswer extends React.Component {
 
     componentDidMount(){
         setTimeout(function(){
-            if(this.props.questionNum % this.props.numQuestions === 0 ) {
+            if(this.props.questionNum % this.props.questionPerRound === 0 ) {
                 this.props.history.push("/PointsLeaderBoard")
             }
             else {
@@ -40,7 +40,8 @@ class CorrectAnswer extends React.Component {
 
 function mapStateToProps(state){
     return {
-        numQuestions: Object.keys(state.gameplay.questions).length,
+        numRounds: state.gameplay.room.rPerGame,
+        questionPerRound: state.gameplay.room.qPerRound,
         correctAnswr: state.gameplay.questions[state.gameplay.room.questionNum].correctAnswr,
         closestAnswr: state.gameplay.questions[state.gameplay.room.questionNum].closestAnswr,
         points: state.gameplay.questions[state.gameplay.room.questionNum].points,
