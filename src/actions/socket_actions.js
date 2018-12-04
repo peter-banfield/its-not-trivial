@@ -11,6 +11,7 @@ export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
 export const INCREMENT_ROUND = 'INCREMENT_ROUND';
 export const RESET_STATE = 'RESET_STATE';
 export const NEW_USERS_CODE = 'NEW_USERS_CODE';
+export const ADD_QUESTION = 'ADD_QUESTION';
 
 
 export function socketActions(store){

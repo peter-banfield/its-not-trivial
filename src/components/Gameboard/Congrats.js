@@ -15,6 +15,7 @@ class Congrats extends React.Component {
             //this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
             this.props.history.push("/roomcode")
         }
+    }
 
     componentWillUnmount(){
         var roundsQuestions = this.props.qPerRound;
