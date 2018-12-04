@@ -7,13 +7,14 @@ import { createGame, getQuestions} from '../../actions/index';
 
 class Congrats extends React.Component {
 
-
     componentWillReceiveProps(nextProps){ 
-        
-        
-            this.props.history.push("/RoomCode")
-             
-    }
+        if(nextProps.screen === screens.SamePlayers){
+            this.props.history.push("/roundnumber")
+        }
+        if(nextProps.screen === screens.PlayAgain){
+            //this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
+            this.props.history.push("/roomcode")
+        }
 
     componentWillUnmount(){
         var roundsQuestions = this.props.qPerRound;

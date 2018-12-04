@@ -40,8 +40,12 @@ io.on('connection', (socket) =>{
     });
 
     //store questions in roomState to sync store upon joinRoom
-    socket.on('storeQuestions', (roomCode, question, index) => {
+    socket.on('storeQuestions', (roomCode, question, index, numQuestion) => {
         roomState[roomCode].questions[index] = question
+
+        if(Object.keys(roomState[roomCode].questions).length == numQuestion){
+            io.in(roomCode).emit('dispatchQuestions', { questions: roomState[roomCode].questions })
+        }
     });
 
     //user joins room and gets questions for each round
@@ -212,11 +216,12 @@ io.on('connection', (socket) =>{
                 roomCode: roomCode,
                 questions: {}
         }
+
         roomState[roomCode].users = usersTemp;
 
         console.log(roomState[roomCode])
 
-        io.in(roomCode).emit('stateResetComplete')
+        io.in(roomCode).emit('stateResetComplete'/*, questions: roomState[roomCode].questions*/)
 
     });
 

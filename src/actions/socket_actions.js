@@ -52,6 +52,10 @@ export function socketActions(store){
         store.dispatch({ type: RESET_STATE })
     })
 
+    socket.on('dispatchQuestions', function(data){
+        store.dispatch({ type: ADD_QUESTION, payload: data })
+    })
+
     socket.on('newCodeForGameBoard', function(data){
         console.log("new code for game board " + data)
         store.dispatch({ type: NEW_USERS_CODE, payload: data });
@@ -63,14 +67,11 @@ export function getId(){
 }
 
 export function createRoom(roomCode, roundsQuestions, roundsGame){
-    console.log("roomcode: " + roomCode)
-    console.log("RoundQ & RoundG: " + roundsQuestions + " " + roundsGame)
     socket.emit("createRoom", roomCode, roundsQuestions, roundsGame)
 }
 
-export function questionsToServer(roomCode, question, index){
-    console.log("roomcode: " + roomCode + " question: " + question + " index: " + index)
-    socket.emit("storeQuestions", roomCode, question, index)
+export function questionsToServer(roomCode, question, index, numQuestion){
+    socket.emit("storeQuestions", roomCode, question, index, numQuestion)
 }
 
 export function joinRoom(username, roomCode){

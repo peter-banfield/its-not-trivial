@@ -10,7 +10,6 @@ class CreateGame extends React.Component {
     gameCreate = event =>{
         var roundsQuestions = this.props.qPerRound;
         var roundsGame = this.props.rPerGame;
-        console.log("RoundQ & RoundG: " + roundsQuestions + " " + roundsGame)
         this.props.createGame(this.props.code, roundsQuestions, roundsGame);
     }
 

@@ -21,6 +21,5 @@ export const screens = {
     PointsLeaderBoard: 6,
     PlayAgain: 7,
     AnswersLeaderBoard: 8,
-    JoinRoom: 9,
-    RoomCode: 10
+    SamePlayers: 9
 }

@@ -16,7 +16,6 @@ export const CREATE_GAME = "CREATE_GAME";
 export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
-export const ADD_QUESTION = 'ADD_QUESTION';
 export const ANSWER_SUBMIT = 'ANSWER_SUBMIT';
 export const RESET_STATE = 'RESET_STATE';
 
@@ -111,18 +110,16 @@ export function getQuestions(numQuestions, roomCode){
                 } else {
                     var question = {question: res.Item.Question.S, correctAnswr: parseInt(res.Item.Answer.N), answers: {}, bets: {}}
                     questions[index] = question
-                    questionsToServer(roomCode, question, index)
+                    questionsToServer(roomCode, question, index, numQuestions)
                 }
             })
         })
-        dispatch({ type: ADD_QUESTION, payload: { question: questions } });
     }
 }
 
 export function checkJoinedPlayers(roomCode){
     return function (dispatch, getState){
         const currentState = getState();
-        //console.log(roomCode)
         const roomUsers = currentState.gameplay.room.usersCount;
         if(roomUsers >= 1){
             console.log('about to delete')
@@ -194,6 +191,7 @@ export function displayWinner(roomCode){
 export function sameUsers(roomCode){
     return function(dispatch, getState){
         resetServerState(roomCode)
+        nextScreen(roomCode, screens.SamePlayers)
     }
 }
 

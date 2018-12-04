@@ -7,19 +7,29 @@ import { screens } from '../screens'
 
 class PlayAgain extends React.Component {
     
-    newUsers = event =>{
-        this.props.PlayWithNew(this.props.roomCode);        
+    gameCreate = event =>{
+        this.props.createGame();
     }
 
     sameUsers = event =>{
-        console.log(this.props.roomCode);
         this.props.sameUsers(this.props.roomCode);
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.screen === screens.JoinRoom){
-            this.props.history.push("/");
-        }        
+        console.log(nextProps)
+        if(nextProps.screen === screens.SamePlayers){
+            //this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
+            this.props.history.push("/Blank")
+        }
+        if(nextProps.screen === screens.PlayAgain){
+            //this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
+            this.props.history.push("/")
+        }
+
+    }
+
+    componentWillUnmount(){
+        this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, this.props.roomCode);
     }
 
     render() {
@@ -36,7 +46,7 @@ class PlayAgain extends React.Component {
                             <Button onClick={this.sameUsers} size="sm">With Same Players</Button> 
                         </div>
                         <div className="col">
-                            <Button onClick={this.newUsers} size="sm">With New Players</Button> 
+                            <Button onClick={this.gameCreate} size="sm">New Players</Button> 
                         </div>                   
                     </Row>
                 </Jumbotron>               
@@ -48,13 +58,17 @@ class PlayAgain extends React.Component {
 function mapStateToProps(state){
     return {
         roomCode: state.gameplay.room.roomCode, 
+        qPerRound: state.gameplay.room.qPerRound,
+        rPerGame: state.gameplay.room.rPerGame,
         screen: state.gameplay.screen
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        PlayWithNew: PlayWithNew,        
+	PlayWithNew: PlayWithNew, 
+        createGame: createGame,
+        getQuestions: getQuestions,
         sameUsers: sameUsers
     }, dispatch);
 }
