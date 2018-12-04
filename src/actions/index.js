@@ -21,21 +21,50 @@ export const ANSWER_SUBMIT = 'ANSWER_SUBMIT';
 export function JoinAction(username, roomCode){
     return function(dispatch, getState){
         dynamodb.getItem({Key: {"id": {S: roomCode}}, TableName: "Rooms"},function(err, data) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            if(Object.keys(data).length === 0) {
-                // reject for invalid roomcode
-                dispatch({ type: "ROOM_ERROR" })
-                } 
+            if(err) {
+                console.log(err);
+            }
             else {
-                // call joinroom action
-                joinRoom(username, roomCode); 
+                if(Object.keys(data).length >= 0 || data.Item.CanJoin.BOOL) {
+                    // call joinroom action
+                    joinRoom(username, roomCode);
+                } 
+                else {
+                    // reject for invalid roomcode
+                    dispatch({ type: "ROOM_ERROR" })
+                     
                 }
             }
         });
     }
+}
+
+export function maxPlayers(roomCode){
+    return function(dispatch, getState){
+        dynamodb.updateItem(
+            {
+                TableName: "Rooms", 
+                Key: {"id": {S: roomCode}}, 
+                ExpressionAttributeNames: {
+                    "#CJ": "CanJoin",
+                }, 
+                ExpressionAttributeValues: {
+                    ":j": {
+                        BOOL: false
+                    }
+                }, 
+                UpdateExpression: "SET #CJ = :j",
+                ConditionExpression: 'attribute_exists(id)'
+            }, function(err, data) {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log('disabled adding new users')
+                }
+            }
+        );
+    } 
 }
 
 export function createGame(roomCode, roundsQuestions, roundsGame){
@@ -93,6 +122,7 @@ export function checkJoinedPlayers(roomCode){
         //console.log(roomCode)
         const roomUsers = currentState.gameplay.room.usersCount;
         if(roomUsers >= 1){
+            console.log('about to delete')
             dynamodb.deleteItem({Key: {"id": {S: String(roomCode)}},TableName: "Rooms"}, function(err, res){
                 if(err){
                     console.log(err);
