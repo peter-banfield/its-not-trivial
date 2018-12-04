@@ -2,13 +2,13 @@ import React from 'react';
 import { Button, Jumbotron, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { PlayWithNew, getQuestions, sameUsers } from '../../actions/index';
+import { PlayWithNew, sameUsers } from '../../actions/index';
 import { screens } from '../screens'
 
 class PlayAgain extends React.Component {
     
     gameCreate = event =>{
-        this.props.createGame();
+        this.props.PlayWithNew(this.props.roomCode);
     }
 
     sameUsers = event =>{
@@ -18,11 +18,9 @@ class PlayAgain extends React.Component {
     componentWillReceiveProps(nextProps){
         console.log(nextProps)
         if(nextProps.screen === screens.SamePlayers){
-            //this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
             this.props.history.push("/Blank")
         }
         if(nextProps.screen === screens.PlayAgain){
-            //this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
             this.props.history.push("/")
         }
 
@@ -66,9 +64,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-	PlayWithNew: PlayWithNew, 
-        createGame: createGame,
-        getQuestions: getQuestions,
+	    PlayWithNew: PlayWithNew,        
         sameUsers: sameUsers
     }, dispatch);
 }
