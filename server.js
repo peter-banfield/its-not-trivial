@@ -220,5 +220,9 @@ io.on('connection', (socket) =>{
 
     });
 
+    socket.on('resetGameBoardForNewUsers', (roomCode, screenNum) => {        
+        io.in(roomCode).emit('newCodeForGameBoard', {screen: screenNum} )
+    });
+
 
 });

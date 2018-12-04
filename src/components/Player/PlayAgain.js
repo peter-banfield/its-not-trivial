@@ -2,12 +2,13 @@ import React from 'react';
 import { Button, Jumbotron, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { createGame, getQuestions, sameUsers } from '../../actions/index';
+import { PlayWithNew, getQuestions, sameUsers } from '../../actions/index';
+import { screens } from '../screens'
 
 class PlayAgain extends React.Component {
     
-    gameCreate = event =>{
-        this.props.createGame();
+    newUsers = event =>{
+        this.props.PlayWithNew(this.props.roomCode);        
     }
 
     sameUsers = event =>{
@@ -16,10 +17,9 @@ class PlayAgain extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
-        if(nextProps.roomCode){
-            this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
-            this.props.history.push("/RoomCode")
-        }
+        if(nextProps.screen === screens.JoinRoom){
+            this.props.history.push("/");
+        }        
     }
 
     render() {
@@ -36,7 +36,7 @@ class PlayAgain extends React.Component {
                             <Button onClick={this.sameUsers} size="sm">With Same Players</Button> 
                         </div>
                         <div className="col">
-                            <Button onClick={this.gameCreate} size="sm">With New Players</Button> 
+                            <Button onClick={this.newUsers} size="sm">With New Players</Button> 
                         </div>                   
                     </Row>
                 </Jumbotron>               
@@ -48,15 +48,13 @@ class PlayAgain extends React.Component {
 function mapStateToProps(state){
     return {
         roomCode: state.gameplay.room.roomCode, 
-        qPerRound: state.gameplay.room.qPerRound,
-        rPerGame: state.gameplay.room.rPerGame
+        screen: state.gameplay.screen
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        createGame: createGame,
-        getQuestions: getQuestions,
+        PlayWithNew: PlayWithNew,        
         sameUsers: sameUsers
     }, dispatch);
 }

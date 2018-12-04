@@ -20,5 +20,7 @@ export const screens = {
     AnswerPlaceBets: 5, 
     PointsLeaderBoard: 6,
     PlayAgain: 7,
-    AnswersLeaderBoard: 8
+    AnswersLeaderBoard: 8,
+    JoinRoom: 9,
+    RoomCode: 10
 }

@@ -10,6 +10,7 @@ export const SCORING_COMPLETE = "SCORING_COMPLETE";
 export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
 export const INCREMENT_ROUND = 'INCREMENT_ROUND';
 export const RESET_STATE = 'RESET_STATE';
+export const NEW_USERS_CODE = 'NEW_USERS_CODE';
 
 
 export function socketActions(store){
@@ -49,6 +50,11 @@ export function socketActions(store){
     socket.on('stateResetComplete', function(data){
         console.log("received emit from server")
         store.dispatch({ type: RESET_STATE })
+    })
+
+    socket.on('newCodeForGameBoard', function(data){
+        console.log("new code for game board " + data)
+        store.dispatch({ type: NEW_USERS_CODE, payload: data });
     })
 }
 
@@ -97,4 +103,8 @@ export function incrementRound(roomCode){
 
 export function resetServerState(roomCode){
     socket.emit("resetState", roomCode)
+}
+
+export function resetGameBoardForNewUsers(roomCode, screenNum){
+    socket.emit("resetGameBoardForNewUsers", roomCode, screenNum)
 }

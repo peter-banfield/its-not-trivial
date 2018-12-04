@@ -1,5 +1,7 @@
 import { joinRoom, createRoom, nextScreen, incrementQuestion,
-         answerSubmit, questionsToServer, betSubmit, incrementRound, resetServerState } from "./socket_actions.js";
+         answerSubmit, questionsToServer, betSubmit, 
+         incrementRound, resetServerState,
+         resetGameBoardForNewUsers } from "./socket_actions.js";
 import { screens } from "../components/screens"
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
@@ -193,4 +195,11 @@ export function sameUsers(roomCode){
     return function(dispatch, getState){
         resetServerState(roomCode)
     }
+}
+
+export function PlayWithNew(roomCode){
+    return function (dispatch, getState){
+        nextScreen(roomCode, screens.JoinRoom);
+        resetGameBoardForNewUsers(roomCode, screens.RoomCode);
+    }    
 }

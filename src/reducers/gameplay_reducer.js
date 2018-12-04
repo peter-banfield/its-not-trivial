@@ -1,8 +1,10 @@
 import { ROOM_ERROR, ADD_QUESTION, /*RESET_STATE*/} from '../actions/index';
 import { ADD_NEW_ROOM, ADD_NEW_USER, SCREEN_SWITCH, INCREMENT_ROUND,
-    ANSWER_SUBMITTED, BET_SUBMITTED, SCORING_COMPLETE, INCREMENT_QUESTION  } from '../actions/socket_actions.js';
+    ANSWER_SUBMITTED, BET_SUBMITTED, SCORING_COMPLETE, INCREMENT_QUESTION,
+    NEW_USERS_CODE  } from '../actions/socket_actions.js';
 
 const initialState = { 
+    newUsers: false,
     screen: 0, 
     room: { 
         usersCount: 0,
@@ -66,6 +68,11 @@ export default function(state = initialState, action){
             return { ...state, questions: action.payload.bets }
         case SCORING_COMPLETE:
             return { ...state, users: action.payload.users, questions: action.payload.questions }
+        case NEW_USERS_CODE:
+            return { 
+                state : undefined,
+                screen: action.payload.screen,
+                newUsers: true }
 	    default:
             return state;
     }
