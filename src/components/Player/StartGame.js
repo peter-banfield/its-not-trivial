@@ -28,7 +28,6 @@ class StartGame extends React.Component {
 }
 
 function mapStateToProps(state) {
-    console.log(state)
     return {
         roomCode: state.gameplay.room.roomCode,
         gameReady: state.gameplay.screen,

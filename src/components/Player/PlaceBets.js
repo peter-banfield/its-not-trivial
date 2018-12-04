@@ -28,7 +28,6 @@ class PlaceBets extends React.Component {
         const doubleDown = document.querySelector('#DoubleDown').checked
         const bigBet = data.get('BigBet');
         const smallBet = data.get('SmallBet');
-        console.log("bets entered: " + doubleDown + bigBet + smallBet);
         if(bigBet !== "" && smallBet !== ""){
             this.props.betSubmitAction(this.props.roomCode, doubleDown, bigBet, smallBet);
             this.props.history.push("/blank")

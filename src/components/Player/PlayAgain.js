@@ -2,7 +2,7 @@ import React from 'react';
 import { Button, Jumbotron, Row } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { PlayWithNew, sameUsers } from '../../actions/index';
+import { PlayWithNew, sameUsers, getQuestions } from '../../actions/index';
 import { screens } from '../screens'
 
 class PlayAgain extends React.Component {
@@ -65,7 +65,8 @@ function mapStateToProps(state){
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
 	    PlayWithNew: PlayWithNew,        
-        sameUsers: sameUsers
+        sameUsers: sameUsers,
+        getQuestions: getQuestions
     }, dispatch);
 }
 
