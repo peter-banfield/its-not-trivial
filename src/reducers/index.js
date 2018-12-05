@@ -6,7 +6,7 @@ import { RESET_STATE, NEW_USERS_CODE } from '../actions/socket_actions.js';
 
 
 const initialState = {
-    screen: 1,
+    screen: 0,
     room: { 
         usersCount: 0,
         round: 0,

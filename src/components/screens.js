@@ -21,5 +21,5 @@ export const screens = {
     PointsLeaderBoard: 6,
     PlayAgain: 7,
     AnswersLeaderBoard: 8,
-    SamePlayers: 9
+    NewUsers: 9
 }

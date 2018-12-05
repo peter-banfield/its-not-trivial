@@ -191,13 +191,13 @@ export function displayWinner(roomCode){
 export function sameUsers(roomCode){
     return function(dispatch, getState){
         resetServerState(roomCode)
-        nextScreen(roomCode, screens.SamePlayers)
+        nextScreen(roomCode, screens.PlayAgain)
     }
 }
 
 export function PlayWithNew(roomCode){
     return function (dispatch, getState){
-        nextScreen(roomCode, screens.JoinRoom);
+        nextScreen(roomCode, screens.NewUsers);
         resetGameBoardForNewUsers(roomCode, screens.RoomCode);
     }    
 }

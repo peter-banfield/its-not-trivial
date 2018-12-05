@@ -17,10 +17,10 @@ class PlayAgain extends React.Component {
 
     componentWillReceiveProps(nextProps){
         console.log(nextProps)
-        if(nextProps.screen === screens.SamePlayers){
+        if(nextProps.screen === screens.PlayAgain){
             this.props.history.push("/Blank")
         }
-        if(nextProps.screen === screens.PlayAgain){
+        if(nextProps.screen === screens.NewUsers){
             this.props.history.push("/")
         }
 
