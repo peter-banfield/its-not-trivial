@@ -13,7 +13,7 @@ class CorrectAnswer extends React.Component {
             else {
                 this.props.history.push("/AnswersLeaderBoard")
             }
-        }.bind(this), 10000);
+        }.bind(this), 5000);
     }
     
     render() {
