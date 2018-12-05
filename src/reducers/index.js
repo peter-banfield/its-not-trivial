@@ -38,6 +38,7 @@ const rootReducer = (state, action) => {
         for(var key in tempState.users){
             tempState.users[key].score = 0
             tempState.users[key].HasDD = true
+            tempState.users[key].numCorrect = 0
         }
         console.log(tempState)
         state.gameplay = tempState
