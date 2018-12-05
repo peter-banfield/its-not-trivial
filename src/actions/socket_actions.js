@@ -9,6 +9,9 @@ export const BET_SUBMITTED = "BET_SUBMITTED";
 export const SCORING_COMPLETE = "SCORING_COMPLETE";
 export const INCREMENT_QUESTION = 'INCREMENT_QUESTION';
 export const INCREMENT_ROUND = 'INCREMENT_ROUND';
+export const RESET_STATE = 'RESET_STATE';
+export const NEW_USERS_CODE = 'NEW_USERS_CODE';
+export const ADD_QUESTION = 'ADD_QUESTION';
 
 
 export function socketActions(store){
@@ -44,6 +47,20 @@ export function socketActions(store){
     socket.on('nextRound', function(data){
         store.dispatch({ type: INCREMENT_ROUND });
     })
+
+    socket.on('stateResetComplete', function(data){
+        console.log("received emit from server")
+        store.dispatch({ type: RESET_STATE })
+    })
+
+    socket.on('dispatchQuestions', function(data){
+        store.dispatch({ type: ADD_QUESTION, payload: data })
+    })
+
+    socket.on('newCodeForGameBoard', function(data){
+        console.log("new code for game board " + data)
+        store.dispatch({ type: NEW_USERS_CODE, payload: data });
+    })
 }
 
 export function getId(){
@@ -51,14 +68,11 @@ export function getId(){
 }
 
 export function createRoom(roomCode, roundsQuestions, roundsGame){
-    console.log("roomcode: " + roomCode)
-    console.log("RoundQ & RoundG: " + roundsQuestions + " " + roundsGame)
     socket.emit("createRoom", roomCode, roundsQuestions, roundsGame)
 }
 
-export function questionsToServer(roomCode, question, index){
-    console.log("roomcode: " + roomCode + " question: " + question + " index: " + index)
-    socket.emit("storeQuestions", roomCode, question, index)
+export function questionsToServer(roomCode, question, index, numQuestion){
+    socket.emit("storeQuestions", roomCode, question, index, numQuestion)
 }
 
 export function joinRoom(username, roomCode){
@@ -87,4 +101,12 @@ export function incrementQuestion(roomCode){
 
 export function incrementRound(roomCode){
     socket.emit("incrementRound", roomCode)
+}
+
+export function resetServerState(roomCode){
+    socket.emit("resetState", roomCode)
+}
+
+export function resetGameBoardForNewUsers(roomCode, screenNum){
+    socket.emit("resetGameBoardForNewUsers", roomCode, screenNum)
 }

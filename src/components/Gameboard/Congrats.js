@@ -2,14 +2,27 @@ import React from 'react';
 import { Jumbotron, Col } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { screens } from '../screens'
+import { screens } from '../screens';
+import { createGame, getQuestions} from '../../actions/index';
 
 class Congrats extends React.Component {
 
     componentWillReceiveProps(nextProps){ 
-        // if(nextProps.screen === screens.PlayAgain){   
-        //     this.props.history.push('/roundnumber');
-        // }
+        if(nextProps.screen === screens.PlayAgain){
+            this.props.history.push("/roundnumber")
+        }
+        if(nextProps.screen === screens.NewUsers){
+            //this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, nextProps.roomCode);
+            this.props.history.push("/roomcode")
+        }
+    }
+
+    componentWillUnmount(){
+        if(this.props.screen === this.props.NewUsers){
+            var roundsQuestions = this.props.qPerRound;
+            var roundsGame = this.props.rPerGame;        
+            this.props.createGame(this.props.code, roundsQuestions, roundsGame);
+        }   
     }
     
     render() {
@@ -36,13 +49,18 @@ var findWinner = (users) => {
 function mapStateToProps(state){
     return {
         winner: findWinner(state.gameplay.users),
-        screen: state.gameplay.screen
+        screen: state.gameplay.screen,
+        code: state.session, 
+        qPerRound: state.gameplay.room.qPerRound,
+        rPerGame: state.gameplay.room.rPerGame,
+        newUsers: state.gameplay.newUsers
     }
 }
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
+        createGame: createGame,
+        getQuestions: getQuestions,
     }, dispatch);
 }
 

@@ -1,5 +1,7 @@
 import { joinRoom, createRoom, nextScreen, incrementQuestion,
-         answerSubmit, questionsToServer, betSubmit, incrementRound } from "./socket_actions.js";
+         answerSubmit, questionsToServer, betSubmit, 
+         incrementRound, resetServerState,
+         resetGameBoardForNewUsers } from "./socket_actions.js";
 import { screens } from "../components/screens"
 var randomstring = require("randomstring");
 // the next 6 lines connect to the database
@@ -14,28 +16,57 @@ export const CREATE_GAME = "CREATE_GAME";
 export const CREATE_USER = "CREATE_USER";
 export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
-export const ADD_QUESTION = 'ADD_QUESTION';
 export const ANSWER_SUBMIT = 'ANSWER_SUBMIT';
+export const RESET_STATE = 'RESET_STATE';
 
 
 export function JoinAction(username, roomCode){
     return function(dispatch, getState){
         dynamodb.getItem({Key: {"id": {S: roomCode}}, TableName: "Rooms"},function(err, data) {
-        if(err) {
-            console.log(err);
-        }
-        else {
-            if(Object.keys(data).length === 0) {
-                // reject for invalid roomcode
-                dispatch({ type: "ROOM_ERROR" })
-                } 
+            if(err) {
+                console.log(err);
+            }
             else {
-                // call joinroom action
-                joinRoom(username, roomCode); 
+                if(Object.keys(data).length >= 0 || data.Item.CanJoin.BOOL) {
+                    // call joinroom action
+                    joinRoom(username, roomCode);
+                } 
+                else {
+                    // reject for invalid roomcode
+                    dispatch({ type: "ROOM_ERROR" })
+                     
                 }
             }
         });
     }
+}
+
+export function maxPlayers(roomCode){
+    return function(dispatch, getState){
+        dynamodb.updateItem(
+            {
+                TableName: "Rooms", 
+                Key: {"id": {S: roomCode}}, 
+                ExpressionAttributeNames: {
+                    "#CJ": "CanJoin",
+                }, 
+                ExpressionAttributeValues: {
+                    ":j": {
+                        BOOL: false
+                    }
+                }, 
+                UpdateExpression: "SET #CJ = :j",
+                ConditionExpression: 'attribute_exists(id)'
+            }, function(err, data) {
+                if(err) {
+                    console.log(err);
+                }
+                else {
+                    console.log('disabled adding new users')
+                }
+            }
+        );
+    } 
 }
 
 export function createGame(roomCode, roundsQuestions, roundsGame){
@@ -79,20 +110,19 @@ export function getQuestions(numQuestions, roomCode){
                 } else {
                     var question = {question: res.Item.Question.S, correctAnswr: parseInt(res.Item.Answer.N), answers: {}, bets: {}}
                     questions[index] = question
-                    questionsToServer(roomCode, question, index)
+                    questionsToServer(roomCode, question, index, numQuestions)
                 }
             })
         })
-        dispatch({ type: ADD_QUESTION, payload: { question: questions } });
     }
 }
 
 export function checkJoinedPlayers(roomCode){
     return function (dispatch, getState){
         const currentState = getState();
-        //console.log(roomCode)
         const roomUsers = currentState.gameplay.room.usersCount;
         if(roomUsers >= 1){
+            console.log('about to delete')
             dynamodb.deleteItem({Key: {"id": {S: String(roomCode)}},TableName: "Rooms"}, function(err, res){
                 if(err){
                     console.log(err);
@@ -121,7 +151,7 @@ export function nextQuestion(roomCode){
  
 export function AnswerSubmitAction(roomCode, answer){
     return function(dispatch, getState){
-            answerSubmit(roomCode, answer);                 
+        answerSubmit(roomCode, answer);                 
     }
 }
 
@@ -141,7 +171,6 @@ export function betSubmitAction(roomCode, doubleDown, bigBet, smallBet){
     return function(dispatch, getState){
         const currentState = getState()
         const questionNum = currentState.gameplay.room.questionNum
-        console.log(questionNum)
         betSubmit(roomCode, questionNum, doubleDown, bigBet, smallBet)
     }
 }
@@ -157,4 +186,18 @@ export function displayWinner(roomCode){
     return function(dispatch, getState){
         nextScreen(roomCode, screens.PointsLeaderBoard)
     }
+}
+
+export function sameUsers(roomCode){
+    return function(dispatch, getState){
+        resetServerState(roomCode)
+        nextScreen(roomCode, screens.PlayAgain)
+    }
+}
+
+export function PlayWithNew(roomCode){
+    return function (dispatch, getState){
+        nextScreen(roomCode, screens.NewUsers);
+        resetGameBoardForNewUsers(roomCode, screens.RoomCode);
+    }    
 }

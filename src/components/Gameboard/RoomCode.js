@@ -1,7 +1,9 @@
 import React from 'react';
 import { Row, Col, Jumbotron, ListGroup, ListGroupItem } from 'reactstrap';
 import {connect} from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { screens } from '../screens';
+import { maxPlayers } from '../../actions/index'
 
 class RoomCode extends React.Component {
     
@@ -14,6 +16,9 @@ class RoomCode extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){ // redirect to pages depending on the gameReady status
+        if(nextProps.numPlayers >= 7){
+            this.props.maxPlayers(this.props.room)
+        }
         if(nextProps.gameReady === screens.StartGame){   
             this.props.history.push("/rules");
         }
@@ -46,8 +51,15 @@ function mapStateToProps(state){
     return {
         players: state.gameplay.users,
         room: state.session.code,
-        gameReady: state.gameplay.screen
+        gameReady: state.gameplay.screen,
+        numPlayers: state.gameplay.room.usersCount
     }
 }
 
-export default connect(mapStateToProps)(RoomCode);
+function mapDispatchToProps(dispatch){
+    return bindActionCreators({
+        maxPlayers: maxPlayers
+    }, dispatch);
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(RoomCode);

@@ -22,7 +22,7 @@ class QuestionAsk extends React.Component {
         }
         return (
             <div className="d-flex flex-column align-items-center justify-content-center" style={{height: '100%'}}>
-                <Jumbotron style={{height: '75%', textAlign: 'center'}}>
+                <Jumbotron style={{height: '75%', textAlign: 'center', width: '75%'}}>
                     <div className="d-flex flex-column" style={{height: '100%'}}>
                         <Question question={this.props.question}/>
                         <div className="d-flex align-items-end" style={{height: '100%'}}>

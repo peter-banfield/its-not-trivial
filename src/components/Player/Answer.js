@@ -12,8 +12,7 @@ class Answer extends React.Component {
         event.preventDefault();
         const data = new FormData(event.target)
         const answer = data.get('answer');
-        console.log(answer);
-        if(answer >= 0){
+        if(answer > 0){
             this.props.AnswerSubmitAction(this.props.roomCode, answer);
             this.props.history.push("/blank")
         }        
