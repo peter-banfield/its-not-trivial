@@ -3,23 +3,7 @@ import { combineReducers } from 'redux';
 import session from './session_reducer';
 import gameplay from './gameplay_reducer';
 import { RESET_STATE, NEW_USERS_CODE } from '../actions/socket_actions.js';
-
-
-const initialState = {
-    screen: 0,
-    room: { 
-        usersCount: 0,
-        round: 0,
-        qPerRound: 1,
-        rPerGame: 1,
-        questionNum: 0,
-        roomCode: ""
-    },
-    users: {},
-    roomError: false,
-    questions: []
-    
-}
+import { initialState } from './gameplay_reducer'
 
 const appReducer = combineReducers({
     session,

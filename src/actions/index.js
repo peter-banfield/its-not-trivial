@@ -18,6 +18,7 @@ export const ADD_NEW_USER = "ADD_NEW_USER";
 export const ROOM_ERROR = "ROOM_ERROR";
 export const ANSWER_SUBMIT = 'ANSWER_SUBMIT';
 export const RESET_STATE = 'RESET_STATE';
+export const SET_OPTIONS = 'SET_OPTIONS';
 
 
 export function JoinAction(username, roomCode){
@@ -200,4 +201,10 @@ export function PlayWithNew(roomCode){
         nextScreen(roomCode, screens.NewUsers);
         resetGameBoardForNewUsers(roomCode, screens.RoomCode);
     }    
+}
+
+export function setOptions(QuestionsPerRound, RoundsPerGame){
+    return function (dispatch, getState){
+        dispatch({ type: SET_OPTIONS, payload: { QuestionsPerRound: QuestionsPerRound, RoundsPerGame: RoundsPerGame } });
+    }
 }

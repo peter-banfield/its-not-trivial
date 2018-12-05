@@ -3,7 +3,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import { Container } from 'reactstrap';
 
 import { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank, ErrorScreen,
-    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, 
+    CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, options,
     AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats } from "./components";
 
 import { Provider } from 'react-redux';
@@ -42,6 +42,7 @@ class App extends Component{
                 <Route path="/PointsLeaderBoard" component = {PointsLeaderBoard} />
                 <Route path="/AnswersLeaderBoard" component = {AnswersLeaderBoard} />
                 <Route path="/Congrats" component = {Congrats} />
+                <Route path="/options" component= {options} />
                 </Switch>
                 </BrowserRouter>
                 </Container>
