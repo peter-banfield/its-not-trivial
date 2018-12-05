@@ -101,7 +101,7 @@ export function getQuestions(numQuestions, roomCode){
             }
             return ints;
         }
-        var questionIds = getRandomInts(numQuestions, 1, 226)
+        var questionIds = getRandomInts(numQuestions, 1, 300)
         // get the questions
         var questions = {}
         questionIds.forEach(function(id, index){
