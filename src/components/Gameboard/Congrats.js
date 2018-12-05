@@ -19,10 +19,9 @@ class Congrats extends React.Component {
 
     componentWillUnmount(){
         var roundsQuestions = this.props.qPerRound;
-            var roundsGame = this.props.rPerGame;        
-            this.props.createGame(this.props.code, roundsQuestions, roundsGame);
-
-            if(this.props.code.code != this.props.code.code){            
+        var roundsGame = this.props.rPerGame;        
+        this.props.createGame(this.props.code, roundsQuestions, roundsGame);
+        if(this.props.code.code != this.props.code.code){            
                 this.props.getQuestions(this.props.qPerRound * this.props.rPerGame, this.props.code.code);
                 
             }

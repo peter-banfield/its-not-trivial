@@ -2,7 +2,7 @@
 import { combineReducers } from 'redux';
 import session from './session_reducer';
 import gameplay from './gameplay_reducer';
-import { RESET_STATE } from '../actions/socket_actions.js';
+import { RESET_STATE, NEW_USERS_CODE } from '../actions/socket_actions.js';
 
 
 const initialState = {
@@ -41,6 +41,10 @@ const rootReducer = (state, action) => {
         }
         console.log(tempState)
         state.gameplay = tempState
+    }
+
+    if(action.type === "NEW_USERS_CODE"){
+        state.gameplay = initialState
     }
   
 
