@@ -28,7 +28,7 @@ const appReducer = combineReducers({
 });
 
 const rootReducer = (state, action) => {
-    if(action.type === "RESET_STATE"){
+    if(action.type === RESET_STATE){
         var tempState = state
         var users = tempState.gameplay.users
         var room = tempState.gameplay.room
@@ -43,7 +43,7 @@ const rootReducer = (state, action) => {
         state.gameplay = tempState
     }
 
-    if(action.type === "NEW_USERS_CODE"){
+    if(action.type === NEW_USERS_CODE){
         state.gameplay = initialState
     }
   

@@ -41,7 +41,7 @@ class PlayAgain extends React.Component {
                     </Row>
                     <Row>
                         <div className="col">
-                            <Button onClick={this.sameUsers} size="sm">With Same Players</Button> 
+                            <Button onClick={this.sameUsers} size="sm">Same Players</Button> 
                         </div>
                         <div className="col">
                             <Button onClick={this.gameCreate} size="sm">New Players</Button> 
