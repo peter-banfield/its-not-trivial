@@ -32,24 +32,29 @@ class PlayAgain extends React.Component {
 
     render() {
         return (
-            <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>               
-                <Jumbotron className="w-100 h-55 text-center">
-                    <Row className="text-center">
-                        <div className="w-100">
-                            <h1>Play Again?</h1><br></br>
-                        </div>
-                    </Row>
-                    <Row>
-                        <div className="col">
-                            <Button onClick={this.sameUsers} size="sm">Same Players</Button> 
-                        </div>
-                        <div className="col">
-                            <Button onClick={this.gameCreate} size="sm">New Players</Button> 
-                        </div>                   
-                    </Row>
-                </Jumbotron>               
+            <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>
+                <Button size="lg" onClick={this.sameUsers}>Play Again</Button>
             </div>
         )
+    //     return (
+    //         <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>               
+    //             <Jumbotron className="w-100 h-55 text-center">
+    //                 <Row className="text-center">
+    //                     <div className="w-100">
+    //                         <h1>Play Again?</h1><br></br>
+    //                     </div>
+    //                 </Row>
+    //                 <Row>
+    //                     <div className="col">
+    //                         <Button onClick={this.sameUsers} size="sm">Same Players</Button> 
+    //                     </div>
+    //                     <div className="col">
+    //                         <Button onClick={this.gameCreate} size="sm">New Players</Button> 
+    //                     </div>                   
+    //                 </Row>
+    //             </Jumbotron>               
+    //         </div>
+    //     )
     }
 }
 
