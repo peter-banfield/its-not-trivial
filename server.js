@@ -31,7 +31,8 @@ io.on('connection', (socket) =>{
                 rPerGame: roundsGame,
                 questionNum: 0,
                 roomCode: "",
-                questions: {}
+                questions: {},
+                users: {}
             }
         }
 
