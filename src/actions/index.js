@@ -28,14 +28,19 @@ export function JoinAction(username, roomCode){
                 console.log(err);
             }
             else {
-                if(Object.keys(data).length >= 0 || data.Item.CanJoin.BOOL) {
-                    // call joinroom action
-                    joinRoom(username, roomCode);
+                if(Object.keys(data).length > 0) {
+                    if(data.Item.CanJoin.BOOL){
+                        // call joinroom action
+                        joinRoom(username, roomCode);
+                    }
+                    else {
+                        // reject for too many people
+                        dispatch({ type: "ROOM_ERROR" })  
+                    }
                 } 
                 else {
                     // reject for invalid roomcode
-                    dispatch({ type: "ROOM_ERROR" })
-                     
+                    dispatch({ type: "ROOM_ERROR" })  
                 }
             }
         });
