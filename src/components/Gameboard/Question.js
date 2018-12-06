@@ -15,7 +15,7 @@ class Question extends React.Component {
             <div>
                 <h1>Question #{this.props.questionNum + 1}</h1>
                 <hr className="my-2" />
-                <p>{this.props.question}</p>
+                <p style={{fontSize:30}}>{this.props.question}</p>
             </div>
         )
     }
