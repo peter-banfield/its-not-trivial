@@ -18,6 +18,8 @@ const rootReducer = (state, action) => {
         var room = tempState.gameplay.room
         tempState = initialState
         tempState.room = room
+        tempState.room.questionNum = 0
+        tempState.room.round = 1
         tempState.users = users
         for(var key in tempState.users){
             tempState.users[key].score = 0

@@ -28,14 +28,19 @@ export function JoinAction(username, roomCode){
                 console.log(err);
             }
             else {
-                if(Object.keys(data).length >= 0 || data.Item.CanJoin.BOOL) {
-                    // call joinroom action
-                    joinRoom(username, roomCode);
+                if(Object.keys(data).length > 0) {
+                    if(data.Item.CanJoin.BOOL){
+                        // call joinroom action
+                        joinRoom(username, roomCode);
+                    }
+                    else {
+                        // reject for too many people
+                        dispatch({ type: "ROOM_ERROR" })  
+                    }
                 } 
                 else {
                     // reject for invalid roomcode
-                    dispatch({ type: "ROOM_ERROR" })
-                     
+                    dispatch({ type: "ROOM_ERROR" })  
                 }
             }
         });
@@ -122,13 +127,11 @@ export function checkJoinedPlayers(roomCode){
     return function (dispatch, getState){
         const currentState = getState();
         const roomUsers = currentState.gameplay.room.usersCount;
-        if(roomUsers >= 1){
-            console.log('about to delete')
+        if(roomUsers >= 4){
             dynamodb.deleteItem({Key: {"id": {S: String(roomCode)}},TableName: "Rooms"}, function(err, res){
                 if(err){
                     console.log(err);
                 } else {
-                    console.log('removed roomcode from database')
                 }
             })
             nextScreen(roomCode, screens.StartGame)
