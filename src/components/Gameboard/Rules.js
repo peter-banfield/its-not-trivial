@@ -39,7 +39,6 @@ class Rules extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
         gameReady: state.gameplay.screen,
     }
 }

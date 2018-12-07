@@ -52,7 +52,6 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
     }, dispatch);
 }
 

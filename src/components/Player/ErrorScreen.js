@@ -5,12 +5,6 @@ import { bindActionCreators } from 'redux';
 
 class ErrorScreen extends React.Component {
 
-    componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
-    }
-
     render() {
         return (
             <div className="container-fluid d-flex align-items-center justify-content-center" style={{height: '100%'}}>

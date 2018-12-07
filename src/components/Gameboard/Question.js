@@ -3,13 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
 class Question extends React.Component {
-
-    componentWillReceiveProps(nextProps){ 
-        // if(conditon){   
-        //     this.props.history.push(endpoint);
-        // }
-    }
-    
+   
     render() {
         return (
             <div>
@@ -30,7 +24,6 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
     }, dispatch);
 }
 

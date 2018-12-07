@@ -21,7 +21,6 @@ class PointsLeaderBoard extends React.Component {
 
     componentDidMount(){
         setTimeout(function(){ 
-            console.log(this.props.moreRounds)
             if(this.props.moreRounds){
                 this.props.nextRound(this.props.room)
             }

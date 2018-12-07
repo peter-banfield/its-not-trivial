@@ -58,16 +58,12 @@ io.on('connection', (socket) =>{
             roomState[roomCode].users = {};
         }
 
-        //roomState[roomCode].users.roomCode = roomCode
-
         roomState[roomCode].users[userId] = {
             username: username, 
             score: 0,
             numCorrect: 0,
             HasDD: true,
         }
-
-        //console.log(roomState[roomCode].questions);
 
         io.in(roomCode).emit('userConnected', 
             { users: roomState[roomCode].users,
@@ -90,7 +86,6 @@ io.on('connection', (socket) =>{
         //if answer is exactly correct assign 2 points automatically
         if(answer == parseInt(roomState[roomCode].questions[questionId].correctAnswr)){
             roomState[roomCode].users[userId].score += 2
-            //console.log('score after correct '+ roomState[roomCode].users[userId].score)
         }
         roomState[roomCode].questions[questionId].answers[userId] = answer
         io.in(roomCode).emit('answerSubmitted', { answer: roomState[roomCode].questions, users: roomState[roomCode].users });
@@ -222,7 +217,7 @@ io.on('connection', (socket) =>{
 
         console.log(roomState[roomCode])
 
-        io.in(roomCode).emit('stateResetComplete'/*, questions: roomState[roomCode].questions*/)
+        io.in(roomCode).emit('stateResetComplete')
 
     });
 

@@ -61,8 +61,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        nextScreen: nextScreen,
-        //nextQuestion: nextQuestion
+        nextScreen: nextScreen
     }, dispatch);
 }
 

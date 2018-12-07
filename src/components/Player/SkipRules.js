@@ -29,7 +29,6 @@ class SkipRules extends React.Component {
 
 function mapStateToProps(state){
     return {
-        // variable to use in component: state.refrence to the attribute of interest
         roomCode: state.gameplay.room.roomCode,
         gameReady: state.gameplay.screen,
         questions: state.gameplay.questions
@@ -37,8 +36,9 @@ function mapStateToProps(state){
 }
 
 function mapDispatchToProps(dispatch){
-    return bindActionCreators({ skipRules: skipRules }, dispatch);
-
+    return bindActionCreators({ 
+        skipRules: skipRules 
+    }, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SkipRules);

@@ -1,4 +1,3 @@
-/*eslint no-unused-expressions: ["error", { "allowShortCircuit": true }]*/
 import { combineReducers } from 'redux';
 import session from './session_reducer';
 import gameplay from './gameplay_reducer';
@@ -26,7 +25,6 @@ const rootReducer = (state, action) => {
             tempState.users[key].HasDD = true
             tempState.users[key].numCorrect = 0
         }
-        console.log(tempState)
         state.gameplay = tempState
     }
 
