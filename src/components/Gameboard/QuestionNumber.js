@@ -3,7 +3,6 @@ import { Jumbotron } from 'reactstrap';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { nextScreen } from '../../actions/socket_actions'
-//import { nextQuestion } from '../../actions/index'
 import { screens } from '../screens'
 
 class QuestionNumber extends React.Component {
@@ -39,8 +38,7 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        nextScreen: nextScreen,
-        //nextQuestion: nextQuestion
+        nextScreen: nextScreen
     }, dispatch);
 }
 

@@ -49,7 +49,6 @@ export function socketActions(store){
     })
 
     socket.on('stateResetComplete', function(data){
-        console.log("received emit from server")
         store.dispatch({ type: RESET_STATE })
     })
 

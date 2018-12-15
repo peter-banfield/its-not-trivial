@@ -73,7 +73,7 @@ function sortAnswers(answers){
 
 function mapStateToProps(state){
     return {
-        answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers), //[state.gameplay.]
+        answers: sortAnswers(state.gameplay.questions[state.gameplay.room.questionNum].answers), 
         submitted: Object.keys(state.gameplay.questions[state.gameplay.room.questionNum].bets).length,
         maxPlayers: state.gameplay.room.usersCount,
         screen: state.gameplay.screen,

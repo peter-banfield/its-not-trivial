@@ -72,8 +72,6 @@ function sortBets(bets, answers){
 
     var countedBets = _.countBy(betsArr, Math.floor)
     var answersKeys = Object.keys(answers)
-    console.log(betsArr)
-    console.log(countedBets)
     answersKeys.forEach((id) => {
         answersArr.push(answers[id])
     })
@@ -112,7 +110,6 @@ function mapStateToProps(state){
 
 function mapDispatchToProps(dispatch){
     return bindActionCreators({
-        // variable to use in component: refrence to action
     }, dispatch);
 }
 

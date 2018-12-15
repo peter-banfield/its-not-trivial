@@ -16,7 +16,6 @@ class PlayAgain extends React.Component {
     }
 
     componentWillReceiveProps(nextProps){
-        console.log(nextProps)
         if(nextProps.screen === screens.PlayAgain){
             this.props.history.push("/Blank")
         }
