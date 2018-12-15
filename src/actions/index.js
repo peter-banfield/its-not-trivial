@@ -188,7 +188,7 @@ export function nextRound(roomCode){
 
 export function displayWinner(roomCode){
     return function(dispatch, getState){
-        nextScreen(roomCode, screens.PointsLeaderBoard)
+        nextScreen(roomCode, screens.LeaderBoard)
     }
 }
 

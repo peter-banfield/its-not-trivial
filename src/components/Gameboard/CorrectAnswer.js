@@ -7,12 +7,12 @@ class CorrectAnswer extends React.Component {
 
     componentDidMount(){
         setTimeout(function(){
-            if(this.props.questionNum % this.props.questionPerRound === 0 ) {
-                this.props.history.push("/PointsLeaderBoard")
-            }
-            else {
-                this.props.history.push("/AnswersLeaderBoard")
-            }
+            // if(this.props.questionNum % this.props.questionPerRound === 0 ) {
+                this.props.history.push("/LeaderBoard")
+            // }
+            // else {
+            //     this.props.history.push("/AnswersLeaderBoard")
+            // }
         }.bind(this), 5000);
     }
     

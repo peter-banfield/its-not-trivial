@@ -47,7 +47,7 @@ export default function(state = initialState, action){
             return {
                 ...state, 
                 users: action.payload.users,
-                room: { ...state.room, usersCount: state.room.usersCount + 1, roomCode: action.payload.room},
+                room: { ...state.room, usersCount: Object.keys(action.payload.users).length, roomCode: action.payload.room},
                 questions: action.payload.questions
             }
         case ROOM_ERROR:
