@@ -14,7 +14,7 @@ class Blank extends React.Component {
             case screens.QuestionAsk:
                 this.props.history.push('/placebets');
                 break;
-            case screens.PointsLeaderBoard:
+            case screens.LeaderBoard:
                 this.props.history.push('/PlayAgain');
                 break;
             default:

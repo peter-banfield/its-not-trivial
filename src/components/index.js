@@ -14,7 +14,7 @@ import QuestionAsk from './Gameboard/QuestionAsk'
 import AnswerPlaceBets from './Gameboard/AnswerPlaceBets'
 import AnswerSeeBets from './Gameboard/AnswerSeeBets'
 import CorrectAnswer from './Gameboard/CorrectAnswer'
-import PointsLeaderBoard from './Gameboard/PointsLeaderBoard'
+import LeaderBoard from './Gameboard/LeaderBoard'
 import AnswersLeaderBoard from './Gameboard/AnswersLeaderBoard'
 import Congrats from './Gameboard/Congrats'
 import ErrorScreen from './Player/ErrorScreen'
@@ -22,4 +22,4 @@ import options from './Gameboard/options'
 
 export { PlaceBets, JoinRoom, StartGame, SkipRules, PlayAgain, Answer, Blank, ErrorScreen,
     CreateGame, RoomCode, Rules, RoundNumber, QuestionNumber, QuestionAsk, options,
-    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, PointsLeaderBoard, AnswersLeaderBoard, Congrats }
+    AnswerPlaceBets, AnswerSeeBets, CorrectAnswer, LeaderBoard, AnswersLeaderBoard, Congrats }
